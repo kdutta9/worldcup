@@ -8,6 +8,34 @@ The shuffle is seeded: a random hex string is generated when you open the page, 
 
 Because the draw is deterministic, it's also auditable. The seed is displayed on the results screen. Anyone can paste the seed into the source, re-run it, and get the identical assignment. No one can claim the draw was rigged, and there are no re-draws.
 
+## Project structure
+
+```
+src/
+  main.jsx                  # React entry point
+  WorldCupLottoDraft.jsx    # Full app — setup, draw, and results board
+```
+
+State lives entirely in React (no backend). The draw is computed client-side from the seed on every load.
+
+## Deployment architecture
+
+Source lives in `github.com/kdutta9/worldcup` (this repo). Built output is deployed as a subdirectory of the main personal site:
+
+- **Source repo**: `kdutta9/worldcup` → `main` branch
+- **Host repo**: `kdutta9/kdutta9.github.io` → Jekyll site serving `kdutta.com`
+- **Live URL**: `kdutta.com/worldcup`
+
+`npm run deploy` builds with Vite, rsyncs `dist/` into `../kdutta9.github.io/worldcup/`, and commits + pushes the host repo. Jekyll passes the built HTML/JS through verbatim (no front matter = no processing).
+
+## Planned features
+
+### Draft snapshot URL
+Encode seed + player names into the URL so a completed draw can be shared as a link rather than a screenshot. Entirely client-side — no backend needed. Recipients see the same deterministic board.
+
+### Live scoreboard
+Per-group standings tracking lotto points as the tournament progresses. Two groups. Data source and update mechanism TBD — options range from a committed JSON file (redeploy to update) to a live DB (Supabase) if real-time updates across viewers are needed.
+
 ## Local setup
 
 ```bash
@@ -17,10 +45,10 @@ npm run dev
 
 Open http://localhost:5173/worldcup/.
 
-## Deploy to GitHub Pages
+## Deploy
 
 ```bash
 npm run deploy
 ```
 
-Builds to `dist/` and pushes to the `gh-pages` branch. Enable GitHub Pages in the repo settings pointing at that branch.
+Builds and pushes output into the host repo under `worldcup/`. Requires `../kdutta9.github.io` to exist locally and have a clean working tree.
