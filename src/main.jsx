@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import WorldCupLottoDraft from './WorldCupLottoDraft'
+import App from './App'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <WorldCupLottoDraft />
+    <App />
   </StrictMode>
 )

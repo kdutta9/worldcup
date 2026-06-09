@@ -2,10 +2,12 @@
   "name": "worldcup-lotto-draft",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "add-group": "node scripts/add-group.mjs",
     "deploy": "vite build && rsync -a --delete dist/ ../kdutta9.github.io/worldcup/ && cd ../kdutta9.github.io && git add worldcup && git commit -m 'Deploy: worldcup lotto 26' && git push"
   },
   "dependencies": {
