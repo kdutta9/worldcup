@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "vite build && rsync -a --delete dist/ ../kdutta9.github.io/worldcup/ && cd ../kdutta9.github.io && git add worldcup && git commit -m 'Deploy: worldcup lotto 26' && git push"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
-    "gh-pages": "^6.2.0",
     "vite": "^6.3.5"
   }
 }
