@@ -118,8 +118,8 @@ export default function WorldCupLottoDraft({ snapshot = null }) {
 
   const sub =
     phase === "setup"
-      ? "48 TEAMS · ALL ASSIGNED · $20 ENTRY"
-      : `${playerCount} PLAYERS · 48 TEAMS · ${teamsPerPlayer} EACH · $20 ENTRY`;
+      ? "48 TEAMS · ALL ASSIGNED"
+      : `${playerCount} PLAYERS · 48 TEAMS · ${teamsPerPlayer} EACH`;
 
   return (
     <div className="root">
@@ -146,7 +146,7 @@ export default function WorldCupLottoDraft({ snapshot = null }) {
             className="text-input"
             value={groupName}
             onChange={(e) => setGroupName(e.target.value)}
-            placeholder="e.g. Boofy"
+            placeholder="e.g. The Barden Bellas"
             maxLength={32}
           />
 
