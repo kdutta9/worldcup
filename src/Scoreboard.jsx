@@ -92,6 +92,9 @@ function GroupStandings({ groupId }) {
         Points are scored per team by furthest round reached: Round of 32 = 1, R16 = 2, QF = 3,
         SF = 4, Runner-up = 5, Champion = 8. Last updated {results.updatedAt || "—"}.
       </p>
+      <div className="btn-row" style={{ marginTop: 18 }}>
+        <a className="ghost-btn" href={`?book=${groupId}`}>Sportsbook: pre-tournament odds →</a>
+      </div>
     </Panel>
   );
 }

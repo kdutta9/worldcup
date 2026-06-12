@@ -1,5 +1,6 @@
 import WorldCupLottoDraft from "./WorldCupLottoDraft";
 import Scoreboard from "./Scoreboard";
+import Sportsbook from "./Sportsbook";
 import Masthead from "./Masthead";
 import { decodeSnapshot } from "./snapshot";
 import { css } from "./styles";
@@ -8,6 +9,7 @@ import { css } from "./styles";
 //   ?d=<payload>   → shared snapshot board
 //   ?scores        → scoreboard landing
 //   ?scores=<id>   → that group's standings
+//   ?book=<id>     → that group's sportsbook sheet
 //   (none)         → draft tool
 export default function App() {
   const params = new URLSearchParams(window.location.search);
@@ -23,6 +25,8 @@ export default function App() {
         <p className="state-msg">That share link is invalid or corrupted.</p>
       </div>
     );
+  } else if (params.has("book")) {
+    view = <Sportsbook bookId={params.get("book")} />;
   } else if (params.has("scores")) {
     view = (
       <div className="root">

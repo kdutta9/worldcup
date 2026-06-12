@@ -89,6 +89,29 @@ and upserts the row into `groups.json`. Then `npm run deploy`.
 Supabase queries (same return shapes) plus a realtime subscription — no schema
 redesign and no changes to the views.
 
+### Sportsbook
+
+`?book=<id>` renders a pre-tournament "sportsbook sheet" per group: outright /
+top-3 / wooden-spoon prices, head-to-head matchups, an over/under ladder with a
+points-distribution histogram, per-team rosters, and (where the group has lore)
+a faction battle. Not real betting — a display format the group chat understands.
+
+The numbers are real, though. `scripts/sportsbook/` holds the pipeline:
+
+- `data.mjs` — the real 2026 groups, the FIFA R32→final bracket (incl. best-eight
+  third-place slots), and the devigged pre-tournament championship consensus
+  (DraftKings · FanDuel · Kalshi · ESPN, June 2026).
+- `engine.mjs` — Poisson-goal tournament simulator; one rating per team drives
+  group results and knockout win probability.
+- `calibrate.mjs` — fits ratings until simulated title probabilities match the
+  consensus; writes `ratings.json` (committed, so builds are reproducible).
+- `build-books.mjs` (`npm run build-books`) — 400k simulated tournaments, scores
+  every pool draw against them, prices the markets with a house margin, writes
+  `public/data/books/<id>.json`.
+
+Lines are frozen pre-tournament by design (the book "closed at kickoff"). To
+re-price mid-tournament you'd condition the sim on results so far — not built.
+
 ## Local setup
 
 ```bash

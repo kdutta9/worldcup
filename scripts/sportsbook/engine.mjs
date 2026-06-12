@@ -1,0 +1,187 @@
+// Monte Carlo engine: one call = one full 2026 World Cup (72 group matches,
+// best-eight thirds into the real FIFA bracket, knockouts to the final).
+//
+// Match model: bivariate-independent Poisson. A team's goal rate scales
+// exponentially with the rating gap, so a single per-team rating drives both
+// group results (with natural draw rates) and knockout win probability.
+// Ratings carry no units of their own — they are calibrated until simulated
+// championship probabilities match the devigged market consensus.
+
+import { GROUPS, TEAM_NAMES, TEAM_INDEX, R32, R16, QF, SF, STAGE } from "./data.mjs";
+
+export function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    let t = (a += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const BASE_GOALS = 1.32; // avg goals per team per match at equal ratings
+const SLOPE = 0.55; // rating gap → goal-rate multiplier exp(±SLOPE·Δ)
+
+function poisson(lambda, rng) {
+  const L = Math.exp(-lambda);
+  let k = 0;
+  let p = 1;
+  do {
+    k++;
+    p *= rng();
+  } while (p > L);
+  return k - 1;
+}
+
+function goalRates(ra, rb) {
+  const d = ra - rb;
+  const la = Math.min(4.5, Math.max(0.15, BASE_GOALS * Math.exp(SLOPE * d)));
+  const lb = Math.min(4.5, Math.max(0.15, BASE_GOALS * Math.exp(-SLOPE * d)));
+  return [la, lb];
+}
+
+// Knockout: 90 minutes by Poisson; a draw goes to the stronger-team-weighted
+// coin (extra time + pens compress but don't erase the skill gap).
+function koWinnerA(ra, rb, rng) {
+  const [la, lb] = goalRates(ra, rb);
+  const ga = poisson(la, rng);
+  const gb = poisson(lb, rng);
+  if (ga !== gb) return ga > gb;
+  return rng() < la / (la + lb);
+}
+
+const GROUP_KEYS = Object.keys(GROUPS); // ["A".."L"]
+const GROUP_TEAMS = GROUP_KEYS.map((g) => GROUPS[g].map((t) => TEAM_INDEX[t]));
+const PAIRS = [
+  [0, 1],
+  [2, 3],
+  [0, 2],
+  [1, 3],
+  [0, 3],
+  [1, 2],
+];
+
+// Third-place slots: bracket match index in R32 plus the FIFA-allowed source groups.
+const THIRD_SLOTS = R32.filter((m) => m.b[0] === "T").map((m) => ({
+  id: m.id,
+  allowed: new Set(m.b[1].split("")),
+}));
+
+// Assign the 8 qualified thirds (by group letter) to the 8 bracket slots,
+// respecting each slot's allowed groups. Most-constrained-slot-first backtracking;
+// FIFA's allocation table guarantees a solution for every real combination.
+function assignThirds(thirdGroups, rng) {
+  const slots = THIRD_SLOTS.map((s) => ({
+    id: s.id,
+    cands: thirdGroups.filter((g) => s.allowed.has(g)),
+  })).sort((x, y) => x.cands.length - y.cands.length);
+  const used = new Set();
+  const out = {};
+  function place(i) {
+    if (i === slots.length) return true;
+    const s = slots[i];
+    const start = Math.floor(rng() * s.cands.length);
+    for (let k = 0; k < s.cands.length; k++) {
+      const g = s.cands[(start + k) % s.cands.length];
+      if (used.has(g)) continue;
+      used.add(g);
+      out[s.id] = g;
+      if (place(i + 1)) return true;
+      used.delete(g);
+    }
+    return false;
+  }
+  if (!place(0)) {
+    // Theoretically unreachable for valid FIFA combinations; fall back to any order.
+    const left = thirdGroups.filter((g) => !used.has(g));
+    THIRD_SLOTS.forEach((s, i) => {
+      if (!(s.id in out)) out[s.id] = left.pop();
+    });
+  }
+  return out; // matchId → group letter
+}
+
+// Simulate one tournament. Writes each team's furthest stage (STAGE enum) into
+// `stages` (Uint8Array(48)) and returns it.
+export function simulateTournament(ratings, rng, stages) {
+  stages.fill(STAGE.GROUP);
+
+  // Group stage. Rank on points, goal difference, goals for, then lots.
+  const firsts = {};
+  const seconds = {};
+  const thirdRows = []; // { group, team, pts, gd, gf }
+  for (let g = 0; g < 12; g++) {
+    const teams = GROUP_TEAMS[g];
+    const pts = [0, 0, 0, 0];
+    const gd = [0, 0, 0, 0];
+    const gf = [0, 0, 0, 0];
+    for (const [x, y] of PAIRS) {
+      const [la, lb] = goalRates(ratings[teams[x]], ratings[teams[y]]);
+      const ga = poisson(la, rng);
+      const gb = poisson(lb, rng);
+      gd[x] += ga - gb;
+      gd[y] += gb - ga;
+      gf[x] += ga;
+      gf[y] += gb;
+      if (ga > gb) pts[x] += 3;
+      else if (gb > ga) pts[y] += 3;
+      else {
+        pts[x] += 1;
+        pts[y] += 1;
+      }
+    }
+    const order = [0, 1, 2, 3]
+      .map((i) => ({ i, key: pts[i] * 1e6 + gd[i] * 1e3 + gf[i] + rng() * 0.5 }))
+      .sort((a, b) => b.key - a.key)
+      .map((o) => o.i);
+    const letter = GROUP_KEYS[g];
+    firsts[letter] = teams[order[0]];
+    seconds[letter] = teams[order[1]];
+    const t = order[2];
+    thirdRows.push({ group: letter, team: teams[t], key: pts[t] * 1e6 + gd[t] * 1e3 + gf[t] + rng() * 0.5 });
+  }
+
+  // Best eight thirds into their bracket slots.
+  thirdRows.sort((a, b) => b.key - a.key);
+  const qualifiedThirds = thirdRows.slice(0, 8);
+  const thirdTeamByGroup = {};
+  for (const r of qualifiedThirds) thirdTeamByGroup[r.group] = r.team;
+  const slotAssign = assignThirds(qualifiedThirds.map((r) => r.group), rng);
+
+  // Round of 32.
+  const winners = {}; // matchId → team index
+  for (const m of R32) {
+    const pick = (spec) =>
+      spec[0] === "W" ? firsts[spec[1]] : spec[0] === "R" ? seconds[spec[1]] : thirdTeamByGroup[slotAssign[m.id]];
+    const a = pick(m.a);
+    const b = pick(m.b);
+    stages[a] = STAGE.R32;
+    stages[b] = STAGE.R32;
+    winners[m.id] = koWinnerA(ratings[a], ratings[b], rng) ? a : b;
+  }
+
+  // R16 → QF → SF, all the same shape: winners advance a stage.
+  for (const [round, stage] of [
+    [R16, STAGE.R16],
+    [QF, STAGE.QF],
+    [SF, STAGE.SF],
+  ]) {
+    for (const m of round) {
+      const a = winners[m.a];
+      const b = winners[m.b];
+      stages[a] = stage;
+      stages[b] = stage;
+      winners[m.id] = koWinnerA(ratings[a], ratings[b], rng) ? a : b;
+    }
+  }
+
+  // Final.
+  const fa = winners[101];
+  const fb = winners[102];
+  const champ = koWinnerA(ratings[fa], ratings[fb], rng) ? fa : fb;
+  stages[champ] = STAGE.CHAMPION;
+  stages[champ === fa ? fb : fa] = STAGE.RUNNER_UP;
+  return stages;
+}
+
+export { TEAM_NAMES, TEAM_INDEX };
