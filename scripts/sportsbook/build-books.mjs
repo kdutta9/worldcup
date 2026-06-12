@@ -95,6 +95,22 @@ const CONFIG = {
     },
     watch: { player: "Kunal", title: "KUNAL WATCH — KUNAL TOTAL POINTS" },
     faction: null,
+    grudges: {
+      title: "BAD BLOOD — GRUDGE MATCHES",
+      blurb:
+        "Some matchups are about money. These are not. Higher pool finish settles it; tie on points = stakes returned, beef continues.",
+      pairs: [
+        { a: "Shaya", b: "Jake", note: "THE FOREVER FEUD" },
+        { a: "Shaya", b: "Matt", note: "YES, SHAYA AGAIN" },
+      ],
+    },
+    // Joint event counted during the sim for Caleb's parlay board.
+    sweep: { player: "Shaya", over: ["Jake", "Matt"] },
+    caleb: {
+      title: "CALEB'S CORNER — DEGEN SPECIALS",
+      blurb:
+        "Caleb is not in the pool. That has never once stopped him. The house posts the slips he'd actually ask for, and reserves the right to demand cash up front.",
+    },
   },
 };
 
@@ -119,6 +135,14 @@ const acc = pools.map((pool) => {
     factionHist: new Float64Array(MAXPTS), // side A's combined total
     totals: new Float64Array(np), // scratch
   };
+});
+
+// Pre-resolved player indices for joint "sweep" events counted inside the loop.
+const sweepIdx = pools.map((pool) => {
+  const sw = CONFIG[pool.id]?.sweep;
+  if (!sw) return null;
+  const at = (nm) => pool.players.findIndex((pl) => pl.name === nm);
+  return { p: at(sw.player), over: sw.over.map(at) };
 });
 
 const rng = mulberry32(20260611);
@@ -165,6 +189,7 @@ for (let s = 0; s < SIMS; s++) {
       a.top[i] += Math.min(Math.max(places - above, 0), ties) / ties;
       a.last[i] += Math.min(Math.max(1 - below, 0), ties) / ties;
     }
+    if (sweepIdx[p] && sweepIdx[p].over.every((j) => totals[sweepIdx[p].p] > totals[j])) a.sweep = (a.sweep ?? 0) + 1;
     if (cfg?.faction) {
       let totA = 0;
       for (const name of cfg.faction.a.players) totA += totals[pool.players.findIndex((pl) => pl.name === name)];
@@ -332,6 +357,44 @@ for (let p = 0; p < pools.length; p++) {
     };
   }
 
+  const idxOf = (nm) => pool.players.findIndex((pl) => pl.name === nm);
+  const pairPrice = (i, j) => {
+    const tie = a.pairTie[Math.min(i, j) * np + Math.max(i, j)] / SIMS;
+    return a.pairWin[i * np + j] / SIMS + tie / 2;
+  };
+
+  // Grudge matches: lore pairs priced like any other H2H, dead heat = push.
+  let grudges = null;
+  if (cfg.grudges) {
+    grudges = {
+      title: cfg.grudges.title,
+      blurb: cfg.grudges.blurb,
+      pairs: cfg.grudges.pairs.map(({ a: an, b: bn, note }) => {
+        const pi = pairPrice(idxOf(an), idxOf(bn));
+        return { a: an, b: bn, note, priceA: price(pi, MARGIN.twoWay), priceB: price(1 - pi, MARGIN.twoWay) };
+      }),
+    };
+  }
+
+  // Caleb's Corner: the longshot slips a degenerate would actually ask for.
+  let caleb = null;
+  if (cfg.caleb) {
+    const matt = players[idxOf("Matt")];
+    const kunalHist = a.hist[idxOf("Kunal")];
+    const robHist = a.hist[idxOf("Rob")];
+    caleb = {
+      title: cfg.caleb.title,
+      blurb: cfg.caleb.blurb,
+      bets: [
+        { label: "Matt wins the whole pool (Panama · Uzbekistan · Curaçao · Haiti)", price: price(matt.pWin, MARGIN.outright) },
+        { label: "Matt cashes top 3", price: price(matt.pTop, MARGIN.place) },
+        { label: "Shaya sweeps the beef — finishes above Jake AND Matt", price: price((a.sweep ?? 0) / SIMS, MARGIN.twoWay) },
+        { label: "Kunal goes nuclear — Over 14.5 pts", price: price(pOver(kunalHist, 14.5), MARGIN.twoWay) },
+        { label: "Rob bricks it — Under 4.5 pts with England AND France", price: price(1 - pOver(robHist, 4.5), MARGIN.twoWay) },
+      ],
+    };
+  }
+
   // Rosters: every seat's teams with tournament probabilities and fair title odds.
   const rosters = [...players.keys()]
     .sort((x, y) => players[y].avg - players[x].avg)
@@ -379,6 +442,8 @@ for (let p = 0; p < pools.length; p++) {
     toCash,
     spoon,
     h2h,
+    grudges,
+    caleb,
     watch,
     faction,
     rosters,

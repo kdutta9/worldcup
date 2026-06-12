@@ -119,6 +119,33 @@ function Book({ book }) {
         </div>
       </Panel>
 
+      {book.grudges && (
+        <Panel title={book.grudges.title} blurb={book.grudges.blurb}>
+          <div className="bk-h2h-grid">
+            {book.grudges.pairs.map((x) => (
+              <div key={`${x.a}-${x.b}`} className="bk-h2h">
+                <div className="bk-h2h-side"><span>{x.a}</span><span className="bk-price">{x.priceA}</span></div>
+                <div className="bk-h2h-vs">— {x.note} —</div>
+                <div className="bk-h2h-side"><span>{x.b}</span><span className="bk-price">{x.priceB}</span></div>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
+      {book.caleb && (
+        <Panel title={book.caleb.title} blurb={book.caleb.blurb}>
+          <div className="bk-rows">
+            {book.caleb.bets.map((b) => (
+              <div key={b.label} className="bk-row">
+                <span className="bk-caleb-label">{b.label}</span>
+                <span className="bk-price">{b.price}</span>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
       <Watch w={book.watch} blurb={book.copy.watch} />
 
       <Panel title="THE ROSTERS" blurb="Every seat's teams, with each team's chance of getting out of its group and expected pool points.">

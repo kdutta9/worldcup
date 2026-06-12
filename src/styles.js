@@ -358,6 +358,7 @@ export const css = `
 .bk-hist-caption { text-align: center; color: rgba(237,232,218,0.45); font-size: 11px; margin-top: 10px; }
 .bk-roster { margin-top: 18px; }
 .bk-roster-head { font-family: 'Anton', sans-serif; font-size: 16px; letter-spacing: 0.04em; color: #E4C46A; margin: 0 0 8px; }
+.bk-caleb-label { font-size: 13.5px; color: rgba(237,232,218,0.85); line-height: 1.4; }
 .bk-fine-block { margin-top: 26px; }
 .bk-fine { color: rgba(237,232,218,0.45); font-size: 11px; line-height: 1.65; margin: 10px 0; }
 .bk-fine b { color: rgba(237,232,218,0.65); }
