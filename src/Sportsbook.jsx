@@ -18,10 +18,15 @@ const loadIndex = (id) =>
     .then((r) => (r.ok ? r.json() : { entries: ["open"] }))
     .catch(() => ({ entries: ["open"] }));
 
-const entryLabel = (key) =>
-  key === "open"
-    ? "OPEN"
-    : new Date(`${key}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase();
+// Snapshots are keyed by match date (the event-log key), but displayed as the
+// next-morning line: the sheet you read on the 13th has absorbed the 12th's
+// results. The fine print still cites the actual match/consensus dates.
+const entryLabel = (key) => {
+  if (key === "open") return "OPEN";
+  const d = new Date(`${key}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase();
+};
 
 export default function Sportsbook({ bookId }) {
   const [state, setState] = useState({ status: "loading", entries: null, books: null, index: null });
@@ -147,7 +152,7 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         )}
         <div className="bk-banner">
           LINES BUILT FROM {m.sources}
-          {m.date ? ` · AS OF ${entryLabel(m.date)}` : " · OPENING SHEET"}
+          {m.date ? ` · ${entryLabel(m.date)} MORNING LINE` : " · OPENING SHEET"}
         </div>
         {entries.length > 1 && <SnapNav entries={entries} cur={cur} onNav={onNav} />}
       </header>
@@ -230,7 +235,7 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         <p className="bk-fine">
           <b>HOUSE RULES.</b> All prices include the house's margin. Dead heats split stakes and payouts.
           {m.date
-            ? ` Lines reprice after every matchday — this is the ${entryLabel(m.date)} sheet. Settled markets come off the board.`
+            ? ` Lines reprice overnight after each matchday — these are the ${entryLabel(m.date)} morning lines, reflecting all results through ${m.date}. Settled markets come off the board.`
             : " All lines subject to movement; the book closed at kickoff of the opener, June 11."}
         </p>
         <p className="bk-fine">
