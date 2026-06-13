@@ -366,6 +366,43 @@ export const css = `
 .bk-foot-nav { text-align: center; font-size: 12px; margin-top: 10px; }
 .bk-link { color: #C9A24B; }
 
+/* Snapshot navigation (prev / date dropdown / next) */
+.bk-nav { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 16px; }
+.bk-nav-btn {
+  background: transparent; color: #C9A24B; border: 1px solid rgba(201,162,75,0.5);
+  border-radius: 6px; padding: 8px 14px; cursor: pointer;
+  font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.12em;
+}
+.bk-nav-btn:hover:not(:disabled) { background: rgba(201,162,75,0.12); }
+.bk-nav-btn:disabled { opacity: 0.35; cursor: default; }
+.bk-nav-select {
+  background: rgba(0,0,0,0.4); color: #E4C46A; border: 1px solid rgba(201,162,75,0.5);
+  border-radius: 6px; padding: 8px 12px; cursor: pointer;
+  font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em;
+}
+.bk-nav-btn:focus-visible, .bk-nav-select:focus-visible { outline: 2px solid #E4C46A; outline-offset: 2px; }
+
+/* Line movement vs the previous sheet */
+.bk-move { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; margin-top: 2px; white-space: nowrap; }
+.bk-move.up { color: #7FE3A8; }
+.bk-move.down { color: #E8806B; }
+.bk-line-right { display: inline-flex; align-items: center; gap: 9px; }
+.bk-tick { font-size: 9px; }
+.bk-tick.up { color: #7FE3A8; }
+.bk-tick.down { color: #E8806B; }
+
+/* Settled markets (clinched / eliminated) come off the board */
+.bk-price.bk-settled { font-family: 'Archivo', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; }
+.bk-settled.locked { color: #7FE3A8; border-color: rgba(127,227,168,0.35); background: rgba(127,227,168,0.08); }
+.bk-settled.dead { color: rgba(237,232,218,0.4); border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); }
+
+/* Line movement chart */
+.bk-chart { width: 100%; height: auto; margin-top: 12px; display: block; }
+.bk-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; }
+.bk-leg { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(237,232,218,0.75); }
+.bk-leg b { color: #E4C46A; font-weight: 700; }
+.bk-leg-swatch { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
+
 @media (max-width: 760px) {
   .bk-grid2 { grid-template-columns: 1fr; }
   .bk-h2h-grid { grid-template-columns: 1fr; }

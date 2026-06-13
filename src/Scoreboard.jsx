@@ -26,6 +26,9 @@ function useAsync(fn, deps) {
 
 function GroupList() {
   const { status, data } = useAsync(loadGroupsIndex, []);
+  useEffect(() => {
+    document.title = "Standings · World Cup Lotto '26";
+  }, []);
 
   return (
     <section className="panel">
@@ -52,10 +55,15 @@ function GroupStandings({ groupId }) {
     [groupId]
   );
 
+  const group = status === "ok" ? data[0] : null;
+  useEffect(() => {
+    if (group) document.title = `${group.name} Standings · World Cup Lotto '26`;
+  }, [group]);
+
   if (status === "loading") return <Panel title="STANDINGS"><p className="state-msg">Loading standings…</p></Panel>;
   if (status === "error") return <Panel title="STANDINGS"><p className="state-msg">Couldn't load this group.</p></Panel>;
 
-  const [group, results] = data;
+  const results = data[1];
   const stages = results.stages || {};
   const rows = computeStandings(group, stages);
 
@@ -93,7 +101,7 @@ function GroupStandings({ groupId }) {
         SF = 4, Runner-up = 5, Champion = 8. Last updated {results.updatedAt || "—"}.
       </p>
       <div className="btn-row" style={{ marginTop: 18 }}>
-        <a className="ghost-btn" href={`?book=${groupId}`}>Sportsbook: pre-tournament odds →</a>
+        <a className="ghost-btn" href={`?book=${groupId}`}>Sportsbook: latest lines →</a>
       </div>
     </Panel>
   );

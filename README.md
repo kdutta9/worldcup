@@ -22,11 +22,16 @@ src/
   scoring.js                # Stage→points, standings, data-loading seam
   styles.js                 # The single stylesheet
 public/data/
-  results.json              # Global team progress (furthest stage reached)
+  matches.json              # Replayable event log of real results (source of truth)
+  results.json              # Global team progress — derived from matches.json
   groups.json               # Index of groups for the scoreboard landing
   groups/<id>.json          # One draft's assignments per group
+  books/<id>.json           # Opening sportsbook lines (pre-tournament)
+  books/<id>/<date>.json    # One repriced book snapshot per matchday
+  books/<id>/index.json     # Snapshot order: "open", then dates
 scripts/
   add-group.mjs             # Snapshot link → group JSON + groups.json entry
+  add-results.mjs           # Match results → matches.json + results.json
 ```
 
 The draw is computed client-side from the seed on every load. Scoreboard data is
@@ -70,8 +75,20 @@ group, plus one `groups/<id>.json` per group holding that draft's player→team
 assignments. Standings are derived client-side. The two JSON shapes map 1:1 onto
 two Postgres tables for a future migration.
 
-**Updating scores.** Edit `public/data/results.json` — add/bump a team's stage as it
-advances — and run `npm run deploy`. Teams omitted from `stages` default to 0.
+**Updating scores.** Enter results into the event log; `results.json` is derived
+from it (don't edit it by hand):
+
+```bash
+npm run add-results -- "Mexico 2-0 South Africa" "South Korea 2-1 Czechia"
+npm run add-results -- "Croatia 1-1 Denmark p:Croatia"   # knockout pens
+```
+
+No date flags: group results resolve against the fixture schedule in
+`scripts/sportsbook/data.mjs`; knockout results resolve against the bracket as
+decided by results already in the log. Re-entering a matchup replaces its entry,
+so a typo is fixed by re-running. The script warns when a past matchday is
+missing fixtures ("June 13 has 4 matches, 3 entered"). Teams omitted from
+`stages` default to 0.
 
 **Adding a group.** Finish a draft (with a group name set), hit **Save to scoreboard**
 on the board — it copies a ready-to-run command — and paste it into your terminal:
@@ -98,19 +115,53 @@ a faction battle. Not real betting — a display format the group chat understan
 
 The numbers are real, though. `scripts/sportsbook/` holds the pipeline:
 
-- `data.mjs` — the real 2026 groups, the FIFA R32→final bracket (incl. best-eight
+- `data.mjs` — the real 2026 groups, the official fixture schedule (all 72 group
+  matches + knockout match dates), the FIFA R32→final bracket (incl. best-eight
   third-place slots), and the devigged pre-tournament championship consensus
   (DraftKings · FanDuel · Kalshi · ESPN, June 2026).
 - `engine.mjs` — Poisson-goal tournament simulator; one rating per team drives
-  group results and knockout win probability.
+  group results and knockout win probability. Accepts a condition (played
+  matches as fixed results, decided knockouts as fixed winners) and randomizes
+  only the remainder.
+- `state.mjs` — derives tournament state from the `matches.json` event log:
+  group tables, qualification, bracket fills, eliminations, furthest stage.
 - `calibrate.mjs` — fits ratings until simulated title probabilities match the
   consensus; writes `ratings.json` (committed, so builds are reproducible).
+- `fetch-consensus.mjs` (`npm run fetch-consensus`) — snapshots Kalshi's World
+  Cup winner market (live bid/ask today, daily candle closes for past dates)
+  into `scripts/sportsbook/consensus/<date>.json`, devigged, eliminated teams
+  forced to 0. A sibling `<date>.overrides.json` patches bad quotes by hand.
 - `build-books.mjs` (`npm run build-books`) — 400k simulated tournaments, scores
   every pool draw against them, prices the markets with a house margin, writes
   `public/data/books/<id>.json`.
 
-Lines are frozen pre-tournament by design (the book "closed at kickoff"). To
-re-price mid-tournament you'd condition the sim on results so far — not built.
+### Live line movement
+
+Books reprice after every matchday. `build-books.mjs --date D` conditions the
+simulation on all matches dated ≤ D, recalibrates alive teams so conditional
+title probabilities match the freshest consensus ≤ D (the snapshot records which
+consensus date was actually used), and writes `public/data/books/<id>/<D>.json`
+plus an `index.json` listing entries in order ("open", then dates). `--backfill`
+builds every match date in the log lacking a snapshot (`--force` rebuilds all —
+use after correcting a score); `--check-open` verifies a zero-match build still
+reproduces the committed opening books bit-for-bit.
+
+Every snapshot is a pure derivation of the event log + a consensus file + a
+fixed per-date seed, so entering results late, skipping nights, or fixing a typo
+never corrupts anything: correct the log and rebuild.
+
+The `?book=<id>` view defaults to the newest sheet, with prev/next buttons and a
+date dropdown to walk the history, ▲▼ movement against the previous sheet, a
+LINE MOVEMENT chart of every seat's outright chances across sheets, and settled
+markets (clinched/eliminated) shown off the board.
+
+**End-of-day workflow:**
+
+```bash
+npm run add-results -- "Team A 2-0 Team B" ...   # enter the night's scores
+npm run refresh-book                              # fetch consensus + backfill snapshots
+npm run deploy
+```
 
 ## Local setup
 

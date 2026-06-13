@@ -52,7 +52,7 @@ function koWinnerA(ra, rb, rng) {
 
 const GROUP_KEYS = Object.keys(GROUPS); // ["A".."L"]
 const GROUP_TEAMS = GROUP_KEYS.map((g) => GROUPS[g].map((t) => TEAM_INDEX[t]));
-const PAIRS = [
+export const PAIRS = [
   [0, 1],
   [2, 3],
   [0, 2],
@@ -103,7 +103,14 @@ function assignThirds(thirdGroups, rng) {
 
 // Simulate one tournament. Writes each team's furthest stage (STAGE enum) into
 // `stages` (Uint8Array(48)) and returns it.
-export function simulateTournament(ratings, rng, stages) {
+//
+// `cond` (optional, from state.mjs buildCondition) replays reality: played group
+// matches arrive pre-accumulated with their pairs removed, completed groups carry
+// a fixed final order, the real third-place allocation pins bracket slots, and
+// decided KO matches have fixed participants and winners. Only the remainder is
+// random. With cond=null the rng consumption is identical to the original
+// unconditioned engine, so pre-tournament builds reproduce bit-for-bit.
+export function simulateTournament(ratings, rng, stages, cond = null) {
   stages.fill(STAGE.GROUP);
 
   // Group stage. Rank on points, goal difference, goals for, then lots.
@@ -112,10 +119,11 @@ export function simulateTournament(ratings, rng, stages) {
   const thirdRows = []; // { group, team, pts, gd, gf }
   for (let g = 0; g < 12; g++) {
     const teams = GROUP_TEAMS[g];
-    const pts = [0, 0, 0, 0];
-    const gd = [0, 0, 0, 0];
-    const gf = [0, 0, 0, 0];
-    for (const [x, y] of PAIRS) {
+    const c = cond?.groups[g];
+    const pts = c ? c.pts.slice() : [0, 0, 0, 0];
+    const gd = c ? c.gd.slice() : [0, 0, 0, 0];
+    const gf = c ? c.gf.slice() : [0, 0, 0, 0];
+    for (const [x, y] of c ? c.remaining : PAIRS) {
       const [la, lb] = goalRates(ratings[teams[x]], ratings[teams[y]]);
       const ga = poisson(la, rng);
       const gb = poisson(lb, rng);
@@ -130,10 +138,12 @@ export function simulateTournament(ratings, rng, stages) {
         pts[y] += 1;
       }
     }
-    const order = [0, 1, 2, 3]
-      .map((i) => ({ i, key: pts[i] * 1e6 + gd[i] * 1e3 + gf[i] + rng() * 0.5 }))
-      .sort((a, b) => b.key - a.key)
-      .map((o) => o.i);
+    const order =
+      c?.order ??
+      [0, 1, 2, 3]
+        .map((i) => ({ i, key: pts[i] * 1e6 + gd[i] * 1e3 + gf[i] + rng() * 0.5 }))
+        .sort((a, b) => b.key - a.key)
+        .map((o) => o.i);
     const letter = GROUP_KEYS[g];
     firsts[letter] = teams[order[0]];
     seconds[letter] = teams[order[1]];
@@ -141,23 +151,32 @@ export function simulateTournament(ratings, rng, stages) {
     thirdRows.push({ group: letter, team: teams[t], key: pts[t] * 1e6 + gd[t] * 1e3 + gf[t] + rng() * 0.5 });
   }
 
-  // Best eight thirds into their bracket slots.
-  thirdRows.sort((a, b) => b.key - a.key);
-  const qualifiedThirds = thirdRows.slice(0, 8);
-  const thirdTeamByGroup = {};
-  for (const r of qualifiedThirds) thirdTeamByGroup[r.group] = r.team;
-  const slotAssign = assignThirds(qualifiedThirds.map((r) => r.group), rng);
+  // Best eight thirds into their bracket slots (fixed once all groups are real).
+  let thirdTeamByGroup;
+  let slotAssign;
+  if (cond?.thirds) {
+    thirdTeamByGroup = {};
+    for (const [letter, t] of Object.entries(cond.thirds.teamByGroup)) thirdTeamByGroup[letter] = t;
+    slotAssign = cond.thirds.slotAssign;
+  } else {
+    thirdRows.sort((a, b) => b.key - a.key);
+    const qualifiedThirds = thirdRows.slice(0, 8);
+    thirdTeamByGroup = {};
+    for (const r of qualifiedThirds) thirdTeamByGroup[r.group] = r.team;
+    slotAssign = assignThirds(qualifiedThirds.map((r) => r.group), rng);
+  }
 
   // Round of 32.
   const winners = {}; // matchId → team index
   for (const m of R32) {
+    const k = cond?.ko[m.id];
     const pick = (spec) =>
       spec[0] === "W" ? firsts[spec[1]] : spec[0] === "R" ? seconds[spec[1]] : thirdTeamByGroup[slotAssign[m.id]];
-    const a = pick(m.a);
-    const b = pick(m.b);
+    const a = k ? k.a : pick(m.a);
+    const b = k ? k.b : pick(m.b);
     stages[a] = STAGE.R32;
     stages[b] = STAGE.R32;
-    winners[m.id] = koWinnerA(ratings[a], ratings[b], rng) ? a : b;
+    winners[m.id] = k ? k.winner : koWinnerA(ratings[a], ratings[b], rng) ? a : b;
   }
 
   // R16 → QF → SF, all the same shape: winners advance a stage.
@@ -167,18 +186,20 @@ export function simulateTournament(ratings, rng, stages) {
     [SF, STAGE.SF],
   ]) {
     for (const m of round) {
-      const a = winners[m.a];
-      const b = winners[m.b];
+      const k = cond?.ko[m.id];
+      const a = k ? k.a : winners[m.a];
+      const b = k ? k.b : winners[m.b];
       stages[a] = stage;
       stages[b] = stage;
-      winners[m.id] = koWinnerA(ratings[a], ratings[b], rng) ? a : b;
+      winners[m.id] = k ? k.winner : koWinnerA(ratings[a], ratings[b], rng) ? a : b;
     }
   }
 
   // Final.
-  const fa = winners[101];
-  const fb = winners[102];
-  const champ = koWinnerA(ratings[fa], ratings[fb], rng) ? fa : fb;
+  const kf = cond?.ko[104];
+  const fa = kf ? kf.a : winners[101];
+  const fb = kf ? kf.b : winners[102];
+  const champ = kf ? kf.winner : koWinnerA(ratings[fa], ratings[fb], rng) ? fa : fb;
   stages[champ] = STAGE.CHAMPION;
   stages[champ === fa ? fb : fa] = STAGE.RUNNER_UP;
   return stages;
