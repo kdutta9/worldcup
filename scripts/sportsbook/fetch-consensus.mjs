@@ -25,7 +25,24 @@ const ROOT = join(HERE, "..", "..");
 const OUT_DIR = join(HERE, "consensus");
 const TODAY = new Date().toISOString().slice(0, 10);
 
-const dates = process.argv.slice(2).length ? process.argv.slice(2) : [TODAY];
+// With explicit date args, fetch exactly those. With none, capture what the
+// snapshots actually need: closing prices for every played matchday, plus
+// today. A date is (re)fetched if its file is missing, is today (refresh live
+// prices), or was only an intraday "live" capture now that the day is over and
+// closing prices exist — so running this the morning after still gets the right
+// closing line, not a stale fallback.
+function defaultDates() {
+  const matchDates = [...new Set(loadMatches(join(ROOT, "public/data/matches.json")).map((m) => m.date))];
+  const needsFetch = (d) => {
+    const f = join(OUT_DIR, `${d}.json`);
+    if (!existsSync(f)) return true;
+    if (d >= TODAY) return true;
+    return JSON.parse(readFileSync(f, "utf8")).mode === "live";
+  };
+  return [...new Set([...matchDates, TODAY])].filter((d) => d <= TODAY && needsFetch(d)).sort();
+}
+
+const dates = process.argv.slice(2).length ? process.argv.slice(2) : defaultDates();
 for (const d of dates)
   if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || d > TODAY) {
     console.error(`Bad date "${d}" — want YYYY-MM-DD, not in the future.`);
