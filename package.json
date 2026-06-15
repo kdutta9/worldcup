@@ -13,7 +13,7 @@
     "fetch-consensus": "node scripts/sportsbook/fetch-consensus.mjs",
     "refresh-book": "node scripts/sportsbook/fetch-consensus.mjs && node scripts/sportsbook/build-books.mjs --backfill",
     "publish": "node scripts/publish.mjs",
-    "deploy": "vite build && rsync -a --delete dist/ ../kdutta9.github.io/worldcup/ && cd ../kdutta9.github.io && git add worldcup && git commit -m 'Deploy: worldcup lotto 26' && git push"
+    "deploy": "vite build && rsync -a --delete dist/ ../kdutta9.github.io/worldcup/ && cd ../kdutta9.github.io && git add worldcup && (git diff --cached --quiet || git commit -m 'Deploy: worldcup lotto 26') && git push"
   },
   "dependencies": {
     "react": "^18.3.1",
