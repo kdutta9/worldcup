@@ -4,14 +4,15 @@
 //
 // 1. Commits and pushes the source repo — the event log and every derived
 //    snapshot/consensus file are the source of truth and must be versioned, not
-//    just sitting in the working tree. The commit message is derived from the
-//    latest match date in the log ("Results through June 14").
+//    just sitting in the working tree. The commit message lists the actual
+//    results added since the last commit (diffed against HEAD's matches.json),
+//    e.g. "June 14 results" + "June 14: Germany 7-1 Curaçao, …".
 // 2. Runs `npm run deploy`, which builds and pushes the compiled site to the
 //    host repo (the live kdutta.com/worldcup).
 //
 // deploy alone only touches the host repo; this is what keeps the two in sync.
 
-import { execSync } from "node:child_process";
+import { execSync, execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -20,17 +21,46 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const run = (cmd) => execSync(cmd, { cwd: ROOT, stdio: "inherit" });
 const capture = (cmd) => execSync(cmd, { cwd: ROOT, encoding: "utf8" }).trim();
 
+const dateLabel = (d) => new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric" });
+const fmtMatch = (m) => `${m.a} ${m.score[0]}-${m.score[1]} ${m.b}${m.pens ? ` (pens: ${m.pens})` : ""}`;
+
+// Results added or corrected vs the committed log, so the message reflects the
+// night's actual entries rather than a bare date.
+function commitMessage() {
+  const cur = JSON.parse(readFileSync(join(ROOT, "public/data/matches.json"), "utf8")).matches ?? [];
+  let prev = [];
+  try {
+    prev = JSON.parse(capture("git show HEAD:public/data/matches.json")).matches ?? [];
+  } catch {
+    prev = [];
+  }
+  const prevById = new Map(prev.map((m) => [m.id, m]));
+  const changed = cur
+    .filter((m) => {
+      const p = prevById.get(m.id);
+      return !p || p.score[0] !== m.score[0] || p.score[1] !== m.score[1] || p.pens !== m.pens;
+    })
+    .sort((a, b) => a.id - b.id);
+
+  if (changed.length === 0) return { subject: "Update worldcup data", body: "" };
+  const dates = [...new Set(changed.map((m) => m.date))].sort();
+  const subject = dates.length === 1 ? `${dateLabel(dates[0])} results` : `Results through ${dateLabel(dates.at(-1))}`;
+  const body = dates
+    .map((d) => `${dateLabel(d)}: ${changed.filter((m) => m.date === d).map(fmtMatch).join(", ")}.`)
+    .join("\n");
+  return { subject, body };
+}
+
 // 1. Commit + push the source repo, if anything changed.
 if (capture("git status --porcelain")) {
-  const matches = JSON.parse(readFileSync(join(ROOT, "public/data/matches.json"), "utf8")).matches ?? [];
-  const latest = matches.reduce((d, m) => (m.date > d ? m.date : d), "");
-  const label = latest
-    ? new Date(`${latest}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric" })
-    : null;
-  const msg = label ? `Results through ${label}` : "Update worldcup data";
-  console.log(`\n→ Committing source data: "${msg}"`);
+  const { subject, body } = commitMessage();
+  console.log(`\n→ Committing source data: "${subject}"`);
+  if (body) console.log(body);
   run("git add -A");
-  run(`git commit -m ${JSON.stringify(msg)}`);
+  execFileSync("git", body ? ["commit", "-m", subject, "-m", body] : ["commit", "-m", subject], {
+    cwd: ROOT,
+    stdio: "inherit",
+  });
   run("git push");
 } else {
   console.log("→ Source repo clean — nothing to commit.");

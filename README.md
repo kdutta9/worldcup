@@ -167,9 +167,10 @@ npm run publish                                   # commit the data, then build 
 never touches the source repo. The data files it builds from (the `matches.json`
 event log, the derived snapshots, the consensus inputs) are the source of truth
 and must be versioned. `npm run publish` closes that gap: it commits + pushes
-the source repo (message derived from the latest match date, e.g. "Results
-through June 14"), then runs `deploy`. Run `deploy` on its own only when you've
-already committed the source by hand.
+the source repo — with a message listing the results added since the last commit
+(e.g. "June 14 results" / "June 14: Germany 7-1 Curaçao, …") — then runs
+`deploy`. Run `deploy` on its own only when you've already committed the source
+by hand.
 
 ## Local setup
 
