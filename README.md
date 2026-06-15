@@ -160,8 +160,16 @@ markets (clinched/eliminated) shown off the board.
 ```bash
 npm run add-results -- "Team A 2-0 Team B" ...   # enter the night's scores
 npm run refresh-book                              # fetch consensus + backfill snapshots
-npm run deploy
+npm run publish                                   # commit the data, then build + deploy live
 ```
+
+`npm run deploy` only commits/pushes the compiled site to the host repo — it
+never touches the source repo. The data files it builds from (the `matches.json`
+event log, the derived snapshots, the consensus inputs) are the source of truth
+and must be versioned. `npm run publish` closes that gap: it commits + pushes
+the source repo (message derived from the latest match date, e.g. "Results
+through June 14"), then runs `deploy`. Run `deploy` on its own only when you've
+already committed the source by hand.
 
 ## Local setup
 
