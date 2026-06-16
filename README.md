@@ -60,9 +60,11 @@ Source lives in `github.com/kdutta9/worldcup` (this repo). Built output is deplo
 ## Features
 
 ### Draft snapshot URL
+
 The results board carries a **Copy share link** button. It encodes `{seed, playerCount, groupName, names}` as base64url into `?d=` — the board is a pure function of those, so recipients see the identical deterministic draw, no screenshot or backend needed. The snapshot board is read-only, with options to replay the reveal animation or start a fresh draw.
 
 ### Live scoreboard
+
 Per-group standings tracking lotto points as the tournament progresses.
 
 **Scoring.** A team earns points for the furthest round it reaches: Round of 32 = 1,
@@ -116,24 +118,24 @@ a faction battle. Not real betting — a display format the group chat understan
 The numbers are real, though. `scripts/sportsbook/` holds the pipeline:
 
 - `data.mjs` — the real 2026 groups, the official fixture schedule (all 72 group
-  matches + knockout match dates), the FIFA R32→final bracket (incl. best-eight
-  third-place slots), and the devigged pre-tournament championship consensus
-  (DraftKings · FanDuel · Kalshi · ESPN, June 2026).
+matches + knockout match dates), the FIFA R32→final bracket (incl. best-eight
+third-place slots), and the devigged pre-tournament championship consensus
+(DraftKings · FanDuel · Kalshi · ESPN, June 2026).
 - `engine.mjs` — Poisson-goal tournament simulator; one rating per team drives
-  group results and knockout win probability. Accepts a condition (played
-  matches as fixed results, decided knockouts as fixed winners) and randomizes
-  only the remainder.
+group results and knockout win probability. Accepts a condition (played
+matches as fixed results, decided knockouts as fixed winners) and randomizes
+only the remainder.
 - `state.mjs` — derives tournament state from the `matches.json` event log:
-  group tables, qualification, bracket fills, eliminations, furthest stage.
+group tables, qualification, bracket fills, eliminations, furthest stage.
 - `calibrate.mjs` — fits ratings until simulated title probabilities match the
-  consensus; writes `ratings.json` (committed, so builds are reproducible).
+consensus; writes `ratings.json` (committed, so builds are reproducible).
 - `fetch-consensus.mjs` (`npm run fetch-consensus`) — snapshots Kalshi's World
-  Cup winner market (live bid/ask today, daily candle closes for past dates)
-  into `scripts/sportsbook/consensus/<date>.json`, devigged, eliminated teams
-  forced to 0. A sibling `<date>.overrides.json` patches bad quotes by hand.
+Cup winner market (live bid/ask today, daily candle closes for past dates)
+into `scripts/sportsbook/consensus/<date>.json`, devigged, eliminated teams
+forced to 0. A sibling `<date>.overrides.json` patches bad quotes by hand.
 - `build-books.mjs` (`npm run build-books`) — 400k simulated tournaments, scores
-  every pool draw against them, prices the markets with a house margin, writes
-  `public/data/books/<id>.json`.
+every pool draw against them, prices the markets with a house margin, writes
+`public/data/books/<id>.json`.
 
 ### Live line movement
 
@@ -158,7 +160,7 @@ markets (clinched/eliminated) shown off the board.
 **End-of-day workflow:**
 
 ```bash
-npm run add-results -- "Team A 2-0 Team B" ...   # enter the night's scores
+npm run add-results -- "Team A 2-0 Team B" "Team C 1-1 Team D"...   # enter the night's scores
 npm run refresh-book                              # fetch consensus + backfill snapshots
 npm run publish                                   # commit the data, then build + deploy live
 ```
@@ -179,7 +181,7 @@ npm install
 npm run dev            # dev server with hot reload
 ```
 
-Open http://localhost:5173/worldcup/. Try the views at `?scores`, `?scores=boofy`,
+Open [http://localhost:5173/worldcup/](http://localhost:5173/worldcup/). Try the views at `?scores`, `?scores=boofy`,
 and a `?d=…` share link.
 
 To build the production bundle and preview the exact static output that gets
