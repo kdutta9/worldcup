@@ -110,6 +110,11 @@ const CONFIG = {
       a: { name: "OLD DKE", players: ["HG", "Prozan", "Arnst", "Oanta"] },
       b: { name: "NEW DKE", players: ["Burnes", "J Call", "Kunal", "Chris"] },
     },
+    morningLine: {
+      title: "THE DKE BOOK — R16 SPECIALS",
+      blurb:
+        "The commish reopens the board: every Round-of-16 tie is two seats with a grudge. Upset prices are each underdog's real shot at the quarters. Opening lines are off the board.",
+    },
   },
   boofy: {
     bookName: "BOOFY SPORTSBOOK",
@@ -140,6 +145,11 @@ const CONFIG = {
       title: "CALEB'S CORNER — DEGEN SPECIALS",
       blurb:
         "Caleb is not in the pool. That has never once stopped him. The house posts the slips he'd actually ask for, and reserves the right to demand cash up front.",
+    },
+    morningLine: {
+      title: "THE MORNING LINE — R16 SPECIALS",
+      blurb:
+        "Opening lines are stale — half the field is dead. The live board: every Round-of-16 tie is two Boofy seats head to head, priced by each underdog's real chance of pulling the upset.",
     },
   },
 };
@@ -529,6 +539,56 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     };
   }
 
+  // Morning-line specials (dated snapshots only): the fresh R16 owner-clash
+  // board — each Round-of-16 tie is two pool seats, priced by the underdog's real
+  // shot at the quarters (a team's reach-QF probability IS its R16 win prob). Only
+  // emitted once the R16 bracket populates, so it never shows on pre-knockout sheets.
+  let morningLine = null;
+  if (snapshot && cfg.morningLine) {
+    const kt = snapshot.state.koTeams;
+    const decided = snapshot.state.ko ?? {};
+    const qfPctOf = (name) => {
+      const sc = stageCounts[TEAM_INDEX[name]];
+      let c = 0;
+      for (let k = 3; k < 7; k++) c += sc[k];
+      return c / sims;
+    };
+    const ownerOf = (name) => pool.players.find((pl) => pl.teams.includes(name))?.name;
+    const bets = [];
+    for (let id = 89; id <= 96; id++) {
+      const pair = kt[id];
+      if (!pair || pair[0] == null || pair[1] == null || decided[id]) continue;
+      const [x, y] = pair;
+      const ox = ownerOf(x);
+      const oy = ownerOf(y);
+      if (ox === oy) {
+        bets.push({ label: `R16 · ${ox} vs himself — ${x} or ${y} reaches the QF (the other's done)`, price: null });
+        continue;
+      }
+      const px = qfPctOf(x);
+      const py = qfPctOf(y);
+      const dog = px <= py ? { t: x, o: ox, p: px } : { t: y, o: oy, p: py };
+      const fav = px <= py ? { t: y, o: oy } : { t: x, o: ox };
+      bets.push({
+        label: `R16 · ${dog.t} (${dog.o}) to knock out ${fav.t} (${fav.o})`,
+        price: price(dog.p, MARGIN.twoWay),
+      });
+    }
+    if (bets.length) {
+      if (pool.id === "boofy") {
+        const pRob = players[idxOf("Rob")].pWin;
+        bets.push({ label: "THE FIELD — any seat other than Rob takes down the pool", price: price(1 - pRob, MARGIN.twoWay) });
+      } else if (pool.id === "sons-of-steve-kerr") {
+        const pArnst = players[idxOf("Arnst")].pWin;
+        bets.push({ label: "THE FIELD — any seat other than Arnst takes down the pool", price: price(1 - pArnst, MARGIN.twoWay) });
+        let close = 0;
+        for (let v = 31; v <= 34; v++) close += a.factionHist[v];
+        bets.push({ label: "DKE CIVIL WAR — decided by 3 points or fewer", price: price(close / sims, MARGIN.twoWay) });
+      }
+      morningLine = { title: cfg.morningLine.title, blurb: cfg.morningLine.blurb, bets };
+    }
+  }
+
   // Rosters: every seat's teams with tournament probabilities and fair title odds.
   const titleOddsOf =
     snapshot?.titleOddsOf ??
@@ -589,6 +649,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
           players: np,
           teamsPerPlayer: pool.teamsPerPlayer,
         },
+    ...(morningLine ? { morningLine } : {}),
     outright,
     toCash,
     spoon,

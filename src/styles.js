@@ -293,6 +293,16 @@ export const css = `
   border-bottom: 1px solid rgba(201,162,75,0.25); padding-bottom: 10px;
 }
 .bk-blurb { color: rgba(237,232,218,0.55); font-size: 12.5px; line-height: 1.55; margin: 10px 0 6px; }
+.bk-morning { border-color: rgba(201,162,75,0.55); }
+.bk-morning-sum {
+  list-style: none; cursor: pointer; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+}
+.bk-morning-sum::-webkit-details-marker { display: none; }
+.bk-morning-title { margin: 0; border-bottom: none; padding-bottom: 0; flex: 1; }
+.bk-morning-caret { color: #C9A24B; font-size: 15px; transition: transform 0.2s; flex-shrink: 0; }
+.bk-morning[open] .bk-morning-caret { transform: rotate(180deg); }
+.bk-morning[open] .bk-morning-title { border-bottom: 1px solid rgba(201,162,75,0.25); padding-bottom: 10px; }
 .bk-rows { display: flex; flex-direction: column; }
 .bk-row {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;

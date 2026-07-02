@@ -157,6 +157,8 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         {entries.length > 1 && <SnapNav entries={entries} cur={cur} onNav={onNav} />}
       </header>
 
+      {book.morningLine && <MorningLine ml={book.morningLine} prev={prev?.morningLine} />}
+
       {book.faction && <Faction f={book.faction} prev={prev?.faction} />}
 
       <Panel title="OUTRIGHT — TO WIN THE POOL" blurb={book.copy.outright}>
@@ -249,6 +251,32 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         </p>
       </footer>
     </>
+  );
+}
+
+function MorningLine({ ml, prev }) {
+  return (
+    <details className="bk-panel bk-morning" open>
+      <summary className="bk-morning-sum">
+        <span className="bk-panel-title bk-morning-title">{ml.title}</span>
+        <span className="bk-morning-caret" aria-hidden="true">▾</span>
+      </summary>
+      {ml.blurb && <p className="bk-blurb">{ml.blurb}</p>}
+      <div className="bk-rows">
+        {ml.bets.map((b) => {
+          const was = prev?.bets?.find((o) => o.label === b.label)?.price;
+          return (
+            <div key={b.label} className="bk-row">
+              <span className="bk-caleb-label">{b.label}</span>
+              <span className="bk-line-right">
+                <PriceMove now={b.price} was={was} />
+                <span className="bk-price">{b.price ?? "—"}</span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </details>
   );
 }
 
