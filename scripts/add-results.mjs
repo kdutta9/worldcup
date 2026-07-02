@@ -12,7 +12,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { GROUP_OF, KO_DATES } from "./sportsbook/data.mjs";
+import { GROUP_OF, KO_DATES, R32 } from "./sportsbook/data.mjs";
 import {
   deriveState,
   loadMatches,
@@ -74,12 +74,31 @@ for (const raw of args) {
     // Knockout: find the bracket slot whose teams — as decided by the results
     // entered so far — are exactly this pair.
     const state = deriveState(matches);
-    const id = Object.keys(state.koTeams)
+    let id = Object.keys(state.koTeams)
       .map(Number)
       .find((id) => {
         const [x, y] = state.koTeams[id];
         return (x === a && y === b) || (x === b && y === a);
       });
+    // The pre-tournament third-place allocation is a constraint-solver guess and
+    // can differ from FIFA's official one. A real R32 result is ground truth: if
+    // the pair didn't match the guess, resolve it against the fixed (group
+    // winner/runner-up) side plus the slot's FIFA-allowed third groups, and let
+    // deriveState's pinning correct the bracket on the next pass.
+    if (!id && state.thirds) {
+      for (const slot of R32) {
+        if (slot.b[0] !== "T" || slot.id in state.ko) continue;
+        const fixed =
+          slot.a[0] === "W" ? state.order[slot.a[1]]?.[0]?.team : state.order[slot.a[1]]?.[1]?.team;
+        const other = fixed === a ? b : fixed === b ? a : null;
+        if (!other) continue;
+        const og = GROUP_OF[other];
+        if (state.thirds.qualifiedGroups.includes(og) && slot.b[1].includes(og)) {
+          id = slot.id;
+          break;
+        }
+      }
+    }
     if (!id)
       fail(
         `No scheduled match between ${a} and ${b}. They're in different groups, and no knockout slot ` +
