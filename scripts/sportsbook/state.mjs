@@ -294,6 +294,7 @@ const ALIASES = {
   "dr congo": "DR Congo",
   "congo": "DR Congo",
   "bosnia and herzegovina": "Bosnia & Herzegovina",
+  "bosnia-herzegovina": "Bosnia & Herzegovina",
   bosnia: "Bosnia & Herzegovina",
   "czech republic": "Czechia",
   "korea republic": "South Korea",

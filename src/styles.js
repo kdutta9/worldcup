@@ -359,6 +359,15 @@ export const css = `
 .bk-roster { margin-top: 18px; }
 .bk-roster-head { font-family: 'Anton', sans-serif; font-size: 16px; letter-spacing: 0.04em; color: #E4C46A; margin: 0 0 8px; }
 .bk-caleb-label { font-size: 13.5px; color: rgba(237,232,218,0.85); line-height: 1.4; }
+
+/* The house organ (?post=) — editorial prose on the book chrome */
+.post-wrap { max-width: 760px; }
+.post-deck { color: rgba(237,232,218,0.7); font-size: 14.5px; line-height: 1.65; margin: 18px auto 0; max-width: 620px; }
+.post-p { color: rgba(237,232,218,0.8); font-size: 14px; line-height: 1.7; margin: 12px 0 0; }
+.post-note { color: rgba(237,232,218,0.55); font-size: 12px; }
+.post-vs { color: rgba(237,232,218,0.45); font-size: 12px; letter-spacing: 0.1em; }
+.post-fixture-note { color: rgba(201,162,75,0.85); }
+
 .bk-fine-block { margin-top: 26px; }
 .bk-fine { color: rgba(237,232,218,0.45); font-size: 11px; line-height: 1.65; margin: 10px 0; }
 .bk-fine b { color: rgba(237,232,218,0.65); }

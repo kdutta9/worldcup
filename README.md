@@ -16,6 +16,9 @@ src/
   App.jsx                   # Query-param router (draft / snapshot / scoreboard)
   WorldCupLottoDraft.jsx    # Setup, draw, results board, snapshot board
   Scoreboard.jsx            # Per-group standings + group list
+  Sportsbook.jsx            # ?book=<id> — renders the precomputed book JSON
+  Post.jsx                  # ?post=<id> — the house organ (frame + archive)
+  posts.jsx                 # Hand-written editorial content, one entry per post
   Masthead.jsx              # Shared header + nav
   draw.js                   # Teams + seeded Fisher–Yates shuffle
   snapshot.js               # Encode/decode the shareable draft URL
@@ -46,6 +49,8 @@ No router dependency; views switch on query params (refresh-safe on static hosti
 - `/worldcup/?d=<payload>` — a shared snapshot board
 - `/worldcup/?scores` — scoreboard landing (lists groups)
 - `/worldcup/?scores=<id>` — that group's standings
+- `/worldcup/?book=<id>` — that group's sportsbook sheet (`?book` — list of books)
+- `/worldcup/?post=<id>` — a house-organ post (`?post` — the archive)
 
 ## Deployment architecture
 
@@ -129,10 +134,17 @@ only the remainder.
 group tables, qualification, bracket fills, eliminations, furthest stage.
 - `calibrate.mjs` — fits ratings until simulated title probabilities match the
 consensus; writes `ratings.json` (committed, so builds are reproducible).
-- `fetch-consensus.mjs` (`npm run fetch-consensus`) — snapshots Kalshi's World
-Cup winner market (live bid/ask today, daily candle closes for past dates)
-into `scripts/sportsbook/consensus/<date>.json`, devigged, eliminated teams
-forced to 0. A sibling `<date>.overrides.json` patches bad quotes by hand.
+- `fetch-consensus.mjs` (`npm run fetch-consensus`) — snapshots the title-market
+consensus into `scripts/sportsbook/consensus/<date>.json`. Live dates blend
+every source that answers — Kalshi (the backbone; its failure aborts),
+Polymarket's public gamma API, and The Odds API sportsbook outrights
+(DraftKings, the Betfair exchange, William Hill; needs `ODDS_API_KEY` in the
+env or in the gitignored `.env` at the repo root, skipped with a note when
+absent). Each source is devigged independently (eliminated teams
+forced to 0, normalized over alive teams), then averaged; the file keeps every
+source's raw quotes for traceability. Past dates are Kalshi-only (daily candle
+closes — nobody else publishes history). A sibling `<date>.overrides.json`
+patches the blended prob for a team before the final normalize.
 - `build-books.mjs` (`npm run build-books`) — 400k simulated tournaments, scores
 every pool draw against them, prices the markets with a house margin, writes
 `public/data/books/<id>.json`.
@@ -144,9 +156,20 @@ simulation on all matches dated ≤ D, recalibrates alive teams so conditional
 title probabilities match the freshest consensus ≤ D (the snapshot records which
 consensus date was actually used), and writes `public/data/books/<id>/<D>.json`
 plus an `index.json` listing entries in order ("open", then dates). `--backfill`
-builds every match date in the log lacking a snapshot (`--force` rebuilds all —
-use after correcting a score); `--check-open` verifies a zero-match build still
-reproduces the committed opening books bit-for-bit.
+builds every match date in the log lacking a fresh snapshot — "fresh" compares
+the sheet's `matchesConditioned` against the log, so a sheet built before all
+of its day's results were entered is rebuilt automatically on the next run
+(`--force` rebuilds all — use after correcting a score); `--check-open` verifies
+a zero-match build still reproduces the committed opening books bit-for-bit.
+
+The specials corner ("Caleb's Corner" in Boofy, "Prozan's Parlay Window" in
+SOSK — the JSON field is `caleb` for historical reasons) is config data in
+`build-books.mjs`: each slip is `{label, kind, …}` priced off the same sim
+accumulators as every other market (`winsPool`, `cashes`, `overPts`,
+`teamReaches`, `joint`, …). Joint events (parlays, sweeps) are declared per
+pool in `joints` and counted inside the sim loop. A board's `since` date picks
+which slips a sheet gets — the pre-`since` board lives in `legacy`, keeping
+the committed opening books reproducible.
 
 Every snapshot is a pure derivation of the event log + a consensus file + a
 fixed per-date seed, so entering results late, skipping nights, or fixing a typo
@@ -156,6 +179,13 @@ The `?book=<id>` view defaults to the newest sheet, with prev/next buttons and a
 date dropdown to walk the history, ▲▼ movement against the previous sheet, a
 LINE MOVEMENT chart of every seat's outright chances across sheets, and settled
 markets (clinched/eliminated) shown off the board.
+
+### The house organ
+
+`?post=<id>` renders an editorial post on the book chrome (`?post` lists the
+archive). Content is hand-written JSX in `src/posts.jsx` — one entry per post,
+numbers copied from the committed sheets they cite rather than joined at
+runtime, since history is immutable. `Post.jsx` only frames it.
 
 **End-of-day workflow:**
 

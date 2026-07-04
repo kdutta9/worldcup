@@ -110,6 +110,21 @@ const CONFIG = {
       a: { name: "OLD DKE", players: ["HG", "Prozan", "Arnst", "Oanta"] },
       b: { name: "NEW DKE", players: ["Burnes", "J Call", "Kunal", "Chris"] },
     },
+    joints: [{ id: "prozan-parlay", type: "teamsReach", teams: ["United States", "Brazil"], stage: "QF" }],
+    specials: {
+      since: "2026-07-03", // the sheet read the morning of R16 kickoff
+      title: "PROZAN'S PARLAY WINDOW — DEGEN SPECIALS",
+      blurb:
+        "Prozan is in the pool, which the house considers a market inefficiency. These are the slips he has actually asked for. Cash up front — we know him.",
+      bets: [
+        { label: "Prozan wins the pool (the ladder out of the basement exists)", kind: "winsPool", player: "Prozan" },
+        { label: "Prozan cashes top 3", kind: "cashes", player: "Prozan" },
+        { label: "The Prozan special — USA AND Brazil both reach the quarters", kind: "joint", id: "prozan-parlay" },
+        { label: "USA win the whole thing", kind: "teamReaches", team: "United States", stage: "CHAMPION" },
+        { label: "Canada lift the trophy (Burnes insists he's never even been)", kind: "teamReaches", team: "Canada", stage: "CHAMPION" },
+      ],
+      legacy: null, // no corner on pre-R16 SOSK sheets
+    },
   },
   boofy: {
     bookName: "BOOFY SPORTSBOOK",
@@ -134,22 +149,48 @@ const CONFIG = {
         { a: "Shaya", b: "Matt", note: "YES, SHAYA AGAIN" },
       ],
     },
-    // Joint event counted during the sim for Caleb's parlay board.
-    sweep: { player: "Shaya", over: ["Jake", "Matt"] },
-    caleb: {
+    joints: [{ id: "shaya-sweep", type: "sweep", player: "Shaya", over: ["Jake", "Matt"] }],
+    specials: {
+      since: "2026-07-03", // the sheet read the morning of R16 kickoff
       title: "CALEB'S CORNER — DEGEN SPECIALS",
       blurb:
         "Caleb is not in the pool. That has never once stopped him. The house posts the slips he'd actually ask for, and reserves the right to demand cash up front.",
+      // The R16 board. The opening board lives in `legacy`; three of its five
+      // slips died with Matt and Shaya's group-stage exits.
+      bets: [
+        { label: "Adrian wins the whole pool (Paraguay, and only Paraguay, remain)", kind: "winsPool", player: "Adrian" },
+        { label: "Dante rises from 11th — cashes top 3 on Spain alone", kind: "cashes", player: "Dante" },
+        { label: "Rob bricks it — Under 4.5 pts with England AND France", kind: "underPts", player: "Rob", line: 4.5 },
+        { label: "Paraguay, slayers of Germany, reach the semifinal", kind: "teamReaches", team: "Paraguay", stage: "SF" },
+        { label: "Hosts with the most — Mexico win the whole thing", kind: "teamReaches", team: "Mexico", stage: "CHAMPION" },
+      ],
+      legacy: {
+        bets: [
+          { label: "Matt wins the whole pool (Panama · Uzbekistan · Curaçao · Haiti)", kind: "winsPool", player: "Matt" },
+          { label: "Matt cashes top 3", kind: "cashes", player: "Matt" },
+          { label: "Shaya sweeps the beef — finishes above Jake AND Matt", kind: "joint", id: "shaya-sweep" },
+          { label: "Kunal goes nuclear — Over 14.5 pts", kind: "overPts", player: "Kunal", line: 14.5 },
+          { label: "Rob bricks it — Under 4.5 pts with England AND France", kind: "underPts", player: "Rob", line: 4.5 },
+        ],
+      },
     },
   },
 };
 
-// Pre-resolved player indices for joint "sweep" events counted inside the loop.
-const sweepIdx = pools.map((pool) => {
-  const sw = CONFIG[pool.id]?.sweep;
-  if (!sw) return null;
-  const at = (nm) => pool.players.findIndex((pl) => pl.name === nm);
-  return { p: at(sw.player), over: sw.over.map(at) };
+// Joint events counted inside the sim loop; specials reference them by id.
+// "sweep" = player strictly outscores everyone listed; "teamsReach" = every
+// team listed reaches at least the stage.
+const jointIdx = pools.map((pool) => {
+  const at = (nm) => {
+    const i = pool.players.findIndex((pl) => pl.name === nm);
+    if (i < 0) throw new Error(`Unknown player "${nm}" in ${pool.id} joints`);
+    return i;
+  };
+  return (CONFIG[pool.id]?.joints ?? []).map((j) =>
+    j.type === "sweep"
+      ? { id: j.id, type: j.type, p: at(j.player), over: j.over.map(at) }
+      : { id: j.id, type: j.type, teams: j.teams.map((t) => TEAM_INDEX[t]), stage: STAGE[j.stage] }
+  );
 });
 
 // --- Simulate ------------------------------------------------------------------
@@ -162,7 +203,7 @@ function runBatch(ratings, sims, seed, cond) {
   const stageCounts = Array.from({ length: n }, () => new Float64Array(7));
   const ptsSum = new Float64Array(n);
 
-  const acc = pools.map((pool) => {
+  const acc = pools.map((pool, p) => {
     const np = pool.players.length;
     return {
       hist: Array.from({ length: np }, () => new Float64Array(MAXPTS)),
@@ -173,6 +214,7 @@ function runBatch(ratings, sims, seed, cond) {
       pairWin: new Float64Array(np * np), // [i*np+j] = sims where i outscored j
       pairTie: new Float64Array(np * np),
       factionHist: new Float64Array(MAXPTS), // side A's combined total
+      joint: new Float64Array(jointIdx[p].length), // sims where each joint event hit
       totals: new Float64Array(np), // scratch
     };
   });
@@ -221,7 +263,12 @@ function runBatch(ratings, sims, seed, cond) {
         a.top[i] += Math.min(Math.max(places - above, 0), ties) / ties;
         a.last[i] += Math.min(Math.max(1 - below, 0), ties) / ties;
       }
-      if (sweepIdx[p] && sweepIdx[p].over.every((j) => totals[sweepIdx[p].p] > totals[j])) a.sweep = (a.sweep ?? 0) + 1;
+      for (let k = 0; k < jointIdx[p].length; k++) {
+        const jt = jointIdx[p][k];
+        const hit =
+          jt.type === "sweep" ? jt.over.every((j) => totals[jt.p] > totals[j]) : jt.teams.every((t) => stages[t] >= jt.stage);
+        if (hit) a.joint[k]++;
+      }
       if (cfg?.faction) {
         let totA = 0;
         for (const name of cfg.faction.a.players) totA += totals[pool.players.findIndex((pl) => pl.name === name)];
@@ -510,22 +557,53 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     };
   }
 
-  // Caleb's Corner: the longshot slips a degenerate would actually ask for.
+  // Specials corner — "Caleb's Corner" in the lore, hence the field name. The
+  // slips are config data, priced off the same sim accumulators as every other
+  // market. `since` picks which board a sheet gets: dated snapshots from that
+  // day forward take `bets`; earlier snapshots and the opening books take
+  // `legacy.bets`, keeping the committed opening books reproducible.
   let caleb = null;
-  if (cfg.caleb) {
-    const matt = players[idxOf("Matt")];
-    const kunalHist = a.hist[idxOf("Kunal")];
-    const robHist = a.hist[idxOf("Rob")];
+  const board = cfg.specials
+    ? (snapshot?.date ?? "") >= (cfg.specials.since ?? "") ? cfg.specials.bets : cfg.specials.legacy?.bets
+    : null;
+  if (board) {
+    const jointOf = (id) => {
+      const k = jointIdx[p].findIndex((j) => j.id === id);
+      if (k < 0) throw new Error(`Unknown joint "${id}" in ${pool.id} specials`);
+      return a.joint[k];
+    };
+    const pReach = (team, stage) => {
+      const sc = stageCounts[TEAM_INDEX[team]];
+      let c = 0;
+      for (let k = STAGE[stage]; k <= STAGE.CHAMPION; k++) c += sc[k];
+      return c / sims;
+    };
+    const priceBet = (bet) => {
+      switch (bet.kind) {
+        case "winsPool":
+          return price(players[idxOf(bet.player)].pWin, MARGIN.outright);
+        case "cashes":
+          return price(players[idxOf(bet.player)].pTop, MARGIN.place);
+        case "lastPlace":
+          return price(players[idxOf(bet.player)].pLast, MARGIN.place);
+        case "overPts":
+          return price(pOver(a.hist[idxOf(bet.player)], sims, bet.line), MARGIN.twoWay);
+        case "underPts":
+          return price(1 - pOver(a.hist[idxOf(bet.player)], sims, bet.line), MARGIN.twoWay);
+        case "outscores":
+          return price(pairPrice(idxOf(bet.player), idxOf(bet.other)), MARGIN.twoWay);
+        case "joint":
+          return price(jointOf(bet.id) / sims, MARGIN.twoWay);
+        case "teamReaches":
+          return price(pReach(bet.team, bet.stage), bet.stage === "CHAMPION" ? MARGIN.outright : MARGIN.place);
+        default:
+          throw new Error(`Unknown special bet kind "${bet.kind}"`);
+      }
+    };
     caleb = {
-      title: cfg.caleb.title,
-      blurb: cfg.caleb.blurb,
-      bets: [
-        { label: "Matt wins the whole pool (Panama · Uzbekistan · Curaçao · Haiti)", price: price(matt.pWin, MARGIN.outright) },
-        { label: "Matt cashes top 3", price: price(matt.pTop, MARGIN.place) },
-        { label: "Shaya sweeps the beef — finishes above Jake AND Matt", price: price((a.sweep ?? 0) / sims, MARGIN.twoWay) },
-        { label: "Kunal goes nuclear — Over 14.5 pts", price: price(pOver(kunalHist, sims, 14.5), MARGIN.twoWay) },
-        { label: "Rob bricks it — Under 4.5 pts with England AND France", price: price(1 - pOver(robHist, sims, 4.5), MARGIN.twoWay) },
-      ],
+      title: cfg.specials.title,
+      blurb: cfg.specials.blurb,
+      bets: board.map((b) => ({ label: b.label, price: priceBet(b) })),
     };
   }
 
@@ -709,17 +787,23 @@ function updateIndex(poolId, date) {
 }
 
 function backfill() {
-  const dates = [...new Set(loadMatches(MATCHES_PATH).map((m) => m.date))].sort();
+  const all = loadMatches(MATCHES_PATH);
+  const dates = [...new Set(all.map((m) => m.date))].sort();
   if (!dates.length) {
     console.log("No matches in the log — nothing to backfill.");
     return;
   }
   for (const date of dates) {
-    const have = pools.every(
-      (pool) => !CONFIG[pool.id] || existsSync(join(ROOT, "public/data/books", pool.id, `${date}.json`))
-    );
-    if (have && !FORCE) {
-      console.log(`Skip ${date} (snapshot exists; --force to rebuild)`);
+    // A sheet built before that day's results landed (a morning-of build)
+    // conditions on fewer matches than the log now holds — rebuild it.
+    const nUpTo = all.filter((m) => m.date <= date).length;
+    const fresh = (pool) => {
+      if (!CONFIG[pool.id]) return true;
+      const f = join(ROOT, "public/data/books", pool.id, `${date}.json`);
+      return existsSync(f) && JSON.parse(readFileSync(f, "utf8")).meta?.matchesConditioned === nUpTo;
+    };
+    if (pools.every(fresh) && !FORCE) {
+      console.log(`Skip ${date} (snapshot fresh; --force to rebuild)`);
       continue;
     }
     buildSnapshot(date);
