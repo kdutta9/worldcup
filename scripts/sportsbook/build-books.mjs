@@ -112,18 +112,36 @@ const CONFIG = {
     },
     joints: [{ id: "prozan-parlay", type: "teamsReach", teams: ["United States", "Brazil"], stage: "QF" }],
     specials: {
-      since: "2026-07-03", // the sheet read the morning of R16 kickoff
       title: "PROZAN'S PARLAY WINDOW — DEGEN SPECIALS",
       blurb:
         "Prozan is in the pool, which the house considers a market inefficiency. These are the slips he has actually asked for. Cash up front — we know him.",
-      bets: [
-        { label: "Prozan wins the pool (the ladder out of the basement exists)", kind: "winsPool", player: "Prozan" },
-        { label: "Prozan cashes top 3", kind: "cashes", player: "Prozan" },
-        { label: "The Prozan special — USA AND Brazil both reach the quarters", kind: "joint", id: "prozan-parlay" },
-        { label: "USA win the whole thing", kind: "teamReaches", team: "United States", stage: "CHAMPION" },
-        { label: "Canada lift the trophy (Burnes insists he's never even been)", kind: "teamReaches", team: "Canada", stage: "CHAMPION" },
+      // No corner on pre-R16 SOSK sheets (no opening board). R16 kickoff, then QF.
+      boards: [
+        {
+          since: "2026-07-03", // the sheet read the morning of R16 kickoff
+          bets: [
+            { label: "Prozan wins the pool (the ladder out of the basement exists)", kind: "winsPool", player: "Prozan" },
+            { label: "Prozan cashes top 3", kind: "cashes", player: "Prozan" },
+            { label: "The Prozan special — USA AND Brazil both reach the quarters", kind: "joint", id: "prozan-parlay" },
+            { label: "USA win the whole thing", kind: "teamReaches", team: "United States", stage: "CHAMPION" },
+            { label: "Canada lift the trophy (Burnes insists he's never even been)", kind: "teamReaches", team: "Canada", stage: "CHAMPION" },
+          ],
+        },
+        {
+          since: "2026-07-06", // QF field set. Prozan's own window slammed shut with USA + Brazil.
+          // Owner-native lines: pool finishes, seat-vs-seat duels, point props — priced off
+          // the sim but distinct from the raw team futures on the main board.
+          blurb:
+            "Prozan's own window slammed shut the day USA and Brazil went home — he's a dead-last statue frozen on 4 points. So the house keeps his name on the marquee and books everyone else's action. Cash up front — we know the type.",
+          bets: [
+            { label: "The QF-98 leapfrog — Burnes (Spain) runs down Chris (Belgium), the fallen favorite's revenge", kind: "outscores", player: "Burnes", other: "Chris" },
+            { label: "House money — Kunal (Norway) outscores Oanta (England) in the QF-99 mirror", kind: "outscores", player: "Kunal", other: "Oanta" },
+            { label: "J Call storms the lead — Argentina, Egypt AND Switzerland all still standing, wins the pool", kind: "winsPool", player: "J Call" },
+            { label: "Arnst runs away and hides — France and Morocco both live, Over 13.5 points", kind: "overPts", player: "Arnst", line: 13.5 },
+            { label: "HG crashes the podium — Colombia alone drags him into the top 3", kind: "cashes", player: "HG" },
+          ],
+        },
       ],
-      legacy: null, // no corner on pre-R16 SOSK sheets
     },
   },
   boofy: {
@@ -136,9 +154,22 @@ const CONFIG = {
       toCash: "Twelve seats, three podium spots. Any money is good money.",
       spoon: "Somebody has to carry the shame until 2030.",
       h2h: "The four strongest seats, priced against each other. Higher pool finish wins; tie on points = stakes returned (handled as half-win in pricing).",
-      watch: "Germany, Brazil, South Korea, Netherlands — the house's problem child drew a loaded hand. The model's median is 8 points. Main line:",
     },
-    watch: { player: "Kunal", title: "KUNAL WATCH — KUNAL TOTAL POINTS" },
+    // Watch timeline: Kunal drew a loaded hand pre-tournament; by the QF all four
+    // of his teams were out, so the seat moves to Rob (England + France, both live).
+    watch: [
+      {
+        player: "Kunal",
+        title: "KUNAL WATCH — KUNAL TOTAL POINTS",
+        copy: "Germany, Brazil, South Korea, Netherlands — the house's problem child drew a loaded hand. The model's median is 8 points. Main line:",
+      },
+      {
+        since: "2026-07-06",
+        player: "Rob",
+        title: "ROB WATCH — ROB TOTAL POINTS",
+        copy: "England and France both through to the quarters — on opposite sides of the bracket, the biggest live hand in the pool. The model's median is 11 points. Main line:",
+      },
+    ],
     faction: null,
     grudges: {
       title: "BAD BLOOD — GRUDGE MATCHES",
@@ -151,28 +182,43 @@ const CONFIG = {
     },
     joints: [{ id: "shaya-sweep", type: "sweep", player: "Shaya", over: ["Jake", "Matt"] }],
     specials: {
-      since: "2026-07-03", // the sheet read the morning of R16 kickoff
       title: "CALEB'S CORNER — DEGEN SPECIALS",
       blurb:
         "Caleb is not in the pool. That has never once stopped him. The house posts the slips he'd actually ask for, and reserves the right to demand cash up front.",
-      // The R16 board. The opening board lives in `legacy`; three of its five
-      // slips died with Matt and Shaya's group-stage exits.
-      bets: [
-        { label: "Adrian wins the whole pool (Paraguay, and only Paraguay, remain)", kind: "winsPool", player: "Adrian" },
-        { label: "Dante rises from 11th — cashes top 3 on Spain alone", kind: "cashes", player: "Dante" },
-        { label: "Rob bricks it — Under 4.5 pts with England AND France", kind: "underPts", player: "Rob", line: 4.5 },
-        { label: "Paraguay, slayers of Germany, reach the semifinal", kind: "teamReaches", team: "Paraguay", stage: "SF" },
-        { label: "Hosts with the most — Mexico win the whole thing", kind: "teamReaches", team: "Mexico", stage: "CHAMPION" },
+      boards: [
+        {
+          // Opening board (no `since`). Three of its five slips died with Matt
+          // and Shaya's group-stage exits; kept intact so opening books reprice.
+          bets: [
+            { label: "Matt wins the whole pool (Panama · Uzbekistan · Curaçao · Haiti)", kind: "winsPool", player: "Matt" },
+            { label: "Matt cashes top 3", kind: "cashes", player: "Matt" },
+            { label: "Shaya sweeps the beef — finishes above Jake AND Matt", kind: "joint", id: "shaya-sweep" },
+            { label: "Kunal goes nuclear — Over 14.5 pts", kind: "overPts", player: "Kunal", line: 14.5 },
+            { label: "Rob bricks it — Under 4.5 pts with England AND France", kind: "underPts", player: "Rob", line: 4.5 },
+          ],
+        },
+        {
+          since: "2026-07-03", // the sheet read the morning of R16 kickoff
+          bets: [
+            { label: "Adrian wins the whole pool (Paraguay, and only Paraguay, remain)", kind: "winsPool", player: "Adrian" },
+            { label: "Dante rises from 11th — cashes top 3 on Spain alone", kind: "cashes", player: "Dante" },
+            { label: "Rob bricks it — Under 4.5 pts with England AND France", kind: "underPts", player: "Rob", line: 4.5 },
+            { label: "Paraguay, slayers of Germany, reach the semifinal", kind: "teamReaches", team: "Paraguay", stage: "SF" },
+            { label: "Hosts with the most — Mexico win the whole thing", kind: "teamReaches", team: "Mexico", stage: "CHAMPION" },
+          ],
+        },
+        {
+          since: "2026-07-06", // QF field set; the R16 board's Paraguay/Mexico/Adrian slips are all dead.
+          // Owner-native lines — pool finishes, seat duels, point props — not raw team futures.
+          bets: [
+            { label: "Rob goes nuclear — England AND France both live and in the quarters, Over 12.5 points", kind: "overPts", player: "Rob", line: 12.5 },
+            { label: "Dante climbs from 10th — cashes top 3 on Spain alone", kind: "cashes", player: "Dante" },
+            { label: "The QF-96 derby — Jake (Switzerland) finishes above Jack (Colombia), settled tomorrow", kind: "outscores", player: "Jake", other: "Jack" },
+            { label: "Nathan survives his own civil war (Argentina vs Egypt, both his) and wins the pool", kind: "winsPool", player: "Nathan" },
+            { label: "The full Cinderella — Morocco, and only Morocco, wins Dino the entire pool", kind: "winsPool", player: "Dino" },
+          ],
+        },
       ],
-      legacy: {
-        bets: [
-          { label: "Matt wins the whole pool (Panama · Uzbekistan · Curaçao · Haiti)", kind: "winsPool", player: "Matt" },
-          { label: "Matt cashes top 3", kind: "cashes", player: "Matt" },
-          { label: "Shaya sweeps the beef — finishes above Jake AND Matt", kind: "joint", id: "shaya-sweep" },
-          { label: "Kunal goes nuclear — Over 14.5 pts", kind: "overPts", player: "Kunal", line: 14.5 },
-          { label: "Rob bricks it — Under 4.5 pts with England AND France", kind: "underPts", player: "Rob", line: 4.5 },
-        ],
-      },
     },
   },
 };
@@ -471,7 +517,17 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   }
 
   // Watch section: O/U ladder + points distribution for the featured seat.
-  const wIdx = pool.players.findIndex((pl) => pl.name === cfg.watch.player);
+  // `watch` may be a single seat (static) or a timeline of {since, player,
+  // title, copy}: pick the latest entry on or before the sheet date, so a seat
+  // change at a new round doesn't rewrite the watch on historical sheets. When
+  // the chosen entry carries its own `copy`, it overrides copy.watch.
+  const date = snapshot?.date ?? "";
+  const watchCfg =
+    (Array.isArray(cfg.watch) ? cfg.watch : [cfg.watch])
+      .filter((w) => date >= (w.since ?? ""))
+      .sort((x, y) => (x.since ?? "").localeCompare(y.since ?? ""))
+      .at(-1);
+  const wIdx = pool.players.findIndex((pl) => pl.name === watchCfg.player);
   const wHist = a.hist[wIdx];
   const main = bestLine(wHist, sims);
   const ladder = [];
@@ -481,14 +537,15 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     ladder.push({ line, over: price(po, MARGIN.twoWay), under: price(1 - po, MARGIN.twoWay) });
   }
   const watch = {
-    player: cfg.watch.player,
-    title: cfg.watch.title,
+    player: watchCfg.player,
+    title: watchCfg.title,
     teams: pool.players[wIdx].teams,
     median: players[wIdx].median,
     mainLine: main,
     ladder,
     hist: trimHist(wHist, sims),
   };
+  const copy = watchCfg.copy ? { ...cfg.copy, watch: watchCfg.copy } : cfg.copy;
 
   // Faction battle (if this pool has one): moneyline, spread ±1.5, team totals.
   let faction = null;
@@ -559,13 +616,17 @@ function deriveBook(pool, p, batch, sims, snapshot) {
 
   // Specials corner — "Caleb's Corner" in the lore, hence the field name. The
   // slips are config data, priced off the same sim accumulators as every other
-  // market. `since` picks which board a sheet gets: dated snapshots from that
-  // day forward take `bets`; earlier snapshots and the opening books take
-  // `legacy.bets`, keeping the committed opening books reproducible.
+  // market. `boards` is a timeline: each entry's `since` is the first date it
+  // applies (a board with no `since` is the opening board). A sheet gets the
+  // latest board whose `since` is on or before its date, so every historical
+  // sheet — opening, R16, QF — reprices reproducibly from the same config.
   let caleb = null;
-  const board = cfg.specials
-    ? (snapshot?.date ?? "") >= (cfg.specials.since ?? "") ? cfg.specials.bets : cfg.specials.legacy?.bets
-    : null;
+  const boardCfg =
+    (cfg.specials?.boards ?? [])
+      .filter((b) => date >= (b.since ?? ""))
+      .sort((x, y) => (x.since ?? "").localeCompare(y.since ?? ""))
+      .at(-1) ?? null;
+  const board = boardCfg?.bets ?? null;
   if (board) {
     const jointOf = (id) => {
       const k = jointIdx[p].findIndex((j) => j.id === id);
@@ -601,8 +662,8 @@ function deriveBook(pool, p, batch, sims, snapshot) {
       }
     };
     caleb = {
-      title: cfg.specials.title,
-      blurb: cfg.specials.blurb,
+      title: boardCfg.title ?? cfg.specials.title,
+      blurb: boardCfg.blurb ?? cfg.specials.blurb,
       bets: board.map((b) => ({ label: b.label, price: priceBet(b) })),
     };
   }
@@ -644,7 +705,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     bookName: cfg.bookName,
     tagline: cfg.tagline,
     stakes: cfg.stakes,
-    copy: cfg.copy,
+    copy,
     meta: snapshot
       ? {
           sims,
