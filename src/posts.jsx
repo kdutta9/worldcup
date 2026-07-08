@@ -87,6 +87,285 @@ const Slips = ({ bets }) => (
 
 export const POSTS = [
   {
+    id: "qf-boofy",
+    bookId: "boofy",
+    bookName: "BOOFY SPORTSBOOK",
+    date: "2026-07-08",
+    linesLabel: "July 8",
+    eyebrow: "THE HOUSE ORGAN — QUARTERFINAL SPECIAL",
+    title: "SEVENS ACROSS THE BOARD",
+    deck: "Dino, Max and Nathan are tied at seven with one team apiece. The guy in FOURTH is −280 to win the whole thing. The quarterfinals start tomorrow — the table, the carnage, a eulogy for Kunal, and a fresh board in Caleb's Corner.",
+    body: (
+      <>
+        <Panel title="THE STORY SO FAR">
+          <P>
+            The Round of 16 killed eight teams and three seats. Adrian went first — Paraguay frightened France for an
+            hour, lost 1–0, and took +48000 worth of dreams with them. Kunal went Sunday when Brazil lost to Norway,
+            a sentence the house has now read eleven times and still doesn't believe (full eulogy below). And Jack
+            went last night the cruelest way available: Colombia, 0–0 through 120 minutes, made three penalties.
+            Switzerland made four.
+          </P>
+          <P>
+            Which brings us to Jake, who watched his team win a knockout match without scoring a goal for two hours
+            and immediately texted the group: <em>"One more closer to the money."</em> Jake has five points. The money
+            is third place. The house has priced this journey at +3500 (see Caleb's Corner) and admires the spirit
+            enormously.
+          </P>
+          <P>
+            At the top it's a genuine logjam: Dino, Max and Nathan, seven points each, one live team each — Morocco,
+            Norway, Argentina. Three men, three horses, no margin. And underneath them, at six, sits the problem the
+            headline promised last time: Rob still has England AND France, they're on opposite halves of the bracket,
+            and the market prices his seat like the tie at the top is a rounding error.
+          </P>
+        </Panel>
+
+        <Panel title="THE TABLE — 8 TEAMS LEFT, 9 POINTS STILL IN PLAY" blurb="Points bank at each round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Of the 65 points the tournament pays out, 56 are already banked below — the last 9 go to whoever's teams keep winning.">
+          <Standings
+            rows={[
+              [7, "Dino", ["Morocco"]],
+              [7, "Max", ["Norway"]],
+              [7, "Nathan", ["Argentina"]],
+              [6, "Rob", ["England", "France"]],
+              [6, "Nick", ["Belgium"]],
+              [5, "Jake", ["Switzerland"]],
+              [4, "Kunal", []],
+              [4, "Jack", []],
+              [4, "Adrian", []],
+              [3, "Dante", ["Spain"]],
+              [3, "Shaya", []],
+              [0, "Matt", []],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="LINE MOVEMENT — OPENING DAY vs THIS MORNING"
+          blurb="Outright (to win the pool), June 11 opening sheet against the July 8 morning line."
+        >
+          <Lines
+            rows={[
+              ["Rob", "+220", "−280", "Was −115 on R16 morning; two quarterfinalists later, the number got angrier. France +185 to win it all, England +580"],
+              ["Nathan", "+780", "+175", "Won the all-Nathan derby (Argentina 3, Egypt 2) and the market noticed: Argentina is the second title choice at +440"],
+              ["Max", "+1150", "+630", "Norway beat Brazil. In a knockout match. The house has read the result several times and it keeps saying that"],
+              ["Dino", "+530", "+1750", "The guaranteed quarterfinalist arrived (Morocco), but Portugal and Canada died on the way — one Cinderella carries the seat"],
+              ["Nick", "+1750", "+3100", "Belgium hung four on the USA and finally looked like Belgium. One team is still one team"],
+              ["Dante", "+410", "+5900", "Spain won its civil war with Portugal. Dante has three points and a very good reason to keep watching"],
+              ["Jake", "+2750", "+8300", "One more closer to the money"],
+              ["Kunal", "+230", "OFF", "Opened second favorite. Now mathematically extinct. Eulogy below — dress appropriately"],
+              ["Jack", "+1650", "OFF", "Colombia missed exactly one more penalty than Switzerland. Margins"],
+              ["Adrian", "+7200", "OFF", "Paraguay went home with dignity, which is more than the +48000 slip can say"],
+              ["Shaya", "+3200", "OFF", "Still holds the beef-ledger win over Matt. Banner year"],
+              ["Matt", "+43000", "OFF", "See the spoon report at the bottom of the eulogy"],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="THE QF SLATE — WHO'S PLAYING FOR WHOM"
+          blurb="Four matches, three days — and the favorite is in two of them, playing two of the three co-leaders."
+        >
+          <Fixtures
+            rows={[
+              ["TOMORROW, Jul 9", "France", "Rob", "Morocco", "Dino", "Half of Rob's empire vs all of Dino's. Morocco +3000 to win the Cup; the house checked, they don't care"],
+              ["Fri, Jul 10", "Spain", "Dante", "Belgium", "Nick", "Two one-team seats. Dante's at 3, Nick's at 6, and the loser starts drafting excuses for 2030"],
+              ["Sat, Jul 11", "Norway", "Max", "England", "Rob", "Max — a Brit, and the house means this respectfully, a DIRTY Brit — sends Haaland to eliminate England"],
+              ["Sat, Jul 11", "Argentina", "Nathan", "Switzerland", "Jake", "Nathan's title horse vs one more closer to the money"],
+            ]}
+          />
+          <P>
+            Read the middle column: Rob plays Dino on Thursday and Max on Saturday. Two of the three men tied at
+            seven have to go through Rob's teams to stay there, and the third (Nathan) gets Jake. If England and
+            France both win, Rob is at eight with two semifinalists and this becomes a coronation newsletter. If
+            they both lose, Caleb's old slip rises from the grave to say it told us so.
+          </P>
+        </Panel>
+
+        <Panel title="IN MEMORIAM — KUNAL (JUNE 11 – JULY 5)" blurb="The house lowers its flags. A seat that opened +230, the second favorite, is survived by four points.">
+          <P>
+            Kunal drew Germany, Brazil, South Korea and the Netherlands — a hand so loaded the opening sheet had him
+            behind only Rob. The autopsy reads as follows. South Korea: never got out of the group. Germany: hung a
+            7–1 on Curaçao, then lost to Ecuador, then died on penalties to Paraguay. The Netherlands: died on
+            penalties the same night, two hours later, like a family pact. Brazil — five-time champions, unbeaten in
+            the tournament — lost 2–1 to Norway in the Round of 16, which is the soccer equivalent of losing your
+            queen to a knight fork you saw coming. Four points. None of them arriving after July 5. The bell tolls.
+          </P>
+          <P>
+            And since we're at the cemetery anyway: Matt remains at peace. The Wooden Spoon market still reads
+            LOCKED, the earliest clinch in Boofy history, and witnesses report he has started referring to it as
+            "hardware." The house respects a man who knows what he's won.
+          </P>
+        </Panel>
+
+        <Panel
+          title="CALEB'S CORNER — THE NEW BOARD"
+          blurb="Caleb is not in the pool. That has never once stopped him. The R16 board is in the ground — obituaries below — and the quarterfinal board is live as of this morning. Cash up front, as always."
+        >
+          <Slips
+            bets={[
+              ["“One more closer to the money” — Jake texts his way onto the podium, cashes top 3", "+3500"],
+              ["The final is Rob vs Rob — England AND France both reach it", "+440"],
+              ["Rob goes nuclear — Over 12.5 points", "+440"],
+              ["Max, a dirty Brit, sends England home on Saturday and wins the whole pool", "+630"],
+              ["Dante climbs from the basement — cashes top 3 on Spain alone", "+330"],
+            ]}
+          />
+          <P>
+            The obituaries. "Adrian wins the whole pool" (+48000) died at 4:52 PM on July 4, cause of death: France.
+            "Paraguay reach the semifinal" (+2050) died in the same incident. "Hosts with the most — Mexico win it
+            all" (+1350) died Sunday at the Azteca, 3–2, England. And the big one: "Rob bricks it — Under 4.5 points,"
+            the slip Caleb texted the house about twice, is mathematically dead — Rob banked his fifth and sixth
+            points inside 24 hours. Caleb has not texted since. The house is told he observed a moment of silence,
+            then asked for the Rob-vs-Rob final at +440.
+          </P>
+          <P>
+            A footnote for the sharps: yes, "Rob over 12.5" and "England and France both reach the final" are both
+            +440, and yes, if you do the arithmetic, they are the same bet wearing two hats — thirteen points only
+            exists via an all-Rob final. The house posted it twice anyway. Caleb bet it twice anyway. Everyone is
+            happy.
+          </P>
+        </Panel>
+      </>
+    ),
+  },
+  {
+    id: "qf-sosk",
+    bookId: "sons-of-steve-kerr",
+    bookName: "SOSK SPORTSBOOK",
+    date: "2026-07-08",
+    linesLabel: "July 8",
+    eyebrow: "THE HOUSE ORGAN — QUARTERFINAL SPECIAL",
+    title: "THREE LEADERS, ONE FAVORITE",
+    deck: "Chris, J Call and Arnst are tied at nine. The market believes exactly one of them — the guy who plays himself on Thursday. Plus: Burnes is somehow the second favorite again, the house closes the file on his citizenship, and a farewell to the greatest comeback that didn't happen.",
+    body: (
+      <>
+        <Panel title="THE STORY SO FAR">
+          <P>
+            Nine, nine, nine. Chris, J Call and Arnst enter the quarterfinals in a dead heat at the top, and the
+            resemblance ends there. Chris got to nine with three teams and has one left — Belgium, +4100 to win the
+            Cup, which is the market's way of coughing politely. J Call and Arnst got there with two apiece, and
+            here's the thing: <em>both of them play themselves this week.</em> Arnst owns France AND Morocco, who
+            meet on Thursday. J Call owns Argentina AND Switzerland, who meet on Saturday. Two men have
+            already banked a semifinalist in a round that hasn't started. The other six seats are gambling; these two
+            are doing paperwork.
+          </P>
+          <P>
+            Below the tie, the weirdest line on the sheet: Burnes is the second favorite. Again. The man opened +190,
+            watched the Netherlands and Sweden die in one weekend, drifted to +540 like a shipwreck — and now Spain
+            has quietly beaten Portugal, the market makes them +410 for the title, and Burnes is back at +280. The
+            house would call it a dead-cat bounce, but out of respect for recent events in his life (see the
+            citizenship file below), we'll allow "resilient."
+          </P>
+          <P>
+            And Saturday's Norway–England match is the pool's only true duel: Kunal against Oanta, both seats stuck on six,
+            winner ties Burnes at seven and takes the last live lane to the podium. Norway beat Ivory Coast, then
+            beat Brazil. England hasn't trailed in a knockout match. Something honest is about to happen.
+          </P>
+        </Panel>
+
+        <Panel title="THE TABLE — 8 TEAMS LEFT, 9 POINTS STILL IN PLAY" blurb="Points bank at each round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Of the 65 points the tournament pays out, 56 are already banked below — the last 9 go to whoever's teams keep winning.">
+          <Standings
+            rows={[
+              [9, "J Call", ["Argentina", "Switzerland"]],
+              [9, "Chris", ["Belgium"]],
+              [9, "Arnst", ["Morocco", "France"]],
+              [7, "Burnes", ["Spain"]],
+              [6, "Oanta", ["England"]],
+              [6, "Kunal", ["Norway"]],
+              [6, "HG", []],
+              [4, "Prozan", []],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="LINE MOVEMENT — OPENING DAY vs THIS MORNING"
+          blurb="Outright (to win the pool), June 11 opening sheet against the July 8 morning line."
+        >
+          <Lines
+            rows={[
+              ["Arnst", "+220", "−145", "Plays himself Thursday, so the semifinal berth is already in the vault. France +185 remains the title favorite"],
+              ["Burnes", "+190", "+280", "The opening favorite, left for dead at +540 on R16 morning, resurrected by Spain. The house checked twice"],
+              ["J Call", "+460", "+280", "Tied with Burnes to the tick — except J Call's semifinalist is already banked and Burnes's is a prayer named Spain"],
+              ["Oanta", "+460", "+650", "England alone, +580 for the Cup, and a date with a Norwegian who has scored in every round"],
+              ["Kunal", "+1150", "+1800", "Norway keeps winning knockout matches and the model keeps apologizing to Norway"],
+              ["Chris", "+960", "+2000", "Tied for the points lead. Priced seventh-favorite money. One-team seats get no respect in this economy"],
+              ["HG", "+2350", "OFF", "The comeback is over. The memorial is below. Hats off"],
+              ["Prozan", "+680", "OFF", "SPOONED"],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="THE QF SLATE — WHO'S PLAYING FOR WHOM"
+          blurb="Four matches, three days, and two of them are men playing solitaire."
+        >
+          <Fixtures
+            rows={[
+              ["TOMORROW, Jul 9", "France", "Arnst", "Morocco", "Arnst", "Arnst vs Arnst. Somewhere Steve Kerr is diagramming a play where both teams run it"],
+              ["Fri, Jul 10", "Spain", "Burnes", "Belgium", "Chris", "The leapfrog window: Burnes at 7 chasing Chris at 9, and their teams settle it in person"],
+              ["Sat, Jul 11", "Norway", "Kunal", "England", "Oanta", "Six points each. Winner ties Burnes at seven. The pool's only honest fistfight"],
+              ["Sat, Jul 11", "Argentina", "J Call", "Switzerland", "J Call", "J Call vs J Call. He has requested the group chat respect his privacy during this difficult win"],
+            ]}
+          />
+          <P>
+            Housekeeping from the war desk: the DKE Civil War moneyline is over. Old DKE's mathematical ceiling —
+            every surviving team running the table in the friendliest possible order — is 32 points, and 33 wins the
+            battle. NEW DKE has clinched. The moneyline is off the board, the −1.5 spread survives at −610 for the
+            completists, and the panel notes, one final time, that this was an OLD DKE production.
+          </P>
+        </Panel>
+
+        <Panel title="THE HUNTER MEMORIAL" blurb="A moment for HG, whose comeback died at the penalty spot last night.">
+          <P>
+            Remember where this started. HG drew Ghana, Colombia, Australia, Algeria, South Africa and South Korea —
+            a hand so bleak the house built an entire section around it. The HUNTER WATCH opened with a median of six
+            points and the outright at +2350, and the sheet's kindest sentence was "the model's median is 6." Then the
+            man's teams just kept banking. Australia dragged Egypt to penalties. Colombia won a knockout match, then
+            took Switzerland to the wall — 120 scoreless minutes from the quarterfinals, and as recently as Saturday
+            the house had HG at +630 to CASH. From that draw. It died 4–3 from twelve yards, and the watch seat
+            passes to J Call, but the flag flies at half-mast today. The worst hand in the pool outlived the opening
+            favorite's entire portfolio. Respect.
+          </P>
+        </Panel>
+
+        <Panel title="THE CITIZENSHIP FILE — CASE CLOSED" blurb="Canada lost 0–3 to Morocco on July 4. The compliance department has issued its final report.">
+          <P>
+            For three weeks this office investigated whether Burnes's Canadian enthusiasm — the "statement win, eh,"
+            the unprompted "playoff hockey," the two apologies for winning — was opportunism. The finding is worse
+            than we feared: <em>it was genuine.</em> That was real national pride,
+            sincerely held, and Morocco put three past it on a Saturday afternoon while he watched with a Tim Hortons
+            double-double going cold in his hand. The +33000 title slip is OFF. The file is closed. The house extends
+            its condolences and notes, purely for the record, that he has already begun describing Spain's press as
+            "forechecking."
+          </P>
+        </Panel>
+
+        <Panel
+          title="HAWAII WEST SPECIALS — THE SATURDAY WINDOW"
+          blurb="Prozan's Parlay Window is retired — the spoon is LOCKED, the first statue in SOSK history, permanently installed at four points. The marquee passes to Hawaii West, the worst (best) bar in San Francisco, where Saturday's doubleheader will be watched as tradition demands. These are the bar's lines. Cash up front — the jukebox doesn't take IOUs."
+        >
+          <Slips
+            bets={[
+              ["J Call beats J Call (Argentina vs Switzerland, both his) and wins the pool", "+280"],
+              ["Kunal (Norway) outscores Oanta (England) — settled on the pitch Saturday, adjudicated at the bar", "+135"],
+              ["The leapfrog lives — Burnes (Spain) still runs down Chris (Belgium), Friday is the whole ballgame", "+250"],
+              ["Arnst plays himself Thursday and his survivor reaches the final — Over 10.5 points", "−175"],
+              ["The Hawaii West parlay — Norway AND Argentina both win Saturday, drinks on the doubters", "+200"],
+            ]}
+          />
+          <P>
+            From the old board: "HG crashes the podium" (+630) died at the penalty spot, see memorial above. The
+            Burnes leapfrog carries over at a fatter +250 — Belgium looked terrifying against the USA and the gap is
+            still two points. And the featured slip is the house special: both Saturday matches will be on the two
+            good TVs at Hawaii West, and if Norway and Argentina both win — Kunal takes the duel, J Call banks his
+            semifinalist the hard way — the bar pays +200 and hears about it until closing. The house has already
+            reserved its stool.
+          </P>
+        </Panel>
+      </>
+    ),
+  },
+  {
     id: "r16-boofy",
     bookId: "boofy",
     bookName: "BOOFY SPORTSBOOK",

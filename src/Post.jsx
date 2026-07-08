@@ -66,10 +66,10 @@ function Article({ post }) {
 
       <footer className="bk-fine-block">
         <p className="bk-fine">
-          <b>SOURCING.</b> Every price quoted is from the committed book sheets — the June 11 opening lines and the
-          July 4 morning line — generated from 400,000 simulated tournaments calibrated to the devigged title-market
-          consensus. From tonight's repricing onward the consensus blends Kalshi, Polymarket, and the sportsbook
-          boards (DraftKings et al.). Standings per the official World Cup Lotto '26 scoring. For entertainment only;
+          <b>SOURCING.</b> Every price quoted is from the committed book sheets — the June 11 opening lines and the{" "}
+          {post.linesLabel ?? "July 4"} morning line — generated from 400,000 simulated tournaments calibrated to the
+          devigged title-market consensus, which since July 4 blends Kalshi, Polymarket, and the sportsbook boards
+          (DraftKings et al.). Standings per the official World Cup Lotto '26 scoring. For entertainment only;
           no real bets, no real money, no refunds.
         </p>
         <p className="bk-foot">{post.bookName} · EST. JUNE 2026 · NO REFUNDS</p>

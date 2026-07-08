@@ -102,7 +102,19 @@ const CONFIG = {
       h2h: "The four strongest seats, priced against each other. Higher pool finish wins; tie on points = stakes returned (handled as half-win in pricing).",
       watch: "Ghana, Colombia, Australia, Algeria, South Africa, South Korea. The model's median is 6 points. Main line:",
     },
-    watch: { player: "HG", title: "HUNTER WATCH — HG TOTAL POINTS" },
+    // Watch timeline: HG (Hunter) drew the loaded hand pre-tournament; by the QF
+    // only Colombia is live, so the seat moves to J Call — three teams still
+    // standing, with the biggest swing left in the pool. The HG entry carries no
+    // copy, so it falls back to copy.watch above and every prior sheet reproduces.
+    watch: [
+      { player: "HG", title: "HUNTER WATCH — HG TOTAL POINTS" },
+      {
+        since: "2026-07-07",
+        player: "J Call",
+        title: "J CALL WATCH — J CALL TOTAL POINTS",
+        copy: "Argentina and Switzerland both through — and they collide in Saturday's quarterfinal, so J Call is guaranteed a semifinalist. The pool's most live hand. The model's median is 10 points. Main line:",
+      },
+    ],
     faction: {
       title: "THE DKE CIVIL WAR — OLD DKE VS NEW DKE",
       blurb:
@@ -110,7 +122,12 @@ const CONFIG = {
       a: { name: "OLD DKE", players: ["HG", "Prozan", "Arnst", "Oanta"] },
       b: { name: "NEW DKE", players: ["Burnes", "J Call", "Kunal", "Chris"] },
     },
-    joints: [{ id: "prozan-parlay", type: "teamsReach", teams: ["United States", "Brazil"], stage: "QF" }],
+    joints: [
+      { id: "prozan-parlay", type: "teamsReach", teams: ["United States", "Brazil"], stage: "QF" },
+      // Both Saturday quarterfinal winners: Norway over England, Argentina over
+      // Switzerland — reaching the SF is exactly winning the QF.
+      { id: "hawaii-west", type: "teamsReach", teams: ["Norway", "Argentina"], stage: "SF" },
+    ],
     specials: {
       title: "PROZAN'S PARLAY WINDOW — DEGEN SPECIALS",
       blurb:
@@ -141,6 +158,21 @@ const CONFIG = {
             { label: "HG crashes the podium — Colombia alone drags him into the top 3", kind: "cashes", player: "HG" },
           ],
         },
+        {
+          since: "2026-07-07", // R16 complete, three-way tie at 9. Arnst and J Call each play themselves in the QFs.
+          // Prozan's window retires with its statue; the Saturday doubleheader
+          // will be watched at Hawaii West, so the bar takes over the marquee.
+          title: "HAWAII WEST SPECIALS — THE SATURDAY WINDOW",
+          blurb:
+            "Saturday's doubleheader — Norway–England and Argentina–Switzerland — will be watched, as tradition demands, at Hawaii West, the worst (best) bar in San Francisco. Prozan's window is retired with its statue. These are the bar's lines. Cash up front — the jukebox doesn't take IOUs.",
+          bets: [
+            { label: "J Call beats J Call (Argentina vs Switzerland, both his) and wins the pool", kind: "winsPool", player: "J Call" },
+            { label: "Kunal (Norway) outscores Oanta (England) — settled on the pitch Saturday, adjudicated at the bar", kind: "outscores", player: "Kunal", other: "Oanta" },
+            { label: "The leapfrog lives — Burnes (Spain) still runs down Chris (Belgium), Friday is the whole ballgame", kind: "outscores", player: "Burnes", other: "Chris" },
+            { label: "Arnst plays himself Thursday and his survivor reaches the final — Over 10.5 points", kind: "overPts", player: "Arnst", line: 10.5 },
+            { label: "The Hawaii West parlay — Norway AND Argentina both win Saturday, drinks on the doubters", kind: "joint", id: "hawaii-west" },
+          ],
+        },
       ],
     },
   },
@@ -169,6 +201,12 @@ const CONFIG = {
         title: "ROB WATCH — ROB TOTAL POINTS",
         copy: "England and France both through to the quarters — on opposite sides of the bracket, the biggest live hand in the pool. The model's median is 11 points. Main line:",
       },
+      {
+        since: "2026-07-07",
+        player: "Rob",
+        title: "ROB WATCH — ROB TOTAL POINTS",
+        copy: "England and France both banked the quarters, on opposite halves — they can only meet in the final. The model's median is 9 points. Main line:",
+      },
     ],
     faction: null,
     grudges: {
@@ -180,7 +218,12 @@ const CONFIG = {
         { a: "Shaya", b: "Matt", note: "YES, SHAYA AGAIN" },
       ],
     },
-    joints: [{ id: "shaya-sweep", type: "sweep", player: "Shaya", over: ["Jake", "Matt"] }],
+    joints: [
+      { id: "shaya-sweep", type: "sweep", player: "Shaya", over: ["Jake", "Matt"] },
+      // England and France sit on opposite bracket halves — they can only meet
+      // in the final, so "both reach the final" is exactly the Rob-vs-Rob final.
+      { id: "rob-final", type: "teamsReach", teams: ["England", "France"], stage: "RUNNER_UP" },
+    ],
     specials: {
       title: "CALEB'S CORNER — DEGEN SPECIALS",
       blurb:
@@ -216,6 +259,16 @@ const CONFIG = {
             { label: "The QF-96 derby — Jake (Switzerland) finishes above Jack (Colombia), settled tomorrow", kind: "outscores", player: "Jake", other: "Jack" },
             { label: "Nathan survives his own civil war (Argentina vs Egypt, both his) and wins the pool", kind: "winsPool", player: "Nathan" },
             { label: "The full Cinderella — Morocco, and only Morocco, wins Dino the entire pool", kind: "winsPool", player: "Dino" },
+          ],
+        },
+        {
+          since: "2026-07-07", // R16 complete: three-way tie at 7, Rob in two of the four QFs, Kunal dead.
+          bets: [
+            { label: "“One more closer to the money” — Jake texts his way onto the podium, cashes top 3", kind: "cashes", player: "Jake" },
+            { label: "The final is Rob vs Rob — England AND France both reach it", kind: "joint", id: "rob-final" },
+            { label: "Rob goes nuclear — Over 12.5 points", kind: "overPts", player: "Rob", line: 12.5 },
+            { label: "Max, a dirty Brit, sends England home on Saturday and wins the whole pool", kind: "winsPool", player: "Max" },
+            { label: "Dante climbs from the basement — cashes top 3 on Spain alone", kind: "cashes", player: "Dante" },
           ],
         },
       ],
