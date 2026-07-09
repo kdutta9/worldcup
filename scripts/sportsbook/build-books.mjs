@@ -173,6 +173,21 @@ const CONFIG = {
             { label: "The Hawaii West parlay — Norway AND Argentina both win Saturday, drinks on the doubters", kind: "joint", id: "hawaii-west" },
           ],
         },
+        {
+          since: "2026-07-08", // QF morning: three-way tie at 9 (J Call, Chris, Arnst). Two of the three
+          // drew both teams in a single quarterfinal, so they clinch a semifinalist without lifting a finger.
+          // The DKE Civil War is mathematically over (New DKE clinched), so the bar's card is the whole show.
+          title: "HAWAII WEST SPECIALS — QF MORNING",
+          blurb:
+            "Three seats knotted at the top on 9 — and two of them, J Call and Arnst, drew both sides of a quarterfinal, so nobody but themselves can knock them out of the lead. Chris has to beat Spain to keep pace. The DKE Civil War is settled — New DKE clinched it the day the bracket set — so Hawaii West takes the marquee. Doors open early Thursday for France–Morocco, loosies on the bar at a dollar a stick. Cash up front; the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "The logjam breaks his way — J Call, guaranteed a semifinalist (Argentina vs Switzerland, both his), wins the pool", kind: "winsPool", player: "J Call" },
+            { label: "Battle of the men who play themselves — J Call (Argentina/Switzerland) finishes above Arnst (France/Morocco)", kind: "outscores", player: "J Call", other: "Arnst" },
+            { label: "The leapfrog, now on Friday — Burnes (Spain) runs down Chris (Belgium) head-to-head", kind: "outscores", player: "Burnes", other: "Chris" },
+            { label: "Chris holds serve — the fallen favorite (Belgium) beats Spain and cashes top 3", kind: "cashes", player: "Chris" },
+            { label: "The Hawaii West parlay — Norway AND Argentina both reach the semis, drinks on the doubters", kind: "joint", id: "hawaii-west" },
+          ],
+        },
       ],
     },
   },
@@ -269,6 +284,20 @@ const CONFIG = {
             { label: "Rob goes nuclear — Over 12.5 points", kind: "overPts", player: "Rob", line: 12.5 },
             { label: "Max, a dirty Brit, sends England home on Saturday and wins the whole pool", kind: "winsPool", player: "Max" },
             { label: "Dante climbs from the basement — cashes top 3 on Spain alone", kind: "cashes", player: "Dante" },
+          ],
+        },
+        {
+          since: "2026-07-08", // QF morning: three-way tie at 7 (Dino, Max, Nathan). Rob, one back with
+          // England AND France, personally lines up against two of the three co-leaders this week.
+          title: "CALEB'S CORNER — QF MORNING",
+          blurb:
+            "Three seats knotted at 7 — Dino, Max, Nathan — and the man one point back drew both England and France, so Rob personally lines up against two of the three co-leaders: his France meets Dino's Morocco on Thursday, his England meets Max's Norway on Saturday. Caleb has a slip on every inch of it. Cash up front — he knows the drill.",
+          bets: [
+            { label: "Rob runs the table — France past Morocco, England past Norway, he laps the field, Over 12.5 points", kind: "overPts", player: "Rob", line: 12.5 },
+            { label: "The final is Rob vs Rob — England AND France both reach it", kind: "joint", id: "rob-final" },
+            { label: "The full Cinderella survives — Morocco (Dino) knocks out Rob's France and wins the pool", kind: "winsPool", player: "Dino" },
+            { label: "Max, a dirty Brit, sends England home Saturday and wins the whole pool", kind: "winsPool", player: "Max" },
+            { label: "Jake's Cinderella — Switzerland runs down Nathan's Argentina in the Saturday QF-100 upset", kind: "outscores", player: "Jake", other: "Nathan" },
           ],
         },
       ],
@@ -509,6 +538,40 @@ function marketStatuses(bounds, places) {
   return { win, cash, spoon };
 }
 
+// A faction side clinches when its guaranteed floor clears a strict majority of
+// the 65 points. Floor = banked points now + one advancement point for every
+// still-to-play knockout in which BOTH teams belong to that side (one of them
+// must win and move up a stage). A rigorous lower bound — deeper same-side
+// collisions, unknown until earlier rounds resolve, can only add to it — so it
+// never flags a live battle decided, unlike reading a 0-in-400k sim count.
+function factionClinch(pool, faction, state) {
+  const teamsOf = (nm) => pool.players[pool.players.findIndex((pl) => pl.name === nm)].teams;
+  const sideOfTeam = {};
+  const floor = { a: 0, b: 0 };
+  for (const side of ["a", "b"]) {
+    for (const nm of faction[side].players) {
+      for (const t of teamsOf(nm)) {
+        sideOfTeam[t] = side;
+        floor[side] += STAGE_POINTS[state.stageOf[t] ?? STAGE.GROUP];
+      }
+    }
+  }
+  const matchStage = (id) =>
+    id <= 88 ? STAGE.R32 : id <= 96 ? STAGE.R16 : id <= 100 ? STAGE.QF : id <= 102 ? STAGE.SF : STAGE.RUNNER_UP;
+  for (const [idStr, teams] of Object.entries(state.koTeams)) {
+    const id = Number(idStr);
+    const [x, y] = teams;
+    if (id === 103 || state.ko[id] || !x || !y) continue; // bronze / already played / unresolved
+    const side = sideOfTeam[x];
+    if (side && side === sideOfTeam[y]) {
+      const s = matchStage(id);
+      floor[side] += STAGE_POINTS[s + 1] - STAGE_POINTS[s];
+    }
+  }
+  const need = Math.floor(65 / 2) + 1; // 33 — strict majority of the 65 points
+  return floor.a >= need ? "a" : floor.b >= need ? "b" : null;
+}
+
 // One pool's book from a finished batch. `snapshot` is null for the opening
 // build; for dated builds it carries meta + decided-market detection inputs.
 function deriveBook(pool, p, batch, sims, snapshot) {
@@ -636,6 +699,24 @@ function deriveBook(pool, p, batch, sims, snapshot) {
       // B's total mirrors A's (totB = 65 − totA), so B's over is A's under.
       b: mk(cfg.faction.b.name, cfg.faction.b.players, pBWin, pBCoverPlus, pBCoverMinus, 65 - lineA, 1 - pOver(fh, sims, lineA)),
     };
+
+    // Bracket-aware clinch: prove the battle is decided from the fixtures, not the
+    // sim (a 0-in-400k longshot is not the same as a mathematical lock). A side's
+    // guaranteed floor is its banked points plus one advancement point for every
+    // still-to-play knockout in which BOTH teams are on that side — one of them
+    // must win and advance. If a floor already clears half of the 65 points, the
+    // war is over: we pull the moneyline/spread/total so nobody can bet a settled
+    // result at the house cap ("free money"), and post a CLINCHED / OUT status.
+    const decided = snapshot ? factionClinch(pool, cfg.faction, snapshot.state) : null;
+    if (decided) {
+      for (const side of ["a", "b"]) {
+        faction[side].status = decided === side ? "clinched" : "eliminated";
+        faction[side].moneyline = null;
+        faction[side].spread = { ...faction[side].spread, price: null };
+        faction[side].total = { ...faction[side].total, over: null, under: null };
+      }
+      faction.decided = decided;
+    }
   }
 
   const idxOf = (nm) => pool.players.findIndex((pl) => pl.name === nm);

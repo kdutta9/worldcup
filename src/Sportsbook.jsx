@@ -133,6 +133,38 @@ function Book({ book, prev, entries, books, cur, onNav }) {
   useEffect(() => {
     document.title = `${book.name} Sportsbook · World Cup Lotto '26`;
   }, [book.name]);
+
+  // Section ordering. The default (pre-QF) layout is faction on top, the specials
+  // corner down by the Watch. From the QF turn (sheets ≥ 2026-07-08) the live
+  // specials corner takes the marquee at the very top of both books — Hawaii West
+  // for SOSK, Caleb's Corner for Boofy — and the now-settled sections yield the
+  // floor: SOSK's clinched faction drops to just above the Watch, and Boofy's
+  // settled Bad Blood sits in its usual spot below it. Gated on date so committed
+  // sheets keep their layout — only new sheets reflow.
+  const qfEra = (m.date ?? "") >= "2026-07-08";
+  const specialsTop = !!book.caleb && qfEra;
+  const specialsDefault = !!book.caleb && !specialsTop;
+  const factionTop = !!book.faction && !qfEra;
+  const factionDemoted = !!book.faction && qfEra;
+  const specialsPanel = book.caleb ? (
+    <Panel title={book.caleb.title} blurb={book.caleb.blurb}>
+      <div className="bk-rows">
+        {book.caleb.bets.map((b) => {
+          const was = prev?.caleb?.bets?.find((o) => o.label === b.label)?.price;
+          return (
+            <div key={b.label} className="bk-row">
+              <span className="bk-caleb-label">{b.label}</span>
+              <span className="bk-line-right">
+                <PriceMove now={b.price} was={was} />
+                <span className="bk-price">{b.price ?? "—"}</span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </Panel>
+  ) : null;
+
   return (
     <>
       <header className="bk-head">
@@ -157,7 +189,14 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         {entries.length > 1 && <SnapNav entries={entries} cur={cur} onNav={onNav} />}
       </header>
 
-      {book.faction && <Faction f={book.faction} prev={prev?.faction} />}
+      {/* QF-era reflow (sheets ≥ 2026-07-08): the degen specials corner is the
+          live action, so it takes the marquee. SOSK's DKE Civil War is settled
+          (New DKE clinched at the bracket set), so Hawaii West goes to the very
+          top and the faction drops to just above the Watch. Boofy's Bad Blood is
+          settled too, so Caleb's Corner jumps above it. Earlier sheets keep their
+          committed layout untouched. */}
+      {specialsTop && specialsPanel}
+      {factionTop && <Faction f={book.faction} prev={prev?.faction} />}
 
       <Panel title="OUTRIGHT — TO WIN THE POOL" blurb={book.copy.outright}>
         <MarketRows rows={book.outright} prevRows={prev?.outright} kind="outright" tags />
@@ -192,24 +231,9 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         </Panel>
       )}
 
-      {book.caleb && (
-        <Panel title={book.caleb.title} blurb={book.caleb.blurb}>
-          <div className="bk-rows">
-            {book.caleb.bets.map((b) => {
-              const was = prev?.caleb?.bets?.find((o) => o.label === b.label)?.price;
-              return (
-                <div key={b.label} className="bk-row">
-                  <span className="bk-caleb-label">{b.label}</span>
-                  <span className="bk-line-right">
-                    <PriceMove now={b.price} was={was} />
-                    <span className="bk-price">{b.price ?? "—"}</span>
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </Panel>
-      )}
+      {specialsDefault && specialsPanel}
+
+      {factionDemoted && <Faction f={book.faction} prev={prev?.faction} />}
 
       <Watch w={book.watch} prevW={prev?.watch} blurb={book.copy.watch} />
 
@@ -484,6 +508,8 @@ function FactionLine({ label, now, was, sm }) {
 }
 
 function Faction({ f, prev }) {
+  // Once the battle is bracket-clinched the markets are pulled: no live moneyline
+  // to bet a settled result at the house cap. We badge the sides instead.
   const Side = ({ s, ps }) => (
     <div className="bk-side">
       <h3 className="bk-side-name">{s.name}</h3>
@@ -493,25 +519,39 @@ function Faction({ f, prev }) {
         </div>
       ))}
       <div className="bk-side-lines">
-        <FactionLine label="Moneyline" now={s.moneyline} was={ps?.moneyline} />
-        <FactionLine
-          label={`Spread ${s.spread.line}`}
-          now={s.spread.price}
-          was={ps?.spread?.line === s.spread.line ? ps.spread.price : undefined}
-        />
-        <div className="bk-line">
-          <span>Team Total O/U {s.total.line}</span>
-          <span className="bk-line-right">
-            <PriceMove now={s.total.over} was={ps?.total?.line === s.total.line ? ps.total.over : undefined} prefix="O " />
-            <span className="bk-price sm">O {s.total.over ?? "—"} · U {s.total.under ?? "—"}</span>
-          </span>
-        </div>
+        {s.status ? (
+          <div className={`bk-faction-status ${s.status}`}>
+            {s.status === "clinched" ? "CLINCHED ✓" : "ELIMINATED"}
+          </div>
+        ) : (
+          <>
+            <FactionLine label="Moneyline" now={s.moneyline} was={ps?.moneyline} />
+            <FactionLine
+              label={`Spread ${s.spread.line}`}
+              now={s.spread.price}
+              was={ps?.spread?.line === s.spread.line ? ps.spread.price : undefined}
+            />
+            <div className="bk-line">
+              <span>Team Total O/U {s.total.line}</span>
+              <span className="bk-line-right">
+                <PriceMove now={s.total.over} was={ps?.total?.line === s.total.line ? ps.total.over : undefined} prefix="O " />
+                <span className="bk-price sm">O {s.total.over ?? "—"} · U {s.total.under ?? "—"}</span>
+              </span>
+            </div>
+          </>
+        )}
         <div className="bk-line dim"><span>Avg points</span><span>{s.avg}</span></div>
       </div>
     </div>
   );
   return (
     <Panel title={f.title} blurb={f.blurb}>
+      {f.decided && (
+        <p className="bk-faction-decided">
+          DECIDED — {(f.decided === "a" ? f.a : f.b).name} has clinched. The scoring system hands out 65 points
+          and they are guaranteed a majority; the loser cannot catch up. Markets closed.
+        </p>
+      )}
       <div className="bk-vs-grid">
         <Side s={f.a} ps={prev?.a} />
         <div className="bk-vs">VS</div>

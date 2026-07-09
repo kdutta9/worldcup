@@ -333,6 +333,16 @@ export const css = `
 .bk-side-name { font-family: 'Anton', sans-serif; font-size: 19px; letter-spacing: 0.08em; color: #E4C46A; margin: 0 0 8px; }
 .bk-side-player { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; color: rgba(237,232,218,0.85); }
 .bk-side-lines { margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; }
+.bk-faction-status {
+  font-family: 'Anton', sans-serif; letter-spacing: 0.08em; font-size: 15px;
+  text-align: center; padding: 8px 0; margin-bottom: 4px; border-radius: 8px;
+}
+.bk-faction-status.clinched { color: #7FE3A8; border: 1px solid rgba(127,227,168,0.35); background: rgba(127,227,168,0.08); }
+.bk-faction-status.eliminated { color: rgba(237,232,218,0.4); border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); }
+.bk-faction-decided {
+  margin: 4px 0 0; padding: 8px 12px; border-radius: 8px; font-size: 12.5px; line-height: 1.5;
+  color: rgba(237,232,218,0.75); border: 1px solid rgba(201,162,75,0.3); background: rgba(201,162,75,0.05);
+}
 .bk-line { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 13px; }
 .bk-line.dim { color: rgba(237,232,218,0.5); }
 .bk-mainline { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
