@@ -639,7 +639,7 @@ function Roster({ r }) {
   return (
     <div className="bk-roster">
       <h3 className="bk-roster-head">
-        {r.player} — <Flags teams={r.teams.map((t) => t.name)} /> — avg {r.avg} pts
+        {r.player} — <Flags teams={r.teams.map((t) => t.name)} /> — {r.settled ? `${r.avg} pts` : `avg ${r.avg} pts`}
       </h3>
       <table className="bk-table">
         <thead>

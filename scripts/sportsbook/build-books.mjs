@@ -188,6 +188,23 @@ const CONFIG = {
             { label: "The Hawaii West parlay — Norway AND Argentina both reach the semis, drinks on the doubters", kind: "joint", id: "hawaii-west" },
           ],
         },
+        {
+          since: "2026-07-09", // QF-97 final: France 2, Morocco 0. Morocco was already locked at 3 (banked
+          // reaching the QF), so Arnst's floor ticks up exactly one point on France's SF banking — the
+          // three-way logjam barely moves. The doubleheader is now the whole show, so the bar's card
+          // gets two more standalone Saturday lines instead of just the combined parlay.
+          title: "HAWAII WEST SPECIALS — DOORS OPEN SATURDAY",
+          blurb:
+            "France 2, Morocco 0 — Arnst nets exactly one point for it, since Morocco was already locked at 3 and France just moved up a rung to the semis. Barely dents the three-way logjam at the top. The real business is Saturday's doubleheader, so the bar opens the card wide: loosies on the counter at a dollar a stick, the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "The logjam breaks his way — Jacob Call wins the pool", kind: "winsPool", player: "J Call" },
+            { label: "Battle of the men who play themselves — J Call (Argentina/Switzerland) finishes above Arnst, now with a one-point bigger cushion", kind: "outscores", player: "J Call", other: "Arnst" },
+            { label: "The leapfrog, now on Friday — Burnes (Spain) runs down Chris (Belgium) head-to-head", kind: "outscores", player: "Burnes", other: "Chris" },
+            { label: "Kunal (Norway) outscores Oanta (England) — Saturday at Hawaii West, adjudicated over a poorly mixed Mai Tai", kind: "outscores", player: "Kunal", other: "Oanta" },
+            { label: "Oanta's last stand — top 3 or nothing, and it hinges on England getting past Erling Haaland", kind: "cashes", player: "Oanta" },
+            { label: "The Hawaii West parlay — Norway AND Argentina both reach the semis, drinks on the doubters", kind: "joint", id: "hawaii-west" },
+          ],
+        },
       ],
     },
   },
@@ -297,7 +314,23 @@ const CONFIG = {
             { label: "The final is Rob vs Rob — England AND France both reach it", kind: "joint", id: "rob-final" },
             { label: "The full Cinderella survives — Morocco (Dino) knocks out Rob's France and wins the pool", kind: "winsPool", player: "Dino" },
             { label: "Max, a dirty Brit, sends England home Saturday and wins the whole pool", kind: "winsPool", player: "Max" },
-            { label: "Jake's Cinderella — Switzerland runs down Nathan's Argentina in the Saturday QF-100 upset", kind: "outscores", player: "Jake", other: "Nathan" },
+            { label: "One more closer to the money — Switzerland takes down Argentina for Jake", kind: "outscores", player: "Jake", other: "Nathan" },
+          ],
+        },
+        {
+          since: "2026-07-09", // QF-97 final: France 2, Morocco 0. Dino's whole roster is cooked —
+          // Iran, Portugal, Canada, Morocco, every seat frozen — so the Cinderella slip and the
+          // Rob-vs-Rob joint both retire; Rob's lone remaining leg (England, Saturday) is the new
+          // single line. Three quarterfinals left decide almost the entire rest of the field.
+          title: "CALEB'S CORNER — ONE DOWN, THREE TO GO",
+          blurb:
+            "France 2, Morocco 0 — book it. Dino's Cinderella died with the final whistle; Iran, Portugal, Canada, Morocco, all four teams cooked, he's frozen on 7 points for the rest of his natural life. Rob banked his semifinalist and pulls clear at the top of the pool with just England left to close it out Saturday. Spain–Belgium Friday and the Norway–England / Argentina–Switzerland doubleheader Saturday settle basically everyone else's summer. Caleb has a slip on what's left. Cash up front — he knows the drill.",
+          bets: [
+            { label: "Rob runs the table — Over 12.5 points with and England vs France final", kind: "overPts", player: "Rob", line: 12.5 },
+            { label: "Max, a dirty Brit, wins the whole pool — step one is sending England home Saturday", kind: "winsPool", player: "Max" },
+            { label: "One more closer to the money — Jake climbs past Nathan in the pool, riding Switzerland's shot at Argentina", kind: "outscores", player: "Jake", other: "Nathan" },
+            { label: "Dante's Inferno — top 3 or bust, and it starts with Spain getting past Belgium Friday", kind: "cashes", player: "Dante" },
+            { label: "The last two with a pulse — Max (Norway) outlasts Dante (Spain) for whatever's left on the board", kind: "outscores", player: "Max", other: "Dante" },
           ],
         },
       ],
@@ -811,6 +844,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     .map((i) => ({
       player: players[i].name,
       avg: players[i].avg,
+      settled: bounds ? bounds.min[i] === bounds.max[i] : false,
       teams: pool.players[i].teams.map((name) => {
         const t = TEAM_INDEX[name];
         const sc = stageCounts[t];
