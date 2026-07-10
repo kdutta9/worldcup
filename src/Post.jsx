@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { POSTS } from "./posts";
+import BackHome from "./BackHome";
 
 // `?post=<id>` → one house-organ post, dressed like the sportsbook sheets.
 // `?post` → the archive. Content lives in posts.jsx; this view only frames it.
@@ -13,6 +14,7 @@ export default function Post({ postId }) {
   if (postId && !post)
     return (
       <div className="book-root">
+        <BackHome />
         <div className="book-wrap">
           <p className="state-msg">
             No such post. <a className="bk-link" href="?post">Back to the archive</a>
@@ -23,6 +25,7 @@ export default function Post({ postId }) {
 
   return (
     <div className="book-root">
+      <BackHome />
       <div className="book-wrap post-wrap">{post ? <Article post={post} /> : <Archive />}</div>
     </div>
   );

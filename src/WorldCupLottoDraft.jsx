@@ -257,7 +257,7 @@ export default function WorldCupLottoDraft({ snapshot = null }) {
               {isSnapshot ? (
                 <>
                   <button className="ghost-btn" onClick={replayDraw}>Replay the draw</button>
-                  <a className="ghost-btn" href="./" style={{ textDecoration: "none" }}>Start your own</a>
+                  <a className="ghost-btn" href="?draft" style={{ textDecoration: "none" }}>Start your own</a>
                 </>
               ) : (
                 <button className="ghost-btn" onClick={saveToScoreboard}>Save to scoreboard</button>

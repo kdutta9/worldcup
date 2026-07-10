@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { TEAM_BY_NAME } from "./draw";
 import { loadGroupsIndex } from "./scoring";
+import BackHome from "./BackHome";
 
 // `?book=<id>` → that group's sportsbook sheet. `?book` → list of books.
 // Data is precomputed by scripts/sportsbook/build-books.mjs from 400k Monte
@@ -56,10 +57,11 @@ export default function Sportsbook({ bookId }) {
 
   return (
     <div className="book-root">
+      <BackHome />
       <div className="book-wrap">
         {state.status === "loading" && <p className="state-msg">Opening the book…</p>}
         {state.status === "error" && (
-          <p className="state-msg">No book posted for this group. <a className="bk-link" href="./">Back to the lobby</a></p>
+          <p className="state-msg">No book posted for this group. <a className="bk-link" href="?book">Back to the lobby</a></p>
         )}
         {state.status === "ok" && state.index && <BookList index={state.index} />}
         {state.status === "ok" && state.books && (
@@ -269,7 +271,7 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         </p>
         <p className="bk-foot">{book.bookName} · EST. JUNE 2026 · NO REFUNDS</p>
         <p className="bk-foot-nav">
-          <a className="bk-link" href={`?scores=${book.id}`}>Live standings</a> · <a className="bk-link" href="./">Draft lobby</a>
+          <a className="bk-link" href={`?scores=${book.id}`}>Live standings</a> · <a className="bk-link" href="./">Scoreboards</a> · <a className="bk-link" href="?draft">New draft</a>
         </p>
       </footer>
     </>

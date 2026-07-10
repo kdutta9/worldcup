@@ -25,7 +25,7 @@ export const css = `
 .sub { color: #C9A24B; letter-spacing: 0.28em; font-size: 12px; font-weight: 700; margin-top: 8px; }
 
 /* Top nav */
-.topnav { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.topnav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
 .topnav a {
   color: #C9A24B; text-decoration: none; font-weight: 700; font-size: 12px;
   letter-spacing: 0.12em; text-transform: uppercase;
@@ -262,6 +262,19 @@ export const css = `
   padding: 36px 14px 64px;
 }
 .book-wrap { max-width: 980px; margin: 0 auto; }
+.bk-backbar {
+  position: sticky; top: 0; z-index: 10;
+  margin: -36px -14px 26px; padding: 10px 14px;
+  padding-top: calc(10px + env(safe-area-inset-top));
+  background: rgba(11,11,14,0.88);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(201,162,75,0.18);
+}
+.bk-back {
+  color: #C9A24B; text-decoration: none; font-weight: 700; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.bk-back:hover { color: #E4C46A; }
 .bk-head { text-align: center; }
 .bk-eyebrow { letter-spacing: 0.55em; font-size: 10px; font-weight: 700; color: #C9A24B; margin: 0 0 10px; }
 .bk-title {

@@ -8,11 +8,11 @@ import { css } from "./styles";
 
 // Query-param routing (no router dep, refresh-safe on static hosting):
 //   ?d=<payload>   → shared snapshot board
-//   ?scores        → scoreboard landing
-//   ?scores=<id>   → that group's standings
-//   ?book=<id>     → that group's sportsbook sheet
+//   ?book=<id>     → that group's sportsbook sheet (?book → book list)
 //   ?post=<id>     → a house-organ post (?post → archive)
-//   (none)         → draft tool
+//   ?draft         → draft tool
+//   ?scores=<id>   → that group's standings
+//   (none)         → scoreboard landing (tournament's in progress; this is the useful default)
 export default function App() {
   const params = new URLSearchParams(window.location.search);
 
@@ -31,15 +31,15 @@ export default function App() {
     view = <Sportsbook bookId={params.get("book")} />;
   } else if (params.has("post")) {
     view = <Post postId={params.get("post")} />;
-  } else if (params.has("scores")) {
+  } else if (params.has("draft")) {
+    view = <WorldCupLottoDraft />;
+  } else {
     view = (
       <div className="root">
         <Masthead sub="LIVE STANDINGS" active="scores" />
         <Scoreboard groupId={params.get("scores")} />
       </div>
     );
-  } else {
-    view = <WorldCupLottoDraft />;
   }
 
   return (
