@@ -326,7 +326,7 @@ const CONFIG = {
           blurb:
             "France 2, Morocco 0 — book it. Dino's Cinderella died with the final whistle; Iran, Portugal, Canada, Morocco, all four teams cooked, he's frozen on 7 points for the rest of his natural life. Rob banked his semifinalist and pulls clear at the top of the pool with just England left to close it out Saturday. Spain–Belgium Friday and the Norway–England / Argentina–Switzerland doubleheader Saturday settle basically everyone else's summer. Caleb has a slip on what's left. Cash up front — he knows the drill.",
           bets: [
-            { label: "Rob runs the table — Over 12.5 points with and England vs France final", kind: "overPts", player: "Rob", line: 12.5 },
+            { label: "Rob runs the table — Over 12.5 points with an England vs France final", kind: "overPts", player: "Rob", line: 12.5 },
             { label: "Max, a dirty Brit, wins the whole pool — step one is sending England home Saturday", kind: "winsPool", player: "Max" },
             { label: "One more closer to the money — Jake climbs past Nathan in the pool, riding Switzerland's shot at Argentina", kind: "outscores", player: "Jake", other: "Nathan" },
             { label: "Dante's Inferno — top 3 or bust, and it starts with Spain getting past Belgium Friday", kind: "cashes", player: "Dante" },
