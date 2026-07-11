@@ -127,6 +127,9 @@ const CONFIG = {
       // Both Saturday quarterfinal winners: Norway over England, Argentina over
       // Switzerland — reaching the SF is exactly winning the QF.
       { id: "hawaii-west", type: "teamsReach", teams: ["Norway", "Argentina"], stage: "SF" },
+      // The all-underdog Saturday: both dogs bite, and SF-102 becomes Norway vs
+      // Switzerland — a Cinderella semifinal with no top-four seed in it.
+      { id: "hawaii-west-chaos", type: "teamsReach", teams: ["Norway", "Switzerland"], stage: "SF" },
     ],
     specials: {
       title: "PROZAN'S PARLAY WINDOW — DEGEN SPECIALS",
@@ -205,6 +208,23 @@ const CONFIG = {
             { label: "The Hawaii West parlay — Norway AND Argentina both reach the semis, drinks on the doubters", kind: "joint", id: "hawaii-west" },
           ],
         },
+        {
+          since: "2026-07-10", // QF-98: Spain 2, Belgium 1. Belgium out freezes Chris solid at 9 (every
+          // team eliminated) and reframes the leapfrog — Burnes can only catch him by taking Spain THROUGH
+          // France in the semi. And the bracket locked a France–Spain semifinal: Arnst and Burnes, the
+          // pool's top two, collide for a single finalist's ticket. Everything else runs through Saturday.
+          title: "HAWAII WEST SPECIALS — THE SATURDAY DOUBLEHEADER",
+          blurb:
+            "Spain 2, Belgium 1 — and the bracket sets a cruel one: Arnst's France meets Burnes's Spain in the semifinal, the pool's top two colliding for a single ticket to the final. Chris is a statue at 9, every team he owns eliminated, guarding the last podium rung. Everything else runs through Saturday's doubleheader at Hawaii West — Norway–England and Argentina–Switzerland, the second of which is J Call playing himself. Loosies a dollar a stick; the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "The leapfrog reborn — Burnes (Spain) runs down the frozen Chris (Belgium), but only through France: Spain reaching the final ties it at 9, only the trophy passes him", kind: "outscores", player: "Burnes", other: "Chris" },
+            { label: "The statue holds — Chris, every team eliminated, cashes top 3 anyway; dead-heat rules split the cash, so even a tie pays", kind: "cashes", player: "Chris" },
+            { label: "Arnst runs it back — France, the tournament favorite, lifts the Cup and he clears Over 12.5 points", kind: "overPts", player: "Arnst", line: 12.5 },
+            { label: "J Call beats J Call — Argentina vs Switzerland on Saturday, both his, so he can't lose a semifinalist, and rides the survivor to win the pool", kind: "winsPool", player: "J Call" },
+            { label: "The Saturday mirror — Kunal (Norway) outlasts Oanta (England), settled on the pitch, adjudicated over a poorly mixed Mai Tai", kind: "outscores", player: "Kunal", other: "Oanta" },
+            { label: "Chaos at Hawaii West — Norway AND Switzerland both pull the Saturday upset and turn SF-102 into a Cinderella semifinal, drinks on the doubters", kind: "joint", id: "hawaii-west-chaos" },
+          ],
+        },
       ],
     },
   },
@@ -238,6 +258,12 @@ const CONFIG = {
         player: "Rob",
         title: "ROB WATCH — ROB TOTAL POINTS",
         copy: "England and France both banked the quarters, on opposite halves — they can only meet in the final. The model's median is 9 points. Main line:",
+      },
+      {
+        since: "2026-07-10",
+        player: "Rob",
+        title: "ROB WATCH — ROB TOTAL POINTS",
+        copy: "France has already banked its semifinal — and drew Spain in it — while England still has to get past Norway on Saturday. Opposite halves: the two can only ever meet in the final. The model's median is 11 points. Main line:",
       },
     ],
     faction: null,
@@ -331,6 +357,23 @@ const CONFIG = {
             { label: "One more closer to the money — Jake climbs past Nathan in the pool, riding Switzerland's shot at Argentina", kind: "outscores", player: "Jake", other: "Nathan" },
             { label: "Dante's Inferno — top 3 or bust, and it starts with Spain getting past Belgium Friday", kind: "cashes", player: "Dante" },
             { label: "The last two with a pulse — Max (Norway) outlasts Dante (Spain) for whatever's left on the board", kind: "outscores", player: "Max", other: "Dante" },
+          ],
+        },
+        {
+          since: "2026-07-10", // QF-98: Spain 2, Belgium 1. Belgium out kills Nick (dead at 6) and hands
+          // Dante's Spain a semifinal — against Rob's France. Every game the pool has left is now a
+          // seat-vs-seat collision: Rob's England vs Max's Norway and Nathan's Argentina vs Jake's
+          // Switzerland on Saturday, Rob's France vs Dante's Spain in the semifinal.
+          title: "CALEB'S CORNER — THE BOOFY CIVIL WAR",
+          blurb:
+            "Spain 2, Belgium 1 — book it, then watch what it did to the bracket. Every match Boofy has left is one seat's team against another's: Saturday it's Rob's England vs Max's Norway and Nathan's Argentina vs Jake's Switzerland; the semifinal is Rob's France against Dante's Spain, the runaway leader trying to bury the basement's last hope. Nick is dead — Belgium was his only pulse, frozen at 6. Caleb has a slip on every collision. Cash up front — he knows the drill.",
+          bets: [
+            { label: "Rob laps the field — England AND France both alive on opposite halves, so they can only meet in the final, and he wins the pool", kind: "winsPool", player: "Rob" },
+            { label: "Dante's Inferno — his entire summer is Spain, and cashing top 3 means Spain lifting the actual trophy; a final isn't enough, it has to be the whole thing", kind: "cashes", player: "Dante" },
+            { label: "Dead but not buried — Dino, every team he owns eliminated, frozen on 7, still cashes top 3 if the climbers all stall", kind: "cashes", player: "Dino" },
+            { label: "Nathan needs Argentina — step one is beating Jake's Switzerland in Saturday's all-Boofy quarterfinal, then the pool is his", kind: "winsPool", player: "Nathan" },
+            { label: "Max, a dirty Brit, sends Rob's England home Saturday and rides Norway to the whole pool", kind: "winsPool", player: "Max" },
+            { label: "One more closer to the money — Jake climbs past Nathan, riding Switzerland's shot at Argentina", kind: "outscores", player: "Jake", other: "Nathan" },
           ],
         },
       ],
