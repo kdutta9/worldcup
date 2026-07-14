@@ -8,6 +8,7 @@ export const STAGE_POINTS = {
   R16: 2, // reached the Round of 16
   QF: 3, // reached the Quarterfinal
   SF: 4, // reached the Semifinal
+  FINALIST: 5, // won the Semifinal — guaranteed at least runner-up, scored as such provisionally
   RUNNER_UP: 5, // lost the Final
   CHAMPION: 8, // won it
 };
@@ -18,6 +19,7 @@ export const STAGE_LABEL = {
   R16: "Round of 16",
   QF: "Quarterfinal",
   SF: "Semifinal",
+  FINALIST: "Finalist",
   RUNNER_UP: "Runner-up",
   CHAMPION: "Champion",
 };

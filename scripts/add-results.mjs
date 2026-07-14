@@ -138,6 +138,18 @@ const state = deriveState(matches);
 const stages = {};
 for (const [team, st] of Object.entries(state.stageOf).sort((x, y) => y[1] - x[1] || (x[0] < y[0] ? -1 : 1)))
   stages[team] = STAGE_KEYS[st];
+
+// A semifinal winner is guaranteed at least runner-up, so the scoreboard shows
+// them as a Finalist (5 pts) right away instead of waiting on the final. This is
+// a display-only override — state.mjs's internal stageOf (which drives the
+// sportsbook engine) still holds SF winners at SF until the final resolves it.
+if (!state.ko[104]) {
+  for (const sfId of [101, 102]) {
+    const r = state.ko[sfId];
+    if (r && stages[r.winner] === "SF") stages[r.winner] = "FINALIST";
+  }
+}
+
 const prevResults = existsSync(RESULTS_PATH) ? JSON.parse(readFileSync(RESULTS_PATH, "utf8")) : {};
 writeFileSync(
   RESULTS_PATH,

@@ -98,7 +98,8 @@ function GroupStandings({ groupId }) {
       </div>
       <p className="fine" style={{ margin: "20px auto 0" }}>
         Points are scored per team by furthest round reached: Round of 32 = 1, R16 = 2, QF = 3,
-        SF = 4, Runner-up = 5, Champion = 8. Last updated {results.updatedAt || "—"}.
+        SF = 4, Runner-up = 5, Champion = 8. A semifinal winner is scored as a Finalist (5, same
+        as runner-up) until the final decides Runner-up vs. Champion. Last updated {results.updatedAt || "—"}.
       </p>
       <div className="btn-row" style={{ marginTop: 18 }}>
         <a className="ghost-btn" href={`?book=${groupId}`}>Sportsbook: latest lines →</a>
