@@ -371,6 +371,9 @@ export const css = `
 }
 .bk-table td { padding: 7px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); color: rgba(237,232,218,0.85); }
 .bk-table .bk-td-team { font-weight: 500; color: #EDE8DA; }
+.bk-table .bk-col-r { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bk-table.bk-standings td.bk-col-r { font-family: 'Anton', sans-serif; letter-spacing: 0.03em; font-size: 15px; color: #E4C46A; }
+.bk-table.bk-standings td.bk-col-r.out { color: rgba(237,232,218,0.35); }
 .bk-table.ladder { max-width: 420px; }
 .bk-table.ladder tr.main td { color: #E4C46A; font-weight: 700; }
 .bk-hist { display: flex; align-items: flex-end; gap: 3px; height: 130px; margin-top: 26px; }

@@ -200,9 +200,15 @@ function Book({ book, prev, entries, books, cur, onNav }) {
       {specialsTop && specialsPanel}
       {factionTop && <Faction f={book.faction} prev={prev?.faction} />}
 
-      <Panel title="OUTRIGHT — TO WIN THE POOL" blurb={book.copy.outright}>
-        <MarketRows rows={book.outright} prevRows={prev?.outright} kind="outright" tags />
-      </Panel>
+      {book.outright[0] && "pts" in book.outright[0] ? (
+        <Panel title="THE POOL — STANDINGS & ODDS TO WIN" blurb={book.copy.outright}>
+          <OutrightTable rows={book.outright} />
+        </Panel>
+      ) : (
+        <Panel title="OUTRIGHT — TO WIN THE POOL" blurb={book.copy.outright}>
+          <MarketRows rows={book.outright} prevRows={prev?.outright} kind="outright" tags />
+        </Panel>
+      )}
 
       {books.length > 1 && <LineMovement entries={entries} books={books} cur={cur} />}
 
@@ -215,13 +221,17 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         </Panel>
       </div>
 
-      <Panel title="HEAD-TO-HEAD — TOP SHELF MATCHUPS" blurb={book.copy.h2h}>
-        <div className="bk-h2h-grid">
-          {book.h2h.map((x) => (
-            <H2H key={`${x.a}-${x.b}`} x={x} prev={matchPair(prev?.h2h, x)} />
-          ))}
-        </div>
-      </Panel>
+      {book.h2h.some((x) => !x.settled) && (
+        <Panel title="HEAD-TO-HEAD — TOP SHELF MATCHUPS" blurb={book.copy.h2h}>
+          <div className="bk-h2h-grid">
+            {book.h2h
+              .filter((x) => !x.settled)
+              .map((x) => (
+                <H2H key={`${x.a}-${x.b}`} x={x} prev={matchPair(prev?.h2h, x)} />
+              ))}
+          </div>
+        </Panel>
+      )}
 
       {book.grudges && (
         <Panel title={book.grudges.title} blurb={book.grudges.blurb}>
@@ -380,6 +390,36 @@ function MarketRows({ rows, prevRows, kind, tags, compact }) {
         </div>
       ))}
     </div>
+  );
+}
+
+// The pool's live standings doubling as the outright board: banked points and
+// still-alive teams (as of this sheet's date), plus the price to win the pool.
+// Point-sorted like a real table; ties broken by win probability.
+function OutrightTable({ rows }) {
+  const sorted = [...rows].sort((a, b) => (b.pts ?? 0) - (a.pts ?? 0) || b.fairPct - a.fairPct);
+  const toWin = (r) =>
+    r.status === "dead" ? "OUT" : r.status === "locked" ? "WON ✓" : r.price ?? "—";
+  return (
+    <table className="bk-table bk-standings">
+      <thead>
+        <tr><th>PTS</th><th>SEAT</th><th>STILL ALIVE</th><th className="bk-col-r">TO WIN</th></tr>
+      </thead>
+      <tbody>
+        {sorted.map((r) => (
+          <tr key={r.player}>
+            <td>{r.pts ?? 0}</td>
+            <td className="bk-td-team">{r.player}</td>
+            <td>
+              {r.alive?.length
+                ? r.alive.map((t) => `${TEAM_BY_NAME[t]?.flag ?? "🏳️"} ${t}`).join(" · ")
+                : "—"}
+            </td>
+            <td className={`bk-col-r ${r.status ? "out" : ""}`}>{toWin(r)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 

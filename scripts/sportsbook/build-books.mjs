@@ -114,6 +114,12 @@ const CONFIG = {
         title: "J CALL WATCH — J CALL TOTAL POINTS",
         copy: "Argentina and Switzerland both through — and they collide in Saturday's quarterfinal, so J Call is guaranteed a semifinalist. The pool's most live hand. The model's median is 10 points. Main line:",
       },
+      {
+        since: "2026-07-11",
+        player: "J Call",
+        title: "J CALL WATCH — J CALL TOTAL POINTS",
+        copy: "He played himself Saturday and Argentina survived Switzerland 3–1 in extra time — saved, the group insists, by a phantom second yellow on Embolo. Argentina is his only live hand now, tied atop the pool with Arnst, and it draws Oanta's England in the semifinal. The model's median is 11 points. Main line:",
+      },
     ],
     faction: {
       title: "THE DKE CIVIL WAR — OLD DKE VS NEW DKE",
@@ -130,6 +136,10 @@ const CONFIG = {
       // The all-underdog Saturday: both dogs bite, and SF-102 becomes Norway vs
       // Switzerland — a Cinderella semifinal with no top-four seed in it.
       { id: "hawaii-west-chaos", type: "teamsReach", teams: ["Norway", "Switzerland"], stage: "SF" },
+      // The two co-leaders' teams sit in opposite semifinals (France in SF-101,
+      // Argentina in SF-102), so "both reach the final" is exactly an Arnst-vs-J-Call
+      // title match — the SOSK mirror of Boofy's Rob-vs-Rob final.
+      { id: "callarnst-final", type: "teamsReach", teams: ["Argentina", "France"], stage: "RUNNER_UP" },
     ],
     specials: {
       title: "PROZAN'S PARLAY WINDOW — DEGEN SPECIALS",
@@ -225,6 +235,25 @@ const CONFIG = {
             { label: "Chaos at Hawaii West — Norway AND Switzerland both pull the Saturday upset and turn SF-102 into a Cinderella semifinal, drinks on the doubters", kind: "joint", id: "hawaii-west-chaos" },
           ],
         },
+        {
+          since: "2026-07-11", // QF-99/100: England 2, Norway 1 and Argentina 3, Switzerland 1 (ET).
+          // J Call played himself (Argentina vs Switzerland) and Argentina survived, so the
+          // four live seats are now EXACTLY the four semifinalists, one owner each, all drawn
+          // into duels: Arnst (France) vs Burnes (Spain) Tuesday, J Call (Argentina) vs Oanta
+          // (England) Wednesday. The Saturday doubleheader is spent — its parlays retire — so
+          // the marquee passes to the man who organized the whole thing at Hawaii West.
+          title: "THE OANTA INVITATIONAL — PRESENTED BY HAWAII WEST",
+          blurb:
+            "Saturday at Hawaii West was, by unanimous panel vote, beast — two good TVs, a full ashtray, loosies a dollar a stick, and Oanta the man who organized it. So the semifinal card carries his name. The cruelty of the draw: every live seat is now a semifinalist, and they're paired off. Arnst (France) meets Burnes (Spain) Tuesday — a co-leader against the leapfrog. J Call (Argentina) meets Oanta (England) Wednesday — a co-leader against the host himself, who has to lift the actual trophy to crash his own party. Chris is a statue at 9, every team eliminated, guarding the last podium rung. Cash up front; the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "J Call beats the host — Argentina past Oanta's England on Wednesday — and wins the pool", kind: "winsPool", player: "J Call" },
+            { label: "Arnst answers the co-leader — France past Burnes's Spain on Tuesday, and he clears Over 12.5 points", kind: "overPts", player: "Arnst", line: 12.5 },
+            { label: "The co-leaders collide for the Cup — Argentina AND France both reach the final, J Call vs Arnst for everything", kind: "joint", id: "callarnst-final" },
+            { label: "The leapfrog, last leg — Burnes (Spain) runs down the frozen Chris, but only the trophy does it: a final merely ties, and it's through Arnst's France first", kind: "outscores", player: "Burnes", other: "Chris" },
+            { label: "Oanta crashes his own party — the man who threw the Saturday needs England to win the whole thing to cash top 3", kind: "cashes", player: "Oanta" },
+            { label: "The statue holds — Chris, every team eliminated, cashes top 3 anyway; dead-heat rules split the cash, so even a tie pays", kind: "cashes", player: "Chris" },
+          ],
+        },
       ],
     },
   },
@@ -264,6 +293,12 @@ const CONFIG = {
         player: "Rob",
         title: "ROB WATCH — ROB TOTAL POINTS",
         copy: "France has already banked its semifinal — and drew Spain in it — while England still has to get past Norway on Saturday. Opposite halves: the two can only ever meet in the final. The model's median is 11 points. Main line:",
+      },
+      {
+        since: "2026-07-11",
+        player: "Rob",
+        title: "ROB WATCH — ROB TOTAL POINTS",
+        copy: "Both England and France are through to the semifinals now, on opposite halves — France meets Spain Tuesday, England meets Argentina Wednesday — so the house owns both sides of the bracket and the two can only reunite in the final. The model's median is 12 points. Main line:",
       },
     ],
     faction: null,
@@ -374,6 +409,25 @@ const CONFIG = {
             { label: "Nathan needs Argentina — step one is beating Jake's Switzerland in Saturday's all-Boofy quarterfinal, then the pool is his", kind: "winsPool", player: "Nathan" },
             { label: "Max, a dirty Brit, sends Rob's England home Saturday and rides Norway to the whole pool", kind: "winsPool", player: "Max" },
             { label: "One more closer to the money — Jake climbs past Nathan, riding Switzerland's shot at Argentina", kind: "outscores", player: "Jake", other: "Nathan" },
+          ],
+        },
+        {
+          since: "2026-07-11", // QF-99/100: England 2, Norway 1 and Argentina 3, Switzerland 1 (ET).
+          // The semifinal bracket is a Rob ambush: he owns France AND England, drawn into
+          // opposite semifinals, so he is personally the opponent both live challengers must
+          // beat — his France meets Dante's Spain Tuesday, his England meets Nathan's Argentina
+          // Wednesday. Max's Norway was knocked out by England — his own country — freezing him
+          // at 7 beside the equally-frozen Dino.
+          title: "CALEB'S CORNER — THE FINAL BOSS",
+          blurb:
+            "England 2, Norway 1; Argentina 3, Switzerland 1 in extra time — and the bracket hands the house its edge. Rob owns both France and England, drawn into opposite semifinals, so every live contender has to go through one of his teams: Dante's Spain meets Rob's France on Tuesday, Nathan's Argentina meets Rob's England on Wednesday. Win both and it's an England–France final with a single seat holding the trophy AND the runner-up. Max — a dirty Brit — watched his Norway get knocked out by England, his own country, and sits frozen at 7 next to Dino, both praying the boring team stays boring. Caleb has a slip on all of it. Cash up front — he knows the drill.",
+          bets: [
+            { label: "The final is Rob vs Rob — England AND France both reach it, the trophy and the runner-up landing on one seat", kind: "joint", id: "rob-final" },
+            { label: "Rob laps the field — two live semifinalists on opposite halves, and he wins the pool", kind: "winsPool", player: "Rob" },
+            { label: "Nathan's only road runs through Rob — Argentina has to beat England on Wednesday, then the pool is his", kind: "winsPool", player: "Nathan" },
+            { label: "Dante's Inferno, last chamber — top 3 means Spain lifting the actual trophy, a final isn't enough, and it starts by getting past Rob's France", kind: "cashes", player: "Dante" },
+            { label: "Killed by his own country — Max, a dirty Brit whose Norway fell to England, is frozen at 7 and still cashes top 3 if Spain stays boring", kind: "cashes", player: "Max" },
+            { label: "Dead but not buried — Dino, every team he owns eliminated, frozen on 7, cashes top 3 if the climbers all stall", kind: "cashes", player: "Dino" },
           ],
         },
       ],
@@ -678,7 +732,19 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   const byWin = [...players.keys()].sort((x, y) => players[y].pWin - players[x].pWin);
   const byLast = [...players.keys()].sort((x, y) => players[y].pLast - players[x].pLast);
 
-  const outright = byWin.map((i) => row(i, players[i].pWin, MARGIN.outright, statuses?.win[i]));
+  // Banked points and still-alive teams as of this sheet's date, so a dated
+  // sheet's outright panel can double as the live standings table. Only emitted
+  // on dated snapshots — the opening book stays as originally committed (and
+  // check-open stays green), and no historical sheet is rewritten unless rebuilt.
+  const standingsRow = (i) => ({
+    pts: players[i].teams.reduce((s, t) => s + STAGE_POINTS[snapshot.state.stageOf[t] ?? STAGE.GROUP], 0),
+    alive: players[i].teams.filter((t) => !snapshot.state.eliminated.has(t)),
+  });
+
+  const outright = byWin.map((i) => {
+    const base = row(i, players[i].pWin, MARGIN.outright, statuses?.win[i]);
+    return snapshot ? { ...base, ...standingsRow(i) } : base;
+  });
   const toCash = [...players.keys()]
     .sort((x, y) => players[y].pTop - players[x].pTop)
     .map((i) => row(i, players[i].pTop, MARGIN.place, statuses?.cash[i]));
