@@ -124,7 +124,7 @@ const CONFIG = {
         since: "2026-07-14",
         player: "J Call",
         title: "J CALL WATCH — J CALL TOTAL POINTS",
-        copy: "Spain's rout of France reshaped the whole top of the board, but J Call's Argentina is still standing and still his most live hand. Beat Oanta's England at noon on July 15 and he's in the final with a live title shot at Spain; lose and he's frozen at 10 — either way he is banked into the podium. The model's median is 10 points. Main line:",
+        copy: "Spain's rout of France reshaped the whole top of the board, but J Call's Argentina is still standing and still his most live hand. Beat Oanta's England and he's in the final with a live title shot at Spain; lose and he's frozen at 10 — either way he is banked into the podium. The model's median is 10 points. Main line:",
       },
     ],
     faction: {
@@ -268,14 +268,14 @@ const CONFIG = {
           since: "2026-07-14", // SF-101: Spain 2, France 0. France out freezes Arnst solid at 10 —
           // locked onto the podium (a champion always clears 10) but barred from first. Spain in the
           // final lifts Burnes's floor to 9 and makes "Spain wins the Cup" worth the whole pool to him.
-          // The other final seat is the noon-July-15 England–Argentina semi: Oanta vs J Call, winner faces Spain.
+          // The other final seat is the noon England–Argentina semi: Oanta vs J Call, winner faces Spain.
           title: "THE OANTA INVITATIONAL — THE LAST SEMIFINAL",
           blurb:
-            "Spain 2, France 0 — the tournament favorite is dead and Spain is in the final. That froze Arnst at 10: locked onto the podium, barred from first, only the size of his check still live. Burnes now holds the whole pool in one result — Spain lifting the Cup is the $150. The other seat in the final is settled at noon on July 15 at Hawaii West: Oanta's England vs J Call's Argentina, winner faces Spain, loser is done. Cash up front; the jukebox still doesn't take IOUs.",
+            "Spain 2, France 0 — the tournament favorite is dead and Spain is in the final. That froze Arnst at 10: locked onto the podium, barred from first, only the size of his check still live. Burnes now holds the whole pool in one result — Spain lifting the Cup is the $150. The other seat in the final is settled at noon at Hawaii West: Oanta's England vs J Call's Argentina, winner faces Spain, loser is done. Cash up front; the jukebox still doesn't take IOUs.",
           bets: [
             { label: "Burnes wins the pool — Spain lifts the Cup and the $150 is his; the board's favorite", kind: "winsPool", player: "Burnes" },
-            { label: "Oanta wins the pool — England beats Argentina at noon on July 15, then dethrones Spain in the final", kind: "winsPool", player: "Oanta" },
-            { label: "J Call wins the pool — Argentina beats England at noon on July 15, then dethrones Spain in the final", kind: "winsPool", player: "J Call" },
+            { label: "Oanta wins the pool — England beats Argentina, then dethrones Spain in the final", kind: "winsPool", player: "Oanta" },
+            { label: "J Call wins the pool — Argentina beats England, then dethrones Spain in the final", kind: "winsPool", player: "J Call" },
             { label: "Arnst holds second — frozen at 10, locked onto the podium, he keeps at least a share of the $60 spot in every outcome but one", kind: "jointNot", id: "arnst-third" },
             { label: "Arnst slips to sole third — the lone exception: Argentina reaches the final AND Spain wins it, stacking two seats above him", kind: "joint", id: "arnst-third" },
             { label: "Chris steals a podium — frozen at 9, every team dead, he backs into a shared third only if Argentina wins the whole thing", kind: "cashes", player: "Chris" },
@@ -331,10 +331,21 @@ const CONFIG = {
         since: "2026-07-14",
         player: "Rob",
         title: "ROB WATCH — ROB TOTAL POINTS",
-        copy: "France died in the semifinal and took the Rob-vs-Rob final with it — but England is still Rob's, and at noon on July 15 England vs Nathan's Argentina decides the whole pool: win it and Rob banks a finalist and the title is his to lose; lose it and he settles for runner-up in the pool at 8. The model's median is 9 points. Main line:",
+        copy: "France died in the semifinal and took the Rob-vs-Rob final with it — but England is still Rob's, and England vs Nathan's Argentina decides the whole pool: win it and Rob banks a finalist and the title is his to lose; lose it and he settles for runner-up in the pool at 8. The model's median is 9 points. Main line:",
       },
     ],
     faction: null,
+    // From the Spain-in-final sheet the live H2H is two duels: Rob vs Nathan
+    // for the pool, and Dante (Spain, needs the title) vs the two frozen, tied
+    // sevens — Dino & Max move together, so one priced line (off Dino) covers
+    // both. Explicit pairs, gated on date so earlier sheets keep the auto shelf.
+    h2hPairs: {
+      since: "2026-07-14",
+      pairs: [
+        { a: "Rob", b: "Nathan" },
+        { a: "Dante", b: "Dino", bLabel: "Dino & Max" },
+      ],
+    },
     grudges: {
       title: "BAD BLOOD — GRUDGE MATCHES",
       blurb:
@@ -465,19 +476,18 @@ const CONFIG = {
         },
         {
           since: "2026-07-14", // SF-101: Spain 2, France 0. France out froze Rob's France at 4 and
-          // killed the Rob-vs-Rob final for good — but Rob still owns England, and the noon-July-15
+          // killed the Rob-vs-Rob final for good — but Rob still owns England, and the noon
           // England–Argentina semifinal now decides the entire pool: the winner's owner (Rob with
           // England, Nathan with Argentina) banks a finalist and clears every frozen seat. Dante's
           // Spain is in the final; his max is 8, so he takes the last podium spot only by winning it all.
           title: "CALEB'S CORNER — ONE GAME FOR THE POOL",
           blurb:
-            "Spain 2, France 0 — and the Rob-vs-Rob final everyone dreaded died with it. But look what it left: Rob still owns England, Nathan owns Argentina, and their teams play each other at noon on July 15 for the final. Whoever wins banks a finalist and clears the whole frozen field — so this one semifinal IS the pool. Dante's Spain is already in the final, but his ceiling is 8: he grabs the last podium chair only if Spain actually lifts the Cup. Caleb has a slip on all of it. Cash up front — he knows the drill.",
+            "Spain 2, France 0 — and the Rob-vs-Rob final everyone dreaded died with it. But look what it left: Rob still owns England, Nathan owns Argentina, and their teams meet at noon for the final. Whoever wins banks a finalist and clears the whole frozen field — so this one semifinal IS the pool. Dante's Spain is already in the final, but his ceiling is 8: he grabs the last podium chair only if Spain actually lifts the Cup. Caleb has a slip on all of it. Cash up front — he knows the drill.",
           bets: [
-            { label: "Rob wins the pool — his England beats Nathan's Argentina at noon on July 15 and it's over", kind: "winsPool", player: "Rob" },
-            { label: "Nathan wins the pool — his Argentina beats Rob's England at noon on July 15 and the $200 is his", kind: "winsPool", player: "Nathan" },
+            { label: "Rob wins the pool — his England beats Nathan's Argentina and it's over", kind: "winsPool", player: "Rob" },
+            { label: "Nathan wins the pool — his Argentina beats Rob's England and the $200 is his", kind: "winsPool", player: "Nathan" },
             { label: "Dante takes the last podium spot — but only if his Spain wins the whole thing; a runner-up leaves him a point short", kind: "cashes", player: "Dante" },
-            { label: "Dino backs into third — Cinderella's corpse, frozen at 7 with every team dead, cashes only if Spain loses the final and Dante stalls at 5", kind: "cashes", player: "Dino" },
-            { label: "Max backs into third — a dirty Brit whose Norway fell to England, also frozen at 7, splitting that last spot with Dino on the same Spain-flops parlay", kind: "cashes", player: "Max" },
+            { label: "Dino and Max back into third — the two frozen sevens (Cinderella's corpse and a dirty Brit killed by his own country) split the last seat if Spain loses the final", kind: "cashes", player: "Dino" },
           ],
         },
       ],
@@ -812,28 +822,34 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     .map((i) => row(i, players[i].pTop, MARGIN.place, statuses?.cash[i]));
   const spoon = byLast.map((i) => row(i, players[i].pLast, MARGIN.place, statuses?.spoon[i]));
 
-  // Top-shelf head-to-heads: the four strongest seats, priced pairwise with
-  // ties as half-wins (dead heat = stakes returned).
-  const shelf = [...players.keys()].sort((x, y) => players[y].avg - players[x].avg).slice(0, 4);
-  const h2h = [];
+  // Head-to-heads, priced pairwise with ties as half-wins (dead heat = stakes
+  // returned). Default is the four strongest seats by expected points, round-
+  // robined; a pool may instead declare explicit pairs from a given date (with
+  // an optional display label to fold tied seats into one line). Gated on date
+  // so the opening book and every prior sheet keep the auto round-robin.
   const bounds = snapshot ? playerBounds(pool, snapshot.state) : null;
   const pairSettled = (i, j) =>
     !bounds ? null : bounds.min[i] > bounds.max[j] ? "a" : bounds.min[j] > bounds.max[i] ? "b" : null;
-  for (let x = 0; x < shelf.length; x++) {
-    for (let y = x + 1; y < shelf.length; y++) {
-      const i = shelf[x];
-      const j = shelf[y];
-      const tie = (a.pairTie[Math.min(i, j) * np + Math.max(i, j)] ?? 0) / sims;
-      const pi = a.pairWin[i * np + j] / sims + tie / 2;
-      const settled = pairSettled(i, j);
-      h2h.push({
-        a: players[i].name,
-        b: players[j].name,
-        priceA: settled ? null : price(pi, MARGIN.twoWay),
-        priceB: settled ? null : price(1 - pi, MARGIN.twoWay),
-        ...(settled ? { settled } : {}),
-      });
-    }
+  const h2hEntry = (i, j, aLabel, bLabel) => {
+    const tie = (a.pairTie[Math.min(i, j) * np + Math.max(i, j)] ?? 0) / sims;
+    const pi = a.pairWin[i * np + j] / sims + tie / 2;
+    const settled = pairSettled(i, j);
+    return {
+      a: aLabel ?? players[i].name,
+      b: bLabel ?? players[j].name,
+      priceA: settled ? null : price(pi, MARGIN.twoWay),
+      priceB: settled ? null : price(1 - pi, MARGIN.twoWay),
+      ...(settled ? { settled } : {}),
+    };
+  };
+  const nameIdx = (nm) => pool.players.findIndex((pl) => pl.name === nm);
+  const h2h = [];
+  if (cfg.h2hPairs && (snapshot?.date ?? "") >= cfg.h2hPairs.since) {
+    for (const pr of cfg.h2hPairs.pairs) h2h.push(h2hEntry(nameIdx(pr.a), nameIdx(pr.b), pr.aLabel, pr.bLabel));
+  } else {
+    const shelf = [...players.keys()].sort((x, y) => players[y].avg - players[x].avg).slice(0, 4);
+    for (let x = 0; x < shelf.length; x++)
+      for (let y = x + 1; y < shelf.length; y++) h2h.push(h2hEntry(shelf[x], shelf[y]));
   }
 
   // Watch section: O/U ladder + points distribution for the featured seat.
