@@ -61,7 +61,7 @@ const Fixtures = ({ rows }) => (
       <div key={`${a}-${b}`} className="bk-row">
         <div className="bk-row-main">
           <span className="bk-player">
-            {flag(a)} {a} <span className="post-vs">vs</span> {flag(b)} {b}
+            {TEAM_BY_NAME[a] ? `${flag(a)} ` : ""}{a} <span className="post-vs">vs</span> {TEAM_BY_NAME[b] ? `${flag(b)} ` : ""}{b}
           </span>
           <span className="bk-teamline">
             {date} · {a}: {sa} · {b}: {sb}
@@ -86,6 +86,277 @@ const Slips = ({ bets }) => (
 );
 
 export const POSTS = [
+  {
+    id: "final-boofy",
+    bookId: "boofy",
+    bookName: "BOOFY SPORTSBOOK",
+    date: "2026-07-14",
+    linesLabel: "July 15",
+    eyebrow: "THE HOUSE ORGAN — SEMIFINAL SPECIAL, PART 2",
+    title: "ONE GAME FOR THE POOL",
+    deck: "Spain beat France 2–0 and the Rob-vs-Rob final everyone dreaded died on the spot. But look what it left behind: Rob still owns England, Nathan owns Argentina, and their two teams play each other at noon on July 15 for a spot in the final — winner's owner banks a finalist, clears the frozen field, and takes the whole pool. Rob −250, Nathan −175, a coin flip for $200. Dante's Spain is in the final and he still can't win; his entire summer is the last chair on the podium, and it only comes if Spain lifts the actual Cup. Dino and Max, still married, still praying it doesn't.",
+    body: (
+      <>
+        <Panel title="THE STORY SO FAR">
+          <P>
+            The final boss lost a life. France — Rob's crown jewel, the tournament favorite, the team that hadn't looked
+            mortal in a month — walked into Spain's semifinal and lost 2–0. Spain has now scored two goals in a knockout
+            round exactly once all tournament and it keeps being enough. France is out, and the England–France final that
+            would have handed one man both the trophy and the runner-up is dead, buried, never to be spoken of again.
+          </P>
+          <P>
+            And yet Rob has never been closer. He still owns England, and the bracket has arranged the kindest possible
+            thing: at noon on July 15, England plays Nathan's Argentina in the second semifinal, and that one game <em>is</em> the
+            pool. Whoever wins banks a finalist — five points, minimum — and instantly clears every frozen seat behind
+            them. The winner's owner is the champion-elect; the loser's owner is runner-up in the pool. There is no third
+            path. The house has Rob −250 and Nathan −175, which is a long way of saying: it's a coin flip for two hundred
+            dollars, and it kicks off at noon on July 15.
+          </P>
+          <P>
+            Underneath, the last cash seat is the same knife fight it's been for a week, only crueler. Dante's Spain
+            reached the final and it did him almost no good: his ceiling is eight points, a three-way tie at best, so he
+            cannot win the pool. His whole season is now the third podium chair — and he takes it only if Spain wins the
+            entire tournament. If Spain loses the final, Dino and Max, both frozen on seven, split that chair between
+            them. Same marriage as last round. Same coin. Higher stakes.
+          </P>
+        </Panel>
+
+        <Panel
+          title="THE TABLE — 61 BANKED, 4 STILL IN PLAY"
+          blurb="Points bank at each round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. New this round: a semifinal winner is scored as a Finalist — a provisional 5 — until the final settles runner-up vs. champion, which is why Spain already shows five. Of the last 4 points, 1 goes to the July 15 winner for reaching the final and 3 go to whoever lifts the Cup."
+        >
+          <Standings
+            rows={[
+              [8, "Rob", ["England"]],
+              [8, "Nathan", ["Argentina"]],
+              [7, "Dino", []],
+              [7, "Max", []],
+              [6, "Nick", []],
+              [5, "Dante", ["Spain"]],
+              [5, "Jake", []],
+              [4, "Jack", []],
+              [4, "Adrian", []],
+              [4, "Kunal", []],
+              [3, "Shaya", []],
+              [0, "Matt", []],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="OUTRIGHT — TO WIN THE POOL"
+          blurb="Outright (to win the pool), June 11 opening sheet against the July 15 morning line. Two live seats splitting one coin, ten obituaries."
+        >
+          <Lines
+            rows={[
+              ["Rob", "+220", "−250", "Opened the favorite and never left. France dying cost him the greedy all-Rob final but handed him a cleaner one: his England beats Argentina at noon on July 15 and it's simply over. He is also, quietly, favored — the market likes England in the semifinal"],
+              ["Nathan", "+780", "−175", "Argentina is his only live hand and it's a good one. Beat Rob's England at noon on July 15, with the Messi whistles the chat has fully convinced itself are coming, and the $200 is his. Lose and he's runner-up in the pool at eight"],
+              ["Dante", "+410", "OFF", "Spain reached the final and Dante still cannot win — his ceiling is a tie at eight. The trophy Spain is chasing pays him nothing up here; his whole play moved to the cash market below"],
+              ["The other nine", "—", "OFF", "Extinct. Nick, Dino, Max and the rest are frozen where they fell; the only question any of them has left is whether the podium's last chair comes to them"],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="TO CASH — THE LAST SEAT ON THE PODIUM"
+          blurb="Three podium spots, twelve seats. Rob and Nathan clinched two of them the moment France went home. The third is a referendum on the final, priced July 15 — and it's Dante against the two frozen men, winner-take-chair."
+        >
+          <Slips
+            bets={[
+              ["Rob — CLINCHED top 3, now playing only for the $200 and the bragging rights", "LOCKED"],
+              ["Nathan — CLINCHED top 3; Argentina is purely about first place now", "LOCKED"],
+              ["Dante takes the last chair — his Spain must lift the actual Cup; a runner-up leaves him a point short", "−250"],
+              ["Dino backs into third — frozen on 7, every team dead, cashes only if Spain LOSES the final", "+270"],
+              ["Max backs into third — the identical bet, splitting the seat with Dino on the same result", "+270"],
+            ]}
+          />
+          <P>
+            The board has finally made Dante the favorite for something — and it's the exact thing his whole summer now
+            depends on. Spain is a heavy chalk to win the tournament, so Dante is −250 to grab the last chair, and the
+            moment he does, Dino and Max die together. If Spain slips in the final, it inverts: Dante stalls on five, and
+            the two frozen sevens dead-heat for third and split the twenty, +270 apiece, one coin deciding both. They
+            were married last round when they were +110. They are still married. The dowry just went up.
+          </P>
+        </Panel>
+
+        <Panel
+          title="TONIGHT — THE WHOLE POOL IN NINETY MINUTES"
+          blurb="One semifinal left, and it is the entire ballgame. Then a final that only Dante is still sweating."
+        >
+          <Fixtures
+            rows={[
+              ["Wed, Jul 15 · noon · SF2", "England", "Rob", "Argentina", "Nathan", "The pool, in one match. Winner banks a finalist and their owner takes it all; the loser's season ends at the semifinal. It's coming home, or it's coming to Messi"],
+              ["The Final", "Spain", "Dante", "TBD Finalist", "Rob / Nathan", "Spain is already in and already the favorite. Dante needs them to win it for his podium chair — and whichever of Rob or Nathan gets here has clinched the pool no matter the result"],
+            ]}
+          />
+          <P>
+            There is no math to do beyond the scoreboard. Rob wins the pool if England wins; Nathan wins the pool
+            if Argentina wins; the loser is runner-up and Dante is playing a separate game entirely, down at the cut line,
+            hoping Spain finishes the job on Sunday. Twelve seats, and by the final whistle on July 15, exactly one of them
+            will be champion-elect.
+          </P>
+        </Panel>
+
+        <Panel
+          title="CALEB'S CORNER — ONE GAME FOR THE POOL"
+          blurb="Caleb is not in the pool. That has never once stopped him. The semifinal board is buried; this is the July 15 championship-week card. Cash up front — he knows the drill."
+        >
+          <Slips
+            bets={[
+              ["Rob wins the pool — his England beats Nathan's Argentina at noon on July 15 and it's over", "−250"],
+              ["Nathan wins the pool — his Argentina beats Rob's England at noon on July 15 and the $200 is his", "−175"],
+              ["Dante takes the last podium spot — only if his Spain wins the whole thing", "−250"],
+              ["Dino backs into third — frozen on 7, cashes only if Spain loses the final and Dante stalls at 5", "+270"],
+              ["Max backs into third — the identical parlay, splitting the seat with Dino", "+270"],
+            ]}
+          />
+          <P>
+            One line for the sharps. Rob is eight points today, and by Sunday he is eight, nine, or twelve — nothing in
+            between. Lose on July 15, he stays eight. Win and lose the final, he's nine. Win it all, twelve. There is no ten
+            and no eleven on his ticket, which is why the Rob Watch ladder has a hole in the middle of it: every rung
+            above 8.5 pays the same, because the only way to clear any of them is England lifting the Cup. Caleb finds
+            this beautiful. Caleb also has not paid for a drink since the group stage.
+          </P>
+        </Panel>
+      </>
+    ),
+  },
+  {
+    id: "final-sosk",
+    bookId: "sons-of-steve-kerr",
+    bookName: "SOSK SPORTSBOOK",
+    date: "2026-07-14",
+    linesLabel: "July 15",
+    eyebrow: "THE HOUSE ORGAN — SEMIFINAL SPECIAL, PART 2",
+    title: "THE FAVORITE IS FROZEN",
+    deck: "Arnst opened this stretch a −160 co-favorite. Then Spain beat his France 2–0 in the semifinal and froze him solid on ten — locked onto the podium, and barred from first place forever, because a champion always clears ten. Burnes bought Spain and Spain is in the final: he's the new −340 chalk. The other seat in that final is the noon-July-15 England–Argentina, Oanta vs J Call, and J Call is the strange one — a co-leader whose win price is the LONGEST on the board. Arnst's only live bet is the size of his own check. Chris is a statue at nine.",
+    body: (
+      <>
+        <Panel title="THE STORY SO FAR">
+          <P>
+            Arnst bought the whole continent, and for one glorious month the continent's best team was France, and France
+            was going to win him everything. Then Spain played them in the semifinal and won 2–0, and the most expensive
+            roster in the pool discovered its ceiling the hard way. France is out. Arnst is frozen on ten points — and
+            not just eliminated from contention, <em>mathematically barred from first place</em>. Whoever wins this
+            tournament clears ten by themselves; there is no arrangement of results where Arnst finishes top of the pool.
+            The co-favorite is now playing for second.
+          </P>
+          <P>
+            The seat that inherited the top of the board is Burnes. He owns Spain, Spain is in the final, and the market
+            makes Spain a heavy favorite to finish the job — so Burnes, +190 to win the pool back on opening day, is now
+            −340. The whole thing sits in one result for him: Spain lifts the Cup, Burnes takes the $150. The other chair
+            in that final is decided at noon on July 15, at Hawaii West, where Oanta's England plays J Call's Argentina — winner
+            advances to face Spain, loser is done for the summer.
+          </P>
+          <P>
+            And here is the wrinkle the house loves. J Call is a co-leader, tied with Arnst on ten, banked so deep he has
+            already <em>clinched</em> a podium — and he's the +280 third choice to win, the longest price on the board.
+            Oanta, four points behind him at seven, is the shorter number at +220. The reason is simple and cruel: to win
+            the pool you have to win the tournament, and Argentina has two mountains left where England, in the market's
+            eyes, has a slightly easier semifinal. J Call has the higher floor and the longer road. Both things, again,
+            are true.
+          </P>
+        </Panel>
+
+        <Panel
+          title="THE TABLE — TWO CO-LEADERS, ONE OF THEM DONE MOVING"
+          blurb="Points bank at each round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. New this round: a semifinal winner is scored as a Finalist — a provisional 5 — until the final settles it, which is why Burnes's Spain already shows nine. Arnst and Chris are frozen; every team they own is eliminated."
+        >
+          <Standings
+            rows={[
+              [10, "J Call", ["Argentina"]],
+              [10, "Arnst", []],
+              [9, "Burnes", ["Spain"]],
+              [9, "Chris", []],
+              [7, "Oanta", ["England"]],
+              [6, "HG", []],
+              [6, "Kunal", []],
+              [4, "Prozan", []],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="OUTRIGHT — TO WIN THE POOL"
+          blurb="Outright (to win the pool), June 11 opening sheet against the July 15 morning line. The board flipped: the two June co-favorites are Burnes at the top and Arnst off it entirely."
+        >
+          <Lines
+            rows={[
+              ["Burnes", "+190", "−340", "Spain is in the final and the market's favorite to win it. That's the entire bet: Spain lifts the Cup, Burnes takes the pool. From +190 longshot to −340 chalk on one semifinal"],
+              ["Oanta", "+460", "+220", "England has to beat Argentina at noon on July 15, then dethrone Spain. It's a long road, but it's the SHORT price of the two challengers — the market likes England to win the semifinal"],
+              ["J Call", "+460", "+280", "A co-leader on ten, already clinched for a podium, and still the longest win price on the board: Argentina has to beat England AND then beat Spain. Highest floor, tallest mountain"],
+              ["Arnst", "+220", "OFF", "Opened a co-favorite. France died in the semifinal and took first place with it — frozen on ten, and a champion always clears ten. He is off the board up here for the rest of the tournament"],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="THE ARNST QUESTION — SECOND OR THIRD, NOTHING ELSE"
+          blurb="He can't win and he can't miss the podium. Everything Arnst has left is which check he cashes, priced July 15 — and it comes down to one very specific way the tournament can end."
+        >
+          <Slips
+            bets={[
+              ["Arnst holds second — frozen at 10, locked onto the podium, keeps at least a share of the $60 in every outcome but one", "−350"],
+              ["Arnst slips to sole third — the lone exception: Argentina reaches the final AND Spain wins it, stacking two seats above him", "+240"],
+              ["Head to head: J Call finishes above Arnst — the co-leader's upside against the frozen man", "−380"],
+            ]}
+          />
+          <P>
+            The arithmetic is clean. Arnst sits on ten, done. For anyone to pass him they have to clear ten themselves,
+            and only two seats can: Burnes, if Spain wins the Cup (twelve), and J Call, if Argentina reaches the final
+            (eleven). One of them above him and Arnst is still second. <em>Both</em> above him and he's sole third — and
+            that needs one exact sequence: Argentina beats England at noon on July 15, then Spain beats Argentina in the final. Any
+            other ending and Arnst keeps at least a share of second. The house makes that specific parlay +240, and makes
+            him −350 to hold. He bought a continent and is now sweating one game he isn't even in.
+          </P>
+        </Panel>
+
+        <Panel
+          title="TO CASH — THE PODIUM, AND CHRIS THE STATUE"
+          blurb="Three cash seats. J Call and Arnst have clinched two. The third is Burnes's to lose, with Oanta and a frozen Chris hoping for chaos."
+        >
+          <Slips
+            bets={[
+              ["J Call — CLINCHED top 3, a floor of ten no result can crack", "LOCKED"],
+              ["Arnst — CLINCHED top 3; only the size of the check is still live", "−2400"],
+              ["Burnes cashes — Spain in the final makes this a formality", "−520"],
+              ["Oanta cashes — needs England to win the whole tournament; his cash IS his win", "+250"],
+              ["Chris steals a shared third — a statue on 9, every team dead, alive only if Argentina wins it all", "+720"],
+            ]}
+          />
+          <P>
+            Chris is the ghost at the edge of the podium. He's been frozen on nine for a week, every team he owns
+            eliminated, and the board has him +720 to cash — up from +160 on opening day, a number that has quietly gotten
+            longer every time the field firmed up around him. His one surviving path is narrow and specific: Argentina
+            wins the entire tournament, which drops enough seats that his nine backs into a shared third. He cannot do a
+            thing about it. He just needs Messi.
+          </P>
+        </Panel>
+
+        <Panel
+          title="THE OANTA INVITATIONAL — THE LAST SEMIFINAL"
+          blurb="The bar Oanta organized on Saturday was, by unanimous panel vote, beast — so his name stays on the marquee through the final. Spain's in; the noon-July-15 semifinal sets the other chair. Cash up front; the jukebox still doesn't take IOUs."
+        >
+          <Slips
+            bets={[
+              ["Burnes wins the pool — Spain lifts the Cup and the $150 is his; the board's favorite", "−340"],
+              ["Oanta wins the pool — England beats Argentina at noon on July 15, then dethrones Spain in the final", "+220"],
+              ["J Call wins the pool — Argentina beats England at noon on July 15, then dethrones Spain in the final", "+280"],
+              ["Arnst holds second — frozen at 10, keeps at least a share of the $60 spot in every outcome but one", "−350"],
+              ["Arnst slips to sole third — Argentina reaches the final AND Spain wins it, stacking two seats above him", "+240"],
+              ["Chris steals a podium — frozen at 9, backs into a shared third only if Argentina wins the whole thing", "+720"],
+            ]}
+          />
+          <P>
+            A closing note on the man on the marquee. Oanta threw the Saturday everyone agreed was beast, and to actually
+            cash his own party he has to win the whole tournament — his England, the +220 win ticket, is also, to the
+            dollar, his only cash ticket. There is no safe version of Oanta's summer. He hosts, or he goes home. The house
+            respects the commitment and is charging him full freight anyway.
+          </P>
+        </Panel>
+      </>
+    ),
+  },
   {
     id: "sf-boofy",
     bookId: "boofy",

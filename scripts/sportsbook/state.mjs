@@ -226,6 +226,13 @@ export function deriveState(matches) {
     eliminated.add(r.winner === r.a ? r.b : r.a);
   }
 
+  // Semifinal winners with the final still to play. stageOf holds them at SF so
+  // the scoreboard can label them "Finalist", but they've reached the final and
+  // so have banked at least runner-up (5) — the sportsbook scores them that way
+  // for standings and lock bounds. Empty until a semifinal is decided.
+  const finalists = new Set();
+  if (!ko[104]) for (const id of [101, 102]) if (ko[id]) finalists.add(ko[id].winner);
+
   return {
     matches,
     tables,
@@ -238,6 +245,7 @@ export function deriveState(matches) {
     koTeams,
     stageOf,
     eliminated,
+    finalists,
   };
 }
 

@@ -120,6 +120,12 @@ const CONFIG = {
         title: "J CALL WATCH — J CALL TOTAL POINTS",
         copy: "He played himself Saturday and Argentina survived Switzerland 3–1 in extra time — saved, the group insists, by a phantom second yellow on Embolo. Argentina is his only live hand now, tied atop the pool with Arnst, and it draws Oanta's England in the semifinal. The model's median is 11 points. Main line:",
       },
+      {
+        since: "2026-07-14",
+        player: "J Call",
+        title: "J CALL WATCH — J CALL TOTAL POINTS",
+        copy: "Spain's rout of France reshaped the whole top of the board, but J Call's Argentina is still standing and still his most live hand. Beat Oanta's England at noon on July 15 and he's in the final with a live title shot at Spain; lose and he's frozen at 10 — either way he is banked into the podium. The model's median is 10 points. Main line:",
+      },
     ],
     faction: {
       title: "THE DKE CIVIL WAR — OLD DKE VS NEW DKE",
@@ -140,6 +146,10 @@ const CONFIG = {
       // Argentina in SF-102), so "both reach the final" is exactly an Arnst-vs-J-Call
       // title match — the SOSK mirror of Boofy's Rob-vs-Rob final.
       { id: "callarnst-final", type: "teamsReach", teams: ["Argentina", "France"], stage: "RUNNER_UP" },
+      // Arnst is frozen at 10 (France out): locked onto the podium, barred from
+      // first. He drops from 2nd to sole 3rd only when TWO seats clear 10 — Spain
+      // champion (Burnes 12) AND Argentina in the final (J Call 11). Both at once.
+      { id: "arnst-third", type: "teamStages", reqs: [["Spain", "CHAMPION"], ["Argentina", "RUNNER_UP"]] },
     ],
     specials: {
       title: "PROZAN'S PARLAY WINDOW — DEGEN SPECIALS",
@@ -254,6 +264,23 @@ const CONFIG = {
             { label: "The statue holds — Chris, every team eliminated, cashes top 3 anyway; dead-heat rules split the cash, so even a tie pays", kind: "cashes", player: "Chris" },
           ],
         },
+        {
+          since: "2026-07-14", // SF-101: Spain 2, France 0. France out freezes Arnst solid at 10 —
+          // locked onto the podium (a champion always clears 10) but barred from first. Spain in the
+          // final lifts Burnes's floor to 9 and makes "Spain wins the Cup" worth the whole pool to him.
+          // The other final seat is the noon-July-15 England–Argentina semi: Oanta vs J Call, winner faces Spain.
+          title: "THE OANTA INVITATIONAL — THE LAST SEMIFINAL",
+          blurb:
+            "Spain 2, France 0 — the tournament favorite is dead and Spain is in the final. That froze Arnst at 10: locked onto the podium, barred from first, only the size of his check still live. Burnes now holds the whole pool in one result — Spain lifting the Cup is the $150. The other seat in the final is settled at noon on July 15 at Hawaii West: Oanta's England vs J Call's Argentina, winner faces Spain, loser is done. Cash up front; the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "Burnes wins the pool — Spain lifts the Cup and the $150 is his; the board's favorite", kind: "winsPool", player: "Burnes" },
+            { label: "Oanta wins the pool — England beats Argentina at noon on July 15, then dethrones Spain in the final", kind: "winsPool", player: "Oanta" },
+            { label: "J Call wins the pool — Argentina beats England at noon on July 15, then dethrones Spain in the final", kind: "winsPool", player: "J Call" },
+            { label: "Arnst holds second — frozen at 10, locked onto the podium, he keeps at least a share of the $60 spot in every outcome but one", kind: "jointNot", id: "arnst-third" },
+            { label: "Arnst slips to sole third — the lone exception: Argentina reaches the final AND Spain wins it, stacking two seats above him", kind: "joint", id: "arnst-third" },
+            { label: "Chris steals a podium — frozen at 9, every team dead, he backs into a shared third only if Argentina wins the whole thing", kind: "cashes", player: "Chris" },
+          ],
+        },
       ],
     },
   },
@@ -299,6 +326,12 @@ const CONFIG = {
         player: "Rob",
         title: "ROB WATCH — ROB TOTAL POINTS",
         copy: "Both England and France are through to the semifinals now, on opposite halves — France meets Spain Tuesday, England meets Argentina Wednesday — so the house owns both sides of the bracket and the two can only reunite in the final. The model's median is 12 points. Main line:",
+      },
+      {
+        since: "2026-07-14",
+        player: "Rob",
+        title: "ROB WATCH — ROB TOTAL POINTS",
+        copy: "France died in the semifinal and took the Rob-vs-Rob final with it — but England is still Rob's, and at noon on July 15 England vs Nathan's Argentina decides the whole pool: win it and Rob banks a finalist and the title is his to lose; lose it and he settles for runner-up in the pool at 8. The model's median is 9 points. Main line:",
       },
     ],
     faction: null,
@@ -430,6 +463,23 @@ const CONFIG = {
             { label: "Dead but not buried — Dino, every team he owns eliminated, frozen on 7, cashes top 3 if the climbers all stall", kind: "cashes", player: "Dino" },
           ],
         },
+        {
+          since: "2026-07-14", // SF-101: Spain 2, France 0. France out froze Rob's France at 4 and
+          // killed the Rob-vs-Rob final for good — but Rob still owns England, and the noon-July-15
+          // England–Argentina semifinal now decides the entire pool: the winner's owner (Rob with
+          // England, Nathan with Argentina) banks a finalist and clears every frozen seat. Dante's
+          // Spain is in the final; his max is 8, so he takes the last podium spot only by winning it all.
+          title: "CALEB'S CORNER — ONE GAME FOR THE POOL",
+          blurb:
+            "Spain 2, France 0 — and the Rob-vs-Rob final everyone dreaded died with it. But look what it left: Rob still owns England, Nathan owns Argentina, and their teams play each other at noon on July 15 for the final. Whoever wins banks a finalist and clears the whole frozen field — so this one semifinal IS the pool. Dante's Spain is already in the final, but his ceiling is 8: he grabs the last podium chair only if Spain actually lifts the Cup. Caleb has a slip on all of it. Cash up front — he knows the drill.",
+          bets: [
+            { label: "Rob wins the pool — his England beats Nathan's Argentina at noon on July 15 and it's over", kind: "winsPool", player: "Rob" },
+            { label: "Nathan wins the pool — his Argentina beats Rob's England at noon on July 15 and the $200 is his", kind: "winsPool", player: "Nathan" },
+            { label: "Dante takes the last podium spot — but only if his Spain wins the whole thing; a runner-up leaves him a point short", kind: "cashes", player: "Dante" },
+            { label: "Dino backs into third — Cinderella's corpse, frozen at 7 with every team dead, cashes only if Spain loses the final and Dante stalls at 5", kind: "cashes", player: "Dino" },
+            { label: "Max backs into third — a dirty Brit whose Norway fell to England, also frozen at 7, splitting that last spot with Dino on the same Spain-flops parlay", kind: "cashes", player: "Max" },
+          ],
+        },
       ],
     },
   },
@@ -447,7 +497,9 @@ const jointIdx = pools.map((pool) => {
   return (CONFIG[pool.id]?.joints ?? []).map((j) =>
     j.type === "sweep"
       ? { id: j.id, type: j.type, p: at(j.player), over: j.over.map(at) }
-      : { id: j.id, type: j.type, teams: j.teams.map((t) => TEAM_INDEX[t]), stage: STAGE[j.stage] }
+      : j.type === "teamStages"
+        ? { id: j.id, type: j.type, reqs: j.reqs.map(([t, s]) => [TEAM_INDEX[t], STAGE[s]]) }
+        : { id: j.id, type: j.type, teams: j.teams.map((t) => TEAM_INDEX[t]), stage: STAGE[j.stage] }
   );
 });
 
@@ -524,7 +576,11 @@ function runBatch(ratings, sims, seed, cond) {
       for (let k = 0; k < jointIdx[p].length; k++) {
         const jt = jointIdx[p][k];
         const hit =
-          jt.type === "sweep" ? jt.over.every((j) => totals[jt.p] > totals[j]) : jt.teams.every((t) => stages[t] >= jt.stage);
+          jt.type === "sweep"
+            ? jt.over.every((j) => totals[jt.p] > totals[j])
+            : jt.type === "teamStages"
+              ? jt.reqs.every(([t, s]) => stages[t] >= s)
+              : jt.teams.every((t) => stages[t] >= jt.stage);
         if (hit) a.joint[k]++;
       }
       if (cfg?.faction) {
@@ -618,6 +674,12 @@ const trimHist = (hist, sims) => {
 // Mathematical lock/elimination bounds per pool seat: a team that's out is
 // frozen at its reached stage; an alive team could in principle win it all.
 // Sound (never flags a live market settled), if conservative the other way.
+// Banked stage for standings/bounds: a semifinal winner awaiting the final has
+// reached runner-up (5), though stageOf holds it at SF for the "Finalist" label.
+function bankedStage(state, t) {
+  return state.finalists?.has(t) ? STAGE.RUNNER_UP : state.stageOf[t] ?? STAGE.GROUP;
+}
+
 function playerBounds(pool, state) {
   const min = [];
   const max = [];
@@ -625,7 +687,7 @@ function playerBounds(pool, state) {
     let lo = 0;
     let hi = 0;
     for (const t of pl.teams) {
-      const reached = STAGE_POINTS[state.stageOf[t] ?? STAGE.GROUP];
+      const reached = STAGE_POINTS[bankedStage(state, t)];
       lo += reached;
       hi += state.eliminated.has(t) ? reached : STAGE_POINTS[STAGE.CHAMPION];
     }
@@ -682,7 +744,7 @@ function factionClinch(pool, faction, state) {
     for (const nm of faction[side].players) {
       for (const t of teamsOf(nm)) {
         sideOfTeam[t] = side;
-        floor[side] += STAGE_POINTS[state.stageOf[t] ?? STAGE.GROUP];
+        floor[side] += STAGE_POINTS[bankedStage(state, t)];
       }
     }
   }
@@ -737,7 +799,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // on dated snapshots — the opening book stays as originally committed (and
   // check-open stays green), and no historical sheet is rewritten unless rebuilt.
   const standingsRow = (i) => ({
-    pts: players[i].teams.reduce((s, t) => s + STAGE_POINTS[snapshot.state.stageOf[t] ?? STAGE.GROUP], 0),
+    pts: players[i].teams.reduce((s, t) => s + STAGE_POINTS[bankedStage(snapshot.state, t)], 0),
     alive: players[i].teams.filter((t) => !snapshot.state.eliminated.has(t)),
   });
 
@@ -931,6 +993,8 @@ function deriveBook(pool, p, batch, sims, snapshot) {
           return price(pairPrice(idxOf(bet.player), idxOf(bet.other)), MARGIN.twoWay);
         case "joint":
           return price(jointOf(bet.id) / sims, MARGIN.twoWay);
+        case "jointNot":
+          return price(1 - jointOf(bet.id) / sims, MARGIN.twoWay);
         case "teamReaches":
           return price(pReach(bet.team, bet.stage), bet.stage === "CHAMPION" ? MARGIN.outright : MARGIN.place);
         default:
