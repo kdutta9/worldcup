@@ -22,6 +22,12 @@ the lines people read going into the next match day.
   the 16th, and a bare `npm run fetch-consensus` will mint a **`2026-07-16`**
   consensus — which, with rest-gap dates live, mints a 7/16 sheet a day early.
   During a rest gap, fetch the date you mean: `node scripts/sportsbook/fetch-consensus.mjs <D>`.
+- **Kalshi's history lags; `npm run set-line` is the fix, not a chat session.**
+  The backbone publishes daily closes that can still price an eliminated team
+  (after the 7/15 semi it had England at 23%, dragging Spain to a 74.5% chalk vs
+  DraftKings' 58.9%). `npm run set-line -- <D> "Spain -165" "Argentina +130"`
+  devigs a posted board and writes `consensus/<D>.overrides.json`, which
+  `fetch-consensus` folds in before its final normalize. Pass every live team.
 - **A rest gap still needs a line.** The final is July 19 but the log stops the
   15th. `EXTRA_SHEET_DATES` lists the match-free dates that get a sheet anyway;
   each is built only once a consensus file exists for that exact date. Sheets are

@@ -223,6 +223,30 @@ npm run refresh-book                              # fetch consensus + backfill s
 npm run publish                                   # commit the data, then build + deploy live
 ```
 
+**Refreshing the line on a matchless day** (a rest gap — see *Rest-gap sheets*).
+There are no results to enter; the only thing that moves is the market:
+
+```bash
+npm run set-line -- 2026-07-16 "Spain -165" "Argentina +130"   # only if the book disagrees with Kalshi
+npm run fetch-consensus -- 2026-07-16                          # pass the date — see below
+npm run build-books -- --backfill                              # builds that date's sheet
+npm run publish                                                # commit + deploy
+```
+
+**Always pass the date explicitly.** `fetch-consensus` derives "today" from
+`new Date().toISOString()`, which is UTC — so any US evening is already tomorrow
+there, and a bare `npm run fetch-consensus` will mint a consensus (and therefore a
+sheet) one day ahead.
+
+`set-line` exists because Kalshi — the consensus backbone — publishes daily closes
+that can lag reality, and after a knockout round it may still be pricing a team
+that's already out. Paste in the board you actually trust; it removes the vig for
+you (`-165/+130` is a 105.7% book → Spain 58.9%, Argentina 41.1%) and writes
+`consensus/<date>.overrides.json`, which `fetch-consensus` folds into the blend.
+Pass *every* live team — the quotes are normalized as a complete market, and the
+script refuses if one is missing. Skip it entirely when the fetched favorites line
+already looks right.
+
 `npm run deploy` only commits/pushes the compiled site to the host repo — it
 never touches the source repo. The data files it builds from (the `matches.json`
 event log, the derived snapshots, the consensus inputs) are the source of truth

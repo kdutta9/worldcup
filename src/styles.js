@@ -238,6 +238,10 @@ export const css = `
 .stand-player { font-family: 'Anton', sans-serif; font-size: 20px; letter-spacing: 0.03em; color: #F2EFE6; flex: 1; }
 .stand-total { font-family: 'Anton', sans-serif; font-size: 26px; color: #E4C46A; }
 .stand-total small { font-family: 'Archivo', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: rgba(242,239,230,0.5); margin-left: 6px; }
+/* The tiebreak, printed beside the points it separates — deliberately quieter,
+   since it only decides anything when the PTS beside it are level. */
+.stand-gd { font-family: 'Anton', sans-serif; font-size: 15px; color: rgba(242,239,230,0.6); }
+.stand-gd small { font-family: 'Archivo', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(242,239,230,0.38); margin-left: 5px; }
 .stand-teams { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .stand-team {
   display: flex; align-items: center; gap: 7px; font-size: 13px;

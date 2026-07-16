@@ -150,6 +150,13 @@ if (!state.ko[104]) {
   }
 }
 
+// Cumulative goal difference per team — the pool's tiebreak, so the standings
+// need it to order tied seats. Only teams that have played appear; anything
+// absent reads as 0. Same team→value shape as `stages`.
+const gd = {};
+for (const [team, v] of Object.entries(state.cumGD).sort((x, y) => y[1] - x[1] || (x[0] < y[0] ? -1 : 1)))
+  if (v !== 0) gd[team] = v;
+
 const prevResults = existsSync(RESULTS_PATH) ? JSON.parse(readFileSync(RESULTS_PATH, "utf8")) : {};
 writeFileSync(
   RESULTS_PATH,
@@ -158,6 +165,7 @@ writeFileSync(
       updatedAt: new Date().toISOString().slice(0, 10),
       _note: prevResults._note ?? "Derived from matches.json by add-results — do not edit by hand.",
       stages,
+      gd,
     },
     null,
     2

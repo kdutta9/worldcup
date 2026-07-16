@@ -11,6 +11,7 @@
     "add-results": "node scripts/add-results.mjs",
     "build-books": "node scripts/sportsbook/build-books.mjs",
     "fetch-consensus": "node scripts/sportsbook/fetch-consensus.mjs",
+    "set-line": "node scripts/sportsbook/set-line.mjs",
     "refresh-book": "node scripts/sportsbook/fetch-consensus.mjs && node scripts/sportsbook/build-books.mjs --backfill",
     "publish": "node scripts/publish.mjs",
     "deploy": "vite build && rsync -a --delete dist/ ../kdutta9.github.io/worldcup/ && cd ../kdutta9.github.io && git add worldcup && (git diff --cached --quiet || git commit -m 'Deploy: worldcup lotto 26') && git push"
