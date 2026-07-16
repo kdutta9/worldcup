@@ -233,6 +233,22 @@ export const POSTS = [
             payout. The house finds this funnier than it should and has posted the line accordingly.
           </P>
           <P>
+            It gets better, because Arnst did his homework. A full hour of research, before a ball was kicked, and
+            the hour terminated in the purchase of an Ivory Coast jersey. Arnst does not own Ivory Coast. Arnst has
+            never owned Ivory Coast. Ivory Coast belongs to <em>Chris</em>, went out in the Round of 32 on June 30,
+            and is worth exactly one point.
+          </P>
+          <P>
+            And that one point is load-bearing — which is the part that should ruin somebody's week. Chris is on nine
+            only because Ivory Coast is one of them; strip it out and he's on eight and never draws level with Burnes
+            at all. Ivory Coast's goal difference is +1, and the tiebreak is Chris +7 against Burnes +7 — so if Spain
+            lose by a single goal on Sunday, Chris takes the last $30 by exactly one goal of difference, and it is the
+            one Ivory Coast supplied. Take that jersey out of the tournament and the shootout branch stops paying
+            Chris fifteen dollars and starts paying Burnes thirty. An hour of research, and Arnst walked out of it
+            owning a shirt for the only team holding up the man directly beneath him on the podium, in a race he is
+            barred from winning and incapable of losing. The team he actually needed was France. France is dead.
+          </P>
+          <P>
             Many happy returns, Jacob. The house means that in the technical sense.
           </P>
         </Panel>
@@ -264,6 +280,14 @@ export const POSTS = [
             Caleb is not in the pool. Caleb has never been in the pool. Caleb has not paid
             for a drink since the group stage and will arrive with opinions about a goal-difference rule he had no
             vote on.
+          </P>
+          <P>
+            And it is time somebody said why. This pool needed a twelfth man. The group asked Caleb, on the entirely
+            sound reasoning that Caleb is a degenerate gambler — it is the whole reason his name is on these lines in
+            the first place. Caleb passed. Didn't fancy it. The seat went to Nathan, who is to this day the twelfth
+            name in the roster file, and on Sunday Nathan will collect two hundred dollars in Caleb's eyeline. The
+            face of this sportsbook was offered the only bet that ever mattered and turned it down, then spent five
+            weeks posting slips about everyone who didn't. He'll be in the kitchen. Bring it up early and often.
           </P>
           <P>
             And that rule is the story of what's left. The pool decided ties break on cumulative goal difference —
@@ -344,7 +368,7 @@ export const POSTS = [
         >
           <Slips
             bets={[
-              ["Nathan — CLINCHED the pool. The $200 is engraved", "LOCKED"],
+              ["Nathan (not Caleb) — CLINCHED the pool. The $200 is engraved", "LOCKED"],
               ["Rob — CLINCHED top 3 the moment England lost; only 2nd vs 3rd is live", "LOCKED"],
               ["Dante takes second — Spain must lift the actual Cup, then he beats Rob on goal difference, +4 to −2", "−175"],
               ["Dino backs into third — Spain lose, and he beats Max to the chair by seven goals", "+125"],
