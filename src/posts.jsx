@@ -379,6 +379,13 @@ export const POSTS = [
             gains nothing. England beats France 4–0 and Rob loses nothing. He is hedged against himself, perfectly,
             by accident, in June, by a random number generator.
           </P>
+          <P>
+            Which leaves Saturday with exactly one thing still riding on it, and it isn't money: Jude Bellingham is, by
+            unanimous panel vote, hot. That is the only market in this pool goal difference cannot touch, it is the
+            only one the third-place game still settles, and Rob — who owns England — is long that too. Perfectly
+            hedged on the scoreline and holding the sole asset in the fixture that appreciates. The house will not be
+            posting a price. The house knows when it is beaten.
+          </P>
         </Panel>
 
         <Panel
