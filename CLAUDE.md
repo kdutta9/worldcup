@@ -14,7 +14,19 @@ the lines people read going into the next match day.
 - The **newest sheet is dated by the latest match in the log**, not the wall clock.
   After entering a match dated `2026-07-10`, the newest sheet is `2026-07-10` even
   if the machine clock has rolled to the 11th. `--backfill` builds one sheet per
-  match date in the log.
+  match date in the log — plus any `EXTRA_SHEET_DATES` whose consensus has landed
+  (see below).
+- **The clock is UTC and it lies to you.** `fetch-consensus` and `add-results` use
+  `new Date().toISOString()`, so on a US evening the "today" they see is already
+  tomorrow. Entering the 15th's result at 6pm Pacific stamps `results.json` with
+  the 16th, and a bare `npm run fetch-consensus` will mint a **`2026-07-16`**
+  consensus — which, with rest-gap dates live, mints a 7/16 sheet a day early.
+  During a rest gap, fetch the date you mean: `node scripts/sportsbook/fetch-consensus.mjs <D>`.
+- **A rest gap still needs a line.** The final is July 19 but the log stops the
+  15th. `EXTRA_SHEET_DATES` lists the match-free dates that get a sheet anyway;
+  each is built only once a consensus file exists for that exact date. Sheets are
+  labelled the *next* morning, so the `2026-07-18` sheet displays as "JUL 19
+  MORNING LINE" — that's the one the finals post should cite on the day.
 - A **new specials board uses `since: <that match date>`** — the same date as the
   results that triggered it, *not* the next day. Each sheet gets the latest board
   whose `since` ≤ the sheet date.
@@ -39,6 +51,30 @@ npm run publish                     # 4. commit source, then build + deploy
 ```
 
 Skipping step 2 is the failure mode: everything runs clean and the lines are stale.
+
+**A dead seat can still break the Watch.** The watch panel's O/U ladder drops any
+rung that's already settled, so pointing `watch` at a seat whose teams are all
+eliminated leaves an empty ladder — the panel renders hollow. When the featured
+seat freezes, move the watch to someone with a live team (that's why Boofy's went
+Kunal → Rob → Dante).
+
+## Never reprice a posted sheet
+
+Anything that changes what a market *means* — the goal-difference tiebreak, the
+margin schedule, new panel copy, a display field — must be **gated on a date**,
+never switched on globally. `GD_TIEBREAK_SINCE`, `FIELD_MARGIN_SINCE`, the `since`
+timelines (`watch`, `specials.boards`, `h2hPairs`, `copyFrom`, all read via
+`latestSince`), and the `tiebreak`-gated `gd` field all exist for this reason.
+Two guards prove you got it right, and both must stay green:
+
+```
+node scripts/sportsbook/build-books.mjs --check-open        # opening books bit-identical
+node scripts/sportsbook/build-books.mjs --date 2026-07-14   # then: git diff → must be EMPTY
+```
+
+`--backfill` won't rebuild an old sheet on its own (freshness protects it), but
+`--backfill --force` will, and it will silently drift a day's prices. Don't reach
+for it to refresh today's line — use `--date <D>`.
 
 ## Rebuild after editing any prose
 

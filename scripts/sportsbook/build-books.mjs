@@ -4,7 +4,7 @@
 //
 //   node scripts/sportsbook/build-books.mjs [sims]                # opening books → public/data/books/<id>.json
 //   node scripts/sportsbook/build-books.mjs --date 2026-06-15     # conditioned snapshot → public/data/books/<id>/<date>.json
-//   node scripts/sportsbook/build-books.mjs --backfill [--force]  # snapshot every match date in the log
+//   node scripts/sportsbook/build-books.mjs --backfill [--force]  # snapshot every match date (+ any rest-gap date whose consensus has landed)
 //   node scripts/sportsbook/build-books.mjs --check-open          # verify a zero-match build reproduces the committed open books
 //
 // Dated snapshots are pure derivations of public/data/matches.json (≤ date) and
@@ -40,6 +40,22 @@ const FORCE = argv.includes("--force");
 const CHECK_OPEN = argv.includes("--check-open");
 const OPEN_SEED = 20260611; // the committed opening books' seed — do not change
 
+// The pool ruled that ties break on cumulative goal difference — every team a
+// seat owns, every match of the tournament, group and knockout alike. It landed
+// the day the final was set, so it applies from that sheet forward and no
+// earlier: before this date the book split dead heats, and those sheets are
+// history. Gating it here (rather than switching the sim outright) is what keeps
+// --check-open green and every prior sheet reproducible.
+const GD_TIEBREAK_SINCE = "2026-07-15";
+
+// Sheets on dates with no match — the reprint that carries a round's line across
+// a rest gap. The tournament ends July 19 but the log stops on the 15th, so the
+// four days of championship week would otherwise post no line at all. A date here
+// is built only once a consensus file exists for it *exactly*, which keeps the
+// wall clock out of the pipeline: the market snapshot is the day's event, so
+// `npm run refresh-book` each morning fetches the market and the sheet follows.
+const EXTRA_SHEET_DATES = ["2026-07-16", "2026-07-17", "2026-07-18"];
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const MATCHES_PATH = join(ROOT, "public/data/matches.json");
 const CONSENSUS_DIR = join(ROOT, "scripts/sportsbook/consensus");
@@ -50,8 +66,29 @@ const baseRatings = (() => {
 
 // --- Pricing -----------------------------------------------------------------
 // Margins (total book): outright ~135%, place markets ~125% per place, two-way
-// sides ~107.5% each (≈115% book) — same shape as the SOSK sheet.
+// sides ~107.5% each (≈115% book) — same shape as the SOSK sheet. These describe
+// a FULL field; see fieldMargin for what happens as runners die.
 const MARGIN = { outright: 1.35, place: 1.25, twoWay: 1.075 };
+
+// A book's overround is a function of how many runners it's actually pricing: a
+// two-way market runs ~107.5%, a twelve-runner futures board ~135%. The constants
+// above only ever encoded the full-field end of that, which was invisible until
+// the field collapsed to two and the outright board started charging 35% vig on a
+// single coin flip — posting BOTH finalists at negative odds, a thing no real book
+// has ever done, and pricing "Burnes wins the pool" (−390) differently from
+// "Dante finishes above Rob" (−175) despite the two being the same event.
+//
+// So interpolate on the live runner count, anchored on the book's own numbers:
+// a full field reproduces the original constant exactly, and two live runners give
+// the two-way price the h2h board already posts. Everything between is linear.
+const fieldMargin = (full, live, np) =>
+  live <= 2 || np <= 2 ? MARGIN.twoWay : MARGIN.twoWay + ((live - 2) / (np - 2)) * (full - MARGIN.twoWay);
+
+// Scaling changes what a settled-heavy board charges, so — like the tiebreak — it
+// applies from the sheet it was introduced on and never reprices a posted one.
+// (`--check-open` is unaffected either way: the opening book has no dead seats, so
+// a full field resolves fieldMargin straight back to the original constant.)
+const FIELD_MARGIN_SINCE = "2026-07-15";
 
 function american(p) {
   const q = Math.min(p, 0.96); // cap so prices stop at ~-2400
@@ -70,6 +107,17 @@ function price(p, margin) {
   if (p <= 0) return null; // off the board — it has never happened in the sims
   return fmt(roundOdds(american(Math.min(p * margin, 0.985))));
 }
+
+// Config timelines (watch seats, specials boards, h2h pairs) all read the same
+// way: an entry carries the first date it applies, an entry with no `since` is
+// the opening one, and a sheet gets the latest entry on or before its own date.
+// That is what lets a seat change or a new board at a new round leave every
+// earlier sheet reproducing exactly as committed.
+const latestSince = (entries, date) =>
+  entries
+    .filter((e) => date >= (e.since ?? ""))
+    .sort((x, y) => (x.since ?? "").localeCompare(y.since ?? ""))
+    .at(-1) ?? null;
 // --- Load pools ----------------------------------------------------------------
 const groupsDir = join(ROOT, "public/data/groups");
 const pools = readdirSync(groupsDir)
@@ -102,6 +150,16 @@ const CONFIG = {
       h2h: "The four strongest seats, priced against each other. Higher pool finish wins; tie on points = stakes returned (handled as half-win in pricing).",
       watch: "Ghana, Colombia, Australia, Algeria, South Africa, South Korea. The model's median is 6 points. Main line:",
     },
+    copyFrom: [
+      {
+        since: "2026-07-15", // the pool ruled ties break on cumulative goal difference
+        outright:
+          "First place takes $150. Ties break on cumulative goal difference — every team you own, every match of the tournament. Only a dead heat on both splits the cash.",
+        toCash:
+          "Any money is good money ($30 still buys a burrito). Burnes and Chris are level on 9 points AND on 7 goal difference: one goal on Sunday settles the last $30.",
+        h2h: "The four strongest seats, priced against each other. Higher pool finish wins; level on points goes to the better goal difference, and only a dead heat on both returns stakes.",
+      },
+    ],
     // Watch timeline: HG (Hunter) drew the loaded hand pre-tournament; by the QF
     // only Colombia is live, so the seat moves to J Call — three teams still
     // standing, with the biggest swing left in the pool. The HG entry carries no
@@ -125,6 +183,12 @@ const CONFIG = {
         player: "J Call",
         title: "J CALL WATCH — J CALL TOTAL POINTS",
         copy: "Spain's rout of France reshaped the whole top of the board, but J Call's Argentina is still standing and still his most live hand. Beat Oanta's England and he's in the final with a live title shot at Spain; lose and he's frozen at 10 — either way he is banked into the podium. The model's median is 10 points. Main line:",
+      },
+      {
+        since: "2026-07-15",
+        player: "J Call",
+        title: "J CALL WATCH — J CALL TOTAL POINTS",
+        copy: "Argentina beat Oanta's England 2–1 in Atlanta and Jacob Call is banked on eleven with a finalist in hand — and the final is Sunday, July 19, which happens to be his birthday. There are exactly two numbers left on his ticket: 11 if Spain win, 14 if Argentina do. Nothing in between, which is why the ladder below is a cliff rather than a slope. The model's median is 11 points. Main line:",
       },
     ],
     faction: {
@@ -281,6 +345,25 @@ const CONFIG = {
             { label: "Chris steals a podium — frozen at 9, every team dead, he backs into a shared third only if Argentina wins the whole thing", kind: "cashes", player: "Chris" },
           ],
         },
+        {
+          since: "2026-07-15", // SF-102: Argentina 2, England 1 — Messi assists in the 85th and the
+          // 90+2nd. The field is now exactly two live seats, Burnes (Spain) and J Call (Argentina),
+          // and whichever one's team lifts the Cup wins the pool outright. Everything below them is
+          // frozen and sorted by the new goal-difference tiebreak, which is where the cruelty lives:
+          // Burnes and Chris are tied on 9 points AND on 7 goal difference right now, so a Spain
+          // defeat drops Burnes below Chris by exactly one goal — unless it's a shootout, which
+          // leaves Spain's GD untouched and dead-heats them for the $30.
+          title: "THE BIRTHDAY INVITATIONAL — JULY 19, THE FINAL",
+          blurb:
+            "The final is Sunday, July 19. Sunday, July 19 is Jacob Call's birthday. Jacob Call owns Argentina. The house has stopped pretending this is a coincidence and simply put his name on the marquee. Two seats are live and they are the two finalists' owners — Burnes bought Spain in June, J Call has Argentina, and whichever team lifts the Cup, that man wins the pool. There is no third road. Beneath them the new goal-difference rule has already quietly settled almost everything: Arnst is frozen on 10 and playing only for the size of his check, and Chris — a statue on 9 since Belgium died — is tied with Burnes on points AND on goal difference, which means one goal on Sunday decides the last $30. Cash up front; the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "Burnes wins the pool — he bought Spain in June and Spain lifting the Cup on Sunday is the entire $150", kind: "winsPool", player: "Burnes" },
+            { label: "The birthday boy takes it all — Argentina win on July 19, Jacob Call's actual birthday, and the pool is his", kind: "winsPool", player: "J Call" },
+            { label: "Arnst's check is Burnes's problem — frozen on 10, he is second if Spain lose and third if Spain win, and he cannot lift a finger either way", kind: "outscores", player: "Arnst", other: "Burnes" },
+            { label: "The one-goal tiebreak — Chris, every team dead, takes third off Burnes because Spain losing drops their goal difference below his 7", kind: "outscores", player: "Chris", other: "Burnes" },
+            { label: "Burnes salvages something — Spain lift the Cup, or Argentina need a shootout, which leaves Spain's goal difference untouched and dead-heats the last $30", kind: "cashes", player: "Burnes" },
+          ],
+        },
       ],
     },
   },
@@ -295,6 +378,16 @@ const CONFIG = {
       spoon: "Somebody has to carry the shame until 2030.",
       h2h: "The four strongest seats, priced against each other. Higher pool finish wins; tie on points = stakes returned (handled as half-win in pricing).",
     },
+    copyFrom: [
+      {
+        since: "2026-07-15", // the pool ruled ties break on cumulative goal difference
+        outright:
+          "First place takes $200 even — Dante topped up the pot, and Nathan has already won it. Ties break on cumulative goal difference — every team you own, every match of the tournament.",
+        toCash:
+          "Twelve seats, three podium spots, two of them settled. The tiebreak decided the rest in advance: Dante beats Rob by six goals if they tie on 8, Dino beats Max by seven on 7.",
+        h2h: "The seats with something left to settle. Higher pool finish wins; level on points goes to the better goal difference, and only a dead heat on both returns stakes.",
+      },
+    ],
     // Watch timeline: Kunal drew a loaded hand pre-tournament; by the QF all four
     // of his teams were out, so the seat moves to Rob (England + France, both live).
     watch: [
@@ -333,19 +426,41 @@ const CONFIG = {
         title: "ROB WATCH — ROB TOTAL POINTS",
         copy: "France died in the semifinal and took the Rob-vs-Rob final with it — but England is still Rob's, and England vs Nathan's Argentina decides the whole pool: win it and Rob banks a finalist and the title is his to lose; lose it and he settles for runner-up in the pool at 8. The model's median is 9 points. Main line:",
       },
+      {
+        since: "2026-07-15",
+        player: "Dante",
+        title: "DANTE WATCH — DANTE TOTAL POINTS",
+        copy: "England lost and Rob is a statue on 8 — the Watch moves to the last seat in the pool with a pulse. Dante has Spain, Spain are in the final, and his whole summer is two numbers: 8 if they lift the Cup, 5 if they don't. Eight ties Rob and beats him on goal difference for second and $40; five is sixth place and nothing. The model's median is 8 points. Main line:",
+      },
     ],
     faction: null,
-    // From the Spain-in-final sheet the live H2H is two duels: Rob vs Nathan
-    // for the pool, and Dante (Spain, needs the title) vs the two frozen, tied
-    // sevens — Dino & Max move together, so one priced line (off Dino) covers
-    // both. Explicit pairs, gated on date so earlier sheets keep the auto shelf.
-    h2hPairs: {
-      since: "2026-07-14",
-      pairs: [
-        { a: "Rob", b: "Nathan" },
-        { a: "Dante", b: "Dino", bLabel: "Dino & Max" },
-      ],
-    },
+    // Explicit H2H pairs from the Spain-in-final sheet on; before that the auto
+    // shelf (top four by expected points) still governs, so earlier sheets are
+    // untouched. Settled pairs are filtered out of the view, so each entry lists
+    // only what's still live on that date.
+    h2hPairs: [
+      {
+        // Two duels: Rob vs Nathan for the pool, and Dante (Spain, needs the
+        // title) vs the two frozen, tied sevens — Dino & Max moved together
+        // under dead-heat rules, so one line off Dino covered both.
+        since: "2026-07-14",
+        pairs: [
+          { a: "Rob", b: "Nathan" },
+          { a: "Dante", b: "Dino", bLabel: "Dino & Max" },
+        ],
+      },
+      {
+        // The goal-difference tiebreak divorced Dino and Max — Dino wins that
+        // pair 12 to 5 in every branch, so it's settled and comes off the board.
+        // Nathan has clinched, England is dead: the only live questions left are
+        // Dante's Spain against Rob for second, and against Dino for the last chair.
+        since: "2026-07-15",
+        pairs: [
+          { a: "Dante", b: "Rob" },
+          { a: "Dante", b: "Dino" },
+        ],
+      },
+    ],
     grudges: {
       title: "BAD BLOOD — GRUDGE MATCHES",
       blurb:
@@ -490,6 +605,23 @@ const CONFIG = {
             { label: "Dino and Max back into third — the two frozen sevens (Cinderella's corpse and a dirty Brit killed by his own country) split the last seat if Spain loses the final", kind: "cashes", player: "Dino" },
           ],
         },
+        {
+          since: "2026-07-15", // SF-102: Argentina 2, England 1. Rob's England is dead and Nathan has
+          // mathematically clinched the $200. What's left is $40 and $20 — and the goal-difference
+          // tiebreak has already decided most of it in advance: Dante beats Rob (+4 to −2) if they
+          // tie on 8, and Dino beats Max (12 to 5) in the tie on 7 that both are frozen into. Max
+          // therefore cashes in ZERO branches, so his slip comes off the board entirely. The
+          // third-place game is a non-event: Rob owns England AND France, so it's a wash on his ledger.
+          title: "CALEB'S CORNER — LIVE FROM NICK'S PLACE",
+          blurb:
+            "Sunday's final is at Nick's place. Nick has been dead since the quarterfinal — Belgium was his only pulse, frozen on 6 — and he is hosting the party regardless, which the house finds both tragic and extremely on brand. Caleb will be in attendance, in person, for the first time all tournament: he has never been in this pool and has never once let that stop him. Nathan has already clinched the $200; the engraving is done. What's left is $40, $20, and a goal-difference rule that settled three of the four remaining questions before Sunday even kicks off — Dante beats Rob by six goals if they tie, Dino beats Max by seven, and Max, a dirty Brit whose Norway was knocked out by England, now cashes in exactly zero outcomes. Cash up front — he knows the drill.",
+          bets: [
+            { label: "Dante steals second — Spain lift the Cup, he ties Rob on 8, and takes it on goal difference, +4 to −2", kind: "outscores", player: "Dante", other: "Rob" },
+            { label: "Rob salvages the $40 — Spain lose, Dante stalls on 5, and runner-up is the last thing England and France ever bought him", kind: "outscores", player: "Rob", other: "Dante" },
+            { label: "Dino backs into the last chair — dead since the quarterfinal, he needs Spain to lose, then beats Max to it by seven goals neither of them can touch", kind: "cashes", player: "Dino" },
+            { label: "Nathan wins the pool — the house is not taking this action and posts the number purely so it can be admired", kind: "winsPool", player: "Nathan" },
+          ],
+        },
       ],
     },
   },
@@ -517,9 +649,10 @@ const jointIdx = pools.map((pool) => {
 const n = TEAM_NAMES.length;
 const MAXPTS = 66;
 
-function runBatch(ratings, sims, seed, cond) {
+function runBatch(ratings, sims, seed, cond, tiebreak = false) {
   const stages = new Uint8Array(n);
   const pts = new Uint8Array(n);
+  const teamGD = tiebreak ? new Float64Array(n) : null;
   const stageCounts = Array.from({ length: n }, () => new Float64Array(7));
   const ptsSum = new Float64Array(n);
 
@@ -536,6 +669,7 @@ function runBatch(ratings, sims, seed, cond) {
       factionHist: new Float64Array(MAXPTS), // side A's combined total
       joint: new Float64Array(jointIdx[p].length), // sims where each joint event hit
       totals: new Float64Array(np), // scratch
+      gds: new Float64Array(np), // scratch — this sim's goal difference per seat
     };
   });
 
@@ -543,7 +677,7 @@ function runBatch(ratings, sims, seed, cond) {
   console.log(`Simulating ${sims.toLocaleString()} tournaments…`);
   const t0 = Date.now();
   for (let s = 0; s < sims; s++) {
-    simulateTournament(ratings, rng, stages, cond);
+    simulateTournament(ratings, rng, stages, cond, teamGD);
     for (let t = 0; t < n; t++) {
       const st = stages[t];
       stageCounts[t][st]++;
@@ -555,14 +689,22 @@ function runBatch(ratings, sims, seed, cond) {
       const a = acc[p];
       const np = pool.players.length;
       const totals = a.totals;
+      const gds = a.gds;
       for (let i = 0; i < np; i++) {
         let tot = 0;
         for (const ti of pool.players[i].idx) tot += pts[ti];
         totals[i] = tot;
         a.hist[i][tot]++;
         a.sum[i] += tot;
+        if (tiebreak) {
+          let g = 0;
+          for (const ti of pool.players[i].idx) g += teamGD[ti];
+          gds[i] = g;
+        }
       }
-      // Dead-heat credits for win / top-places / last.
+      // Dead-heat credits for win / top-places / last. Seats are ordered on
+      // points, then — once the tiebreak is live — on goal difference, so a
+      // dead heat now needs both to match and the split is genuinely rare.
       const cfg = CONFIG[pool.id];
       const places = cfg?.places ?? 3;
       for (let i = 0; i < np; i++) {
@@ -570,12 +712,13 @@ function runBatch(ratings, sims, seed, cond) {
         let below = 0;
         let ties = 0;
         for (let j = 0; j < np; j++) {
-          if (totals[j] > totals[i]) above++;
-          else if (totals[j] < totals[i]) below++;
+          const d = totals[j] - totals[i] || (tiebreak ? gds[j] - gds[i] : 0);
+          if (d > 0) above++;
+          else if (d < 0) below++;
           else ties++;
           if (j > i) {
-            if (totals[i] > totals[j]) a.pairWin[i * np + j]++;
-            else if (totals[j] > totals[i]) a.pairWin[j * np + i]++;
+            if (d < 0) a.pairWin[i * np + j]++;
+            else if (d > 0) a.pairWin[j * np + i]++;
             else a.pairTie[i * np + j]++;
           }
         }
@@ -693,46 +836,74 @@ function bankedStage(state, t) {
 function playerBounds(pool, state) {
   const min = [];
   const max = [];
+  const gd = [];
+  const frozen = [];
   for (const pl of pool.players) {
     let lo = 0;
     let hi = 0;
+    let g = 0;
     for (const t of pl.teams) {
       const reached = STAGE_POINTS[bankedStage(state, t)];
       lo += reached;
       hi += state.eliminated.has(t) ? reached : STAGE_POINTS[STAGE.CHAMPION];
+      g += state.cumGD[t] ?? 0;
     }
     min.push(lo);
     max.push(hi);
+    gd.push(g);
+    frozen.push(pl.teams.every((t) => state.eliminated.has(t)));
   }
-  return { min, max };
+  return { min, max, gd, frozen };
 }
 
-function marketStatuses(bounds, places) {
-  const { min, max } = bounds;
-  const np = min.length;
+// Order two seats by what the fixtures still permit, never by the sim. A seat
+// with a team alive has unbounded goal difference, so GD only decides a pair
+// once BOTH are frozen — then their points and their GD are equally final and
+// the tiebreak settles them for good. Without that guard an exact points tie
+// between two dead seats would sit "live" forever while the sim quietly priced
+// one of them at zero.
+function boundsCmp(bounds, tiebreak) {
+  const { min, max, gd, frozen } = bounds;
+  const tiedFrozen = (i, j) => tiebreak && frozen[i] && frozen[j] && min[i] === min[j];
+  return {
+    // j finishes strictly above i in every outcome that remains.
+    surelyAbove: (j, i) => min[j] > max[i] || (tiedFrozen(i, j) && gd[j] > gd[i]),
+    // j could still finish strictly above i. Without the tiebreak an exact tie
+    // shares the place, so only a higher ceiling threatens i. With it, a tie is
+    // something i can *lose*: j's ceiling merely reaching i's floor is a threat
+    // unless both are frozen and i is provably the better goal difference.
+    couldBeAbove: (j, i) =>
+      max[j] > min[i] ||
+      (tiebreak && max[j] === min[i] && (!(frozen[i] && frozen[j]) || gd[j] > gd[i])),
+  };
+}
+
+function marketStatuses(bounds, places, tiebreak) {
+  const { surelyAbove, couldBeAbove } = boundsCmp(bounds, tiebreak);
+  const np = bounds.min.length;
   const win = [];
   const cash = [];
   const spoon = [];
   for (let i = 0; i < np; i++) {
     const others = [...Array(np).keys()].filter((j) => j !== i);
     win.push(
-      max[i] < Math.max(...others.map((j) => min[j]))
+      others.some((j) => surelyAbove(j, i))
         ? "dead"
-        : min[i] > Math.max(...others.map((j) => max[j]))
+        : others.every((j) => surelyAbove(i, j))
           ? "locked"
           : null
     );
     cash.push(
-      others.filter((j) => min[j] > max[i]).length >= places
+      others.filter((j) => surelyAbove(j, i)).length >= places
         ? "dead"
-        : others.filter((j) => max[j] > min[i]).length <= places - 1
+        : others.filter((j) => couldBeAbove(j, i)).length <= places - 1
           ? "locked"
           : null
     );
     spoon.push(
-      others.some((j) => max[j] < min[i])
+      others.some((j) => surelyAbove(i, j))
         ? "dead"
-        : others.every((j) => min[j] > max[i])
+        : others.every((j) => surelyAbove(j, i))
           ? "locked"
           : null
     );
@@ -792,7 +963,23 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     pLast: a.last[i] / sims,
   }));
 
-  const statuses = snapshot ? marketStatuses(playerBounds(pool, snapshot.state), cfg.places ?? 3) : null;
+  const tiebreak = snapshot?.tiebreak ?? false;
+  const statuses = snapshot
+    ? marketStatuses(playerBounds(pool, snapshot.state), cfg.places ?? 3, tiebreak)
+    : null;
+
+  // Per-market margins, scaled by how many runners that market is actually
+  // pricing. A settled seat isn't a runner — it carries no price — so a board
+  // down to two live names is a two-way market and gets charged like one.
+  const liveRunners = (sts) => (sts ? sts.filter((s) => !s).length : np);
+  const scaled = (snapshot?.date ?? "") >= FIELD_MARGIN_SINCE;
+  const marginOf = (full, sts) => (scaled ? fieldMargin(full, liveRunners(sts), np) : full);
+  const M = {
+    outright: marginOf(MARGIN.outright, statuses?.win),
+    cash: marginOf(MARGIN.place, statuses?.cash),
+    spoon: marginOf(MARGIN.place, statuses?.spoon),
+  };
+
   const row = (i, p, margin, status) => ({
     player: players[i].name,
     teams: players[i].teams,
@@ -808,19 +995,24 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // sheet's outright panel can double as the live standings table. Only emitted
   // on dated snapshots — the opening book stays as originally committed (and
   // check-open stays green), and no historical sheet is rewritten unless rebuilt.
+  // `gd` rides along only once the tiebreak is live — it's the number that now
+  // separates tied seats, and gating it keeps it off every historical sheet.
   const standingsRow = (i) => ({
     pts: players[i].teams.reduce((s, t) => s + STAGE_POINTS[bankedStage(snapshot.state, t)], 0),
+    ...(tiebreak
+      ? { gd: players[i].teams.reduce((s, t) => s + (snapshot.state.cumGD[t] ?? 0), 0) }
+      : {}),
     alive: players[i].teams.filter((t) => !snapshot.state.eliminated.has(t)),
   });
 
   const outright = byWin.map((i) => {
-    const base = row(i, players[i].pWin, MARGIN.outright, statuses?.win[i]);
+    const base = row(i, players[i].pWin, M.outright, statuses?.win[i]);
     return snapshot ? { ...base, ...standingsRow(i) } : base;
   });
   const toCash = [...players.keys()]
     .sort((x, y) => players[y].pTop - players[x].pTop)
-    .map((i) => row(i, players[i].pTop, MARGIN.place, statuses?.cash[i]));
-  const spoon = byLast.map((i) => row(i, players[i].pLast, MARGIN.place, statuses?.spoon[i]));
+    .map((i) => row(i, players[i].pTop, M.cash, statuses?.cash[i]));
+  const spoon = byLast.map((i) => row(i, players[i].pLast, M.spoon, statuses?.spoon[i]));
 
   // Head-to-heads, priced pairwise with ties as half-wins (dead heat = stakes
   // returned). Default is the four strongest seats by expected points, round-
@@ -828,8 +1020,9 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // an optional display label to fold tied seats into one line). Gated on date
   // so the opening book and every prior sheet keep the auto round-robin.
   const bounds = snapshot ? playerBounds(pool, snapshot.state) : null;
+  const cmp = bounds ? boundsCmp(bounds, tiebreak) : null;
   const pairSettled = (i, j) =>
-    !bounds ? null : bounds.min[i] > bounds.max[j] ? "a" : bounds.min[j] > bounds.max[i] ? "b" : null;
+    !cmp ? null : cmp.surelyAbove(i, j) ? "a" : cmp.surelyAbove(j, i) ? "b" : null;
   const h2hEntry = (i, j, aLabel, bLabel) => {
     const tie = (a.pairTie[Math.min(i, j) * np + Math.max(i, j)] ?? 0) / sims;
     const pi = a.pairWin[i * np + j] / sims + tie / 2;
@@ -844,8 +1037,9 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   };
   const nameIdx = (nm) => pool.players.findIndex((pl) => pl.name === nm);
   const h2h = [];
-  if (cfg.h2hPairs && (snapshot?.date ?? "") >= cfg.h2hPairs.since) {
-    for (const pr of cfg.h2hPairs.pairs) h2h.push(h2hEntry(nameIdx(pr.a), nameIdx(pr.b), pr.aLabel, pr.bLabel));
+  const pairsCfg = latestSince(cfg.h2hPairs ?? [], snapshot?.date ?? "");
+  if (pairsCfg) {
+    for (const pr of pairsCfg.pairs) h2h.push(h2hEntry(nameIdx(pr.a), nameIdx(pr.b), pr.aLabel, pr.bLabel));
   } else {
     const shelf = [...players.keys()].sort((x, y) => players[y].avg - players[x].avg).slice(0, 4);
     for (let x = 0; x < shelf.length; x++)
@@ -858,11 +1052,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // change at a new round doesn't rewrite the watch on historical sheets. When
   // the chosen entry carries its own `copy`, it overrides copy.watch.
   const date = snapshot?.date ?? "";
-  const watchCfg =
-    (Array.isArray(cfg.watch) ? cfg.watch : [cfg.watch])
-      .filter((w) => date >= (w.since ?? ""))
-      .sort((x, y) => (x.since ?? "").localeCompare(y.since ?? ""))
-      .at(-1);
+  const watchCfg = latestSince(Array.isArray(cfg.watch) ? cfg.watch : [cfg.watch], date);
   const wIdx = pool.players.findIndex((pl) => pl.name === watchCfg.player);
   const wHist = a.hist[wIdx];
   const main = bestLine(wHist, sims);
@@ -881,7 +1071,16 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     ladder,
     hist: trimHist(wHist, sims),
   };
-  const copy = watchCfg.copy ? { ...cfg.copy, watch: watchCfg.copy } : cfg.copy;
+  // Copy that changes at a round boundary — the tiebreak rewrote what a "tie"
+  // even means, so the panel blurbs describing dead heats had to move with it.
+  // Same timeline shape as everything else: keys here patch cfg.copy for sheets
+  // on or after `since`, and earlier sheets keep the wording they were posted with.
+  const { since: _since, ...copyPatch } = latestSince(cfg.copyFrom ?? [], date) ?? {};
+  const copy = {
+    ...cfg.copy,
+    ...copyPatch,
+    ...(watchCfg.copy ? { watch: watchCfg.copy } : {}),
+  };
 
   // Faction battle (if this pool has one): moneyline, spread ±1.5, team totals.
   let faction = null;
@@ -975,11 +1174,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // latest board whose `since` is on or before its date, so every historical
   // sheet — opening, R16, QF — reprices reproducibly from the same config.
   let caleb = null;
-  const boardCfg =
-    (cfg.specials?.boards ?? [])
-      .filter((b) => date >= (b.since ?? ""))
-      .sort((x, y) => (x.since ?? "").localeCompare(y.since ?? ""))
-      .at(-1) ?? null;
+  const boardCfg = latestSince(cfg.specials?.boards ?? [], date);
   const board = boardCfg?.bets ?? null;
   if (board) {
     const jointOf = (id) => {
@@ -993,14 +1188,16 @@ function deriveBook(pool, p, batch, sims, snapshot) {
       for (let k = STAGE[stage]; k <= STAGE.CHAMPION; k++) c += sc[k];
       return c / sims;
     };
+    // Specials ride the same margins as the boards they mirror — a slip reading
+    // "X wins the pool" must not disagree with X's own outright price.
     const priceBet = (bet) => {
       switch (bet.kind) {
         case "winsPool":
-          return price(players[idxOf(bet.player)].pWin, MARGIN.outright);
+          return price(players[idxOf(bet.player)].pWin, M.outright);
         case "cashes":
-          return price(players[idxOf(bet.player)].pTop, MARGIN.place);
+          return price(players[idxOf(bet.player)].pTop, M.cash);
         case "lastPlace":
-          return price(players[idxOf(bet.player)].pLast, MARGIN.place);
+          return price(players[idxOf(bet.player)].pLast, M.spoon);
         case "overPts":
           return price(pOver(a.hist[idxOf(bet.player)], sims, bet.line), MARGIN.twoWay);
         case "underPts":
@@ -1074,6 +1271,11 @@ function deriveBook(pool, p, batch, sims, snapshot) {
           consensusSource: snapshot.consensusSource,
           matchesConditioned: snapshot.nMatches,
           calibrationErr: snapshot.calibrationErr,
+          // Which margin schedule priced this sheet. Sheets on different bases
+          // aren't price-comparable — the view suppresses ▲▼ across the change,
+          // since most of that "move" would be vig, not probability. Emitted only
+          // when true, so sheets predating the change are untouched.
+          ...(scaled ? { marginScaled: true } : {}),
           players: np,
           teamsPerPlayer: pool.teamsPerPlayer,
         }
@@ -1165,9 +1367,11 @@ function buildSnapshot(date) {
     console.log("Zero matches + pre-tournament consensus → reusing committed ratings/seed");
   }
 
-  const batch = runBatch(ratings, SIMS, seed, cond);
+  const tiebreak = date >= GD_TIEBREAK_SINCE;
+  const batch = runBatch(ratings, SIMS, seed, cond, tiebreak);
   const snapshot = {
     date,
+    tiebreak,
     state,
     nMatches: upTo.length,
     consensusDate: consensus.date,
@@ -1206,19 +1410,28 @@ function updateIndex(poolId, date) {
 
 function backfill() {
   const all = loadMatches(MATCHES_PATH);
-  const dates = [...new Set(all.map((m) => m.date))].sort();
-  if (!dates.length) {
+  const matchDates = [...new Set(all.map((m) => m.date))];
+  if (!matchDates.length) {
     console.log("No matches in the log — nothing to backfill.");
     return;
   }
+  // A rest-gap date joins the queue only once its own market snapshot has been
+  // fetched — no consensus file, no sheet, no guessing at future dates.
+  const gapDates = EXTRA_SHEET_DATES.filter((d) => existsSync(join(CONSENSUS_DIR, `${d}.json`)));
+  const dates = [...new Set([...matchDates, ...gapDates])].sort();
   for (const date of dates) {
     // A sheet built before that day's results landed (a morning-of build)
     // conditions on fewer matches than the log now holds — rebuild it.
     const nUpTo = all.filter((m) => m.date <= date).length;
+    const isGap = !matchDates.includes(date);
     const fresh = (pool) => {
       if (!CONFIG[pool.id]) return true;
       const f = join(ROOT, "public/data/books", pool.id, `${date}.json`);
-      return existsSync(f) && JSON.parse(readFileSync(f, "utf8")).meta?.matchesConditioned === nUpTo;
+      if (!existsSync(f)) return false;
+      const meta = JSON.parse(readFileSync(f, "utf8")).meta;
+      // A gap sheet exists to carry that day's market, so it's stale until it
+      // has actually been priced off that day's own consensus.
+      return meta?.matchesConditioned === nUpTo && (!isGap || meta?.consensusDate === date);
     };
     if (pools.every(fresh) && !FORCE) {
       console.log(`Skip ${date} (snapshot fresh; --force to rebuild)`);

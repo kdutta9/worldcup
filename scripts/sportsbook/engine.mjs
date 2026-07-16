@@ -40,12 +40,20 @@ function goalRates(ra, rb) {
   return [la, lb];
 }
 
+// Goals from the most recent koWinnerA call, for callers accumulating goal
+// difference. A draw after 90 leaves these equal, so the shootout contributes
+// nothing to GD — which is exactly the real convention.
+let koGa = 0;
+let koGb = 0;
+
 // Knockout: 90 minutes by Poisson; a draw goes to the stronger-team-weighted
 // coin (extra time + pens compress but don't erase the skill gap).
 function koWinnerA(ra, rb, rng) {
   const [la, lb] = goalRates(ra, rb);
   const ga = poisson(la, rng);
   const gb = poisson(lb, rng);
+  koGa = ga;
+  koGb = gb;
   if (ga !== gb) return ga > gb;
   return rng() < la / (la + lb);
 }
@@ -110,8 +118,19 @@ function assignThirds(thirdGroups, rng) {
 // decided KO matches have fixed participants and winners. Only the remainder is
 // random. With cond=null the rng consumption is identical to the original
 // unconditioned engine, so pre-tournament builds reproduce bit-for-bit.
-export function simulateTournament(ratings, rng, stages, cond = null) {
+//
+// `gdOut` (optional, Float64Array(48)) collects each team's cumulative goal
+// difference across the whole tournament: real matches arrive pre-loaded via
+// `cond.gdBase`, simulated ones add their own margin. It reuses goals the engine
+// already draws, so passing it consumes no extra rng and every prior build still
+// reproduces bit-for-bit. Caveat: the third-place game is never simulated (it
+// changes nobody's stage), so its margin is absent from simulated GD.
+export function simulateTournament(ratings, rng, stages, cond = null, gdOut = null) {
   stages.fill(STAGE.GROUP);
+  if (gdOut) {
+    if (cond?.gdBase) gdOut.set(cond.gdBase);
+    else gdOut.fill(0);
+  }
 
   // Group stage. Rank on points, goal difference, goals for, then lots.
   const firsts = {};
@@ -131,6 +150,10 @@ export function simulateTournament(ratings, rng, stages, cond = null) {
       gd[y] += gb - ga;
       gf[x] += ga;
       gf[y] += gb;
+      if (gdOut) {
+        gdOut[teams[x]] += ga - gb;
+        gdOut[teams[y]] += gb - ga;
+      }
       if (ga > gb) pts[x] += 3;
       else if (gb > ga) pts[y] += 3;
       else {
@@ -166,6 +189,19 @@ export function simulateTournament(ratings, rng, stages, cond = null) {
     slotAssign = assignThirds(qualifiedThirds.map((r) => r.group), rng);
   }
 
+  // Resolve one knockout: a fixed winner from `cond`, else 90 minutes of Poisson
+  // with a draw falling to the weighted coin — which is the shootout, and adds
+  // no goal difference.
+  const koResolve = (k, a, b) => {
+    if (k) return k.winner;
+    const aWins = koWinnerA(ratings[a], ratings[b], rng);
+    if (gdOut) {
+      gdOut[a] += koGa - koGb;
+      gdOut[b] += koGb - koGa;
+    }
+    return aWins ? a : b;
+  };
+
   // Round of 32.
   const winners = {}; // matchId → team index
   for (const m of R32) {
@@ -176,7 +212,7 @@ export function simulateTournament(ratings, rng, stages, cond = null) {
     const b = k ? k.b : pick(m.b);
     stages[a] = STAGE.R32;
     stages[b] = STAGE.R32;
-    winners[m.id] = k ? k.winner : koWinnerA(ratings[a], ratings[b], rng) ? a : b;
+    winners[m.id] = koResolve(k, a, b);
   }
 
   // R16 → QF → SF, all the same shape: winners advance a stage.
@@ -191,7 +227,7 @@ export function simulateTournament(ratings, rng, stages, cond = null) {
       const b = k ? k.b : winners[m.b];
       stages[a] = stage;
       stages[b] = stage;
-      winners[m.id] = k ? k.winner : koWinnerA(ratings[a], ratings[b], rng) ? a : b;
+      winners[m.id] = koResolve(k, a, b);
     }
   }
 
@@ -199,7 +235,7 @@ export function simulateTournament(ratings, rng, stages, cond = null) {
   const kf = cond?.ko[104];
   const fa = kf ? kf.a : winners[101];
   const fb = kf ? kf.b : winners[102];
-  const champ = kf ? kf.winner : koWinnerA(ratings[fa], ratings[fb], rng) ? fa : fb;
+  const champ = koResolve(kf, fa, fb);
   stages[champ] = STAGE.CHAMPION;
   stages[champ === fa ? fb : fa] = STAGE.RUNNER_UP;
   return stages;

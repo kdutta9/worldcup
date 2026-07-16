@@ -17,16 +17,18 @@ const P = ({ children }) => <p className="post-p">{children}</p>;
 
 const flag = (t) => TEAM_BY_NAME[t]?.flag ?? "🏳️";
 
-// [pts, seat, alive-teams[]]
-const Standings = ({ rows }) => (
+// [pts, seat, alive-teams[], gd?] — the GD column is opt-in via `gd`, since only
+// the championship-week posts run under the goal-difference tiebreak.
+const Standings = ({ rows, gd = false }) => (
   <table className="bk-table">
     <thead>
-      <tr><th>PTS</th><th>SEAT</th><th>STILL ALIVE</th></tr>
+      <tr><th>PTS</th>{gd && <th>GD</th>}<th>SEAT</th><th>STILL ALIVE</th></tr>
     </thead>
     <tbody>
-      {rows.map(([pts, name, alive]) => (
+      {rows.map(([pts, name, alive, gdv]) => (
         <tr key={name}>
           <td>{pts}</td>
+          {gd && <td>{gdv > 0 ? `+${gdv}` : gdv < 0 ? `−${-gdv}` : "0"}</td>}
           <td className="bk-td-team">{name}</td>
           <td>{alive.length ? alive.map((t) => `${flag(t)} ${t}`).join(" · ") : "—"}</td>
         </tr>
@@ -86,6 +88,321 @@ const Slips = ({ bets }) => (
 );
 
 export const POSTS = [
+  {
+    id: "final-sosk",
+    bookId: "sons-of-steve-kerr",
+    bookName: "SOSK SPORTSBOOK",
+    date: "2026-07-15",
+    linesLabel: "July 16",
+    eyebrow: "THE HOUSE ORGAN — THE FINAL",
+    title: "MANY HAPPY RETURNS",
+    deck: "Argentina beat England 2–1 in Atlanta on two Messi assists in the last five minutes, and what's left of this pool is the cleanest thing a sportsbook ever gets to post: two live seats, two finalists, one match. Burnes bought Spain in June and is −175. J Call has Argentina and is +125. Whichever team lifts the Cup on Sunday, that man takes the $150 — there is no third road. The final is July 19. July 19 is Jacob Call's birthday. And underneath it all, the pool's new goal-difference tiebreak has loaded a gun nobody noticed: Burnes and Chris are level on 9 points AND level on 7 goal difference, so if Spain lose, Chris takes the last $30 by exactly one goal. Unless it's a shootout. Then they split it.",
+    body: (
+      <>
+        <Panel title="THE STORY SO FAR">
+          <P>
+            Tuchel decided to play six at the back against the best player who has ever lived, which is a bit like
+            boarding up the windows and leaving the front door open. For sixty minutes it looked like tactics. Then
+            Messi simply stopped being marked by anyone in particular and started roaming the space England had
+            politely built for him, and in the 85th minute he put Argentina level, and in the 90+2 he put them in the
+            final. Two assists, five minutes, one bus dismantled. He is still going strong at this tournament with 
+            eight goals, four assists, and an undisputed GOAT claim.
+          </P>
+          <P>
+            So the field is two men. Burnes drew Spain in June and has been quietly correct ever since: Spain have
+            conceded <em>one goal</em> in seven matches — Belgium got it in the quarterfinal, and Belgium may be the
+            best attacking side of the decade — and they beat the tournament favorite 2–0 in the semifinal without
+            ever appearing to try. They are boring in the way a hydraulic press is boring. J Call has Argentina, who
+            have conceded seven and scored nineteen and have Messi. The two of them are the only seats on this board
+            with a pulse, and the beautiful part is that they are not racing each other through some tangle of
+            scenarios. Spain win, Burnes wins. Argentina win, J Call wins. That's the whole document.
+          </P>
+          <P>
+            Which leaves the cruelty for the people who can't do anything. Arnst is frozen on ten and locked onto the
+            podium — France dying barred him from first forever, so his entire remaining interest is the size of his
+            own check, and it is decided by Burnes's team. Chris has been a statue on nine since Belgium went home.
+            And here the new tiebreak does something genuinely vicious: Burnes and Chris are tied on nine points and
+            tied on seven goal difference, right now, tonight. If Spain lose the final, Spain's goal difference drops
+            and Burnes drops below Chris by one goal, and Chris — every team he owns dead for a week — takes the last
+            thirty dollars off him without leaving the couch.
+          </P>
+        </Panel>
+
+        <Panel
+          title="THE TABLE — 62 BANKED, 3 IN PLAY"
+          blurb="Points bank at the furthest round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Both finalists are scored as a provisional 5 until Sunday settles it, so only 3 points remain on the board all week — the gap between runner-up and champion. New this round: the pool broke with dead-heat rules and now settles ties on cumulative goal difference, every team a seat owns, every match of the tournament. Note the column, then note that Burnes and Chris are identical in both."
+        >
+          <Standings
+            gd
+            rows={[
+              [11, "J Call", ["Argentina"], 4],
+              [10, "Arnst", [], 7],
+              [9, "Burnes", ["Spain"], 7],
+              [9, "Chris", [], 7],
+              [7, "Oanta", [], 2],
+              [6, "HG", [], -4],
+              [6, "Kunal", [], -19],
+              [4, "Prozan", [], -4],
+            ]}
+          />
+          <P>
+            Two teams remain in this tournament and they have the same goal difference: Spain +12, Argentina +12.
+            Spain got there by conceding once. Argentina got there by conceding seven and scoring nineteen. Ninety
+            minutes on Sunday decides which of those is the correct way to build a football team, and — via a
+            tiebreak rule written last week — also decides who gets thirty dollars.
+          </P>
+        </Panel>
+
+        <Panel
+          title="OUTRIGHT — TO WIN THE POOL"
+          blurb="The June 11 opening sheet against the July 16 morning line. Six obituaries and a two-horse race."
+        >
+          <Lines
+            rows={[
+              ["Burnes", "+190", "−175", "Opened the favorite of this entire pool and is closing as the favorite of this entire pool, which almost never happens and which he will absolutely never stop mentioning. He bought the most boring team in the world in June and it has conceded one goal since. Spain lift the Cup, he takes $150"],
+              ["J Call", "+460", "+125", "The birthday boy. Argentina is his last live hand, it is in the final, and the final is on his actual birthday. Beat Spain and he has 14 points and the pool; lose and he's 11 and second. There is no number between those two"],
+              ["Arnst", "+220", "OFF", "Was a −160 co-favorite as recently as Saturday and is now a monument. France's death froze him on ten: a champion always clears ten, so he is barred from first place and locked onto the podium. He cannot win, cannot miss the money, and cannot participate"],
+              ["Chris", "+960", "OFF", "Dead for first since Belgium lost, but not dead — see below. He is the entire reason the tiebreak matters"],
+              ["The other four", "—", "OFF", "Oanta hosted the best Saturday of the tournament and finishes fifth. HG, Kunal and Prozan are where they have been for a while"],
+            ]}
+          />
+        </Panel>
+
+        <Panel
+          title="TO CASH — THE ONE-GOAL RULE"
+          blurb="Three podium spots. J Call and Arnst have clinched two of them. The third is a one-goal argument between a man with a team and a man without one, priced July 16."
+        >
+          <Slips
+            bets={[
+              ["J Call — CLINCHED top 3; he's playing purely for the $150 now", "LOCKED"],
+              ["Arnst — CLINCHED top 3, barred from 1st; only the size of the check is live", "LOCKED"],
+              ["Burnes cashes — Spain lift the Cup, or Argentina need a shootout", "−230"],
+              ["Chris takes the last $30 — Spain lose in ninety or in extra time, and one goal of tournament difference does the rest", "+165"],
+            ]}
+          />
+          <P>
+            This is the best line on the board and it needs explaining. Burnes and Chris are both on nine points and
+            both on +7 goal difference. Every team Chris owns is eliminated, so his +7 is carved in stone. Burnes's +7
+            contains Spain, so it moves on Sunday. If Spain <em>win</em>, Burnes goes to twelve and none of this
+            matters. If Spain <em>lose</em> by any margin at all, Spain's goal difference falls, Burnes falls to +6 or
+            worse, and Chris wins the tiebreak and the $30 — having not had a live team since July 10.
+          </P>
+          <P>
+            But there is a door. A shootout is a draw, and a draw doesn't move goal difference. So if Argentina win
+            the World Cup on penalties, Spain stay on +12, Burnes stays on +7, and the two of them finish tied on
+            points <em>and</em> tied on goal difference — a genuine dead heat, the only one the new rule can still
+            produce, and they split the thirty. That is the entire remaining Burnes portfolio: win the tournament, or
+            pray for penalties. The house priced it at −230 and would like the record to show it enjoyed doing so.
+          </P>
+        </Panel>
+
+        <Panel
+          title="SUNDAY — AND THE GAME NOBODY ORDERED"
+          blurb="One match decides the pool. The other one decides nothing, which is its whole charm."
+        >
+          <Fixtures
+            rows={[
+              ["Sun, Jul 19 · The Final", "Spain", "Burnes", "Argentina", "J Call", "The pool, in ninety minutes. Whoever's team lifts it takes $150 and the loser takes second. Both sides carry +12 goal difference into it, and the margin — or the absence of one — also settles the last podium seat behind them"],
+              ["Sat, Jul 18 · Third Place", "France", "Arnst", "England", "Oanta", "The meme game, and for once genuinely a meme: Arnst is frozen at ten regardless and Oanta is fifth regardless. Neither man's goal difference can change a single dollar in this pool. Play it in a car park"],
+            ]}
+          />
+          <P>
+            Four days of nothing, then everything. The book will reprice each morning until kickoff — the market moves,
+            the sheet moves with it, and the story does not move at all, because the story is that two men own the two
+            teams left and one of them is having a birthday.
+          </P>
+        </Panel>
+
+        <Panel
+          title="THE BIRTHDAY INVITATIONAL — JULY 19"
+          blurb="Prozan's window has been shuttered since USA and Brazil went home. Hawaii West got its Saturday. The Oanta Invitational got its semifinal. The marquee now belongs to the man whose birthday is the World Cup final, priced July 16. Cash up front; the jukebox still doesn't take IOUs."
+        >
+          <Slips
+            bets={[
+              ["Burnes wins the pool — he bought Spain in June and Spain lifting the Cup is the entire $150", "−175"],
+              ["The birthday boy takes it all — Argentina win on July 19", "+125"],
+              ["Arnst's check is Burnes's problem — second if Spain lose, third if Spain win, and he cannot lift a finger either way", "+125"],
+              ["The one-goal tiebreak — Chris takes third off Burnes because Spain losing drops their goal difference below his 7", "+165"],
+              ["Burnes salvages something — Spain lift the Cup, or Argentina need a shootout", "−230"],
+            ]}
+          />
+          <P>
+            Consider Arnst's +125 for a moment. He has no live team, he cannot win the pool, he cannot miss the
+            podium, and the only open question on his ticket — sixty dollars or thirty — is answered entirely by
+            whether another man's Spain wins a football match he has no stake in. He is a spectator at his own
+            payout. The house finds this funnier than it should and has posted the line accordingly.
+          </P>
+          <P>
+            Many happy returns, Jacob. The house means that in the technical sense.
+          </P>
+        </Panel>
+      </>
+    ),
+  },
+  {
+    id: "final-boofy",
+    bookId: "boofy",
+    bookName: "BOOFY SPORTSBOOK",
+    date: "2026-07-15",
+    linesLabel: "July 16",
+    eyebrow: "THE HOUSE ORGAN — THE FINAL",
+    title: "THE WAKE AT NICK'S PLACE",
+    deck: "Argentina beat England 2–1 and Nathan won the pool — not \"is winning,\" won. Nine points with three left on the board and nobody above eight: the $200 is engraved. So on Sunday, at the home of a man whose last team died in the quarterfinal, eleven eliminated seats will gather to watch a World Cup final that decides $40, $20, and nothing else. The pool's new goal-difference tiebreak settled most of even that in advance — Dante beats Rob by six goals if they tie on eight, Dino beats Max by seven on seven — which means Max, a dirty Brit whose Norway was knocked out by England, now cashes in exactly zero outcomes. Caleb will be in attendance. Caleb has never been in this pool.",
+    body: (
+      <>
+        <Panel title="THE STORY SO FAR">
+          <P>
+            It ended on Wednesday. Rob's England took Messi's Argentina to the 85th minute with a six-man back line and a
+            plan, and then the plan met the player, and two assists later Rob's summer was over and Nathan had
+            mathematically won the Boofy pool. Nine points, three points left in the entire tournament, and the
+            highest anyone else can reach is eight. There is no scenario, no shootout, no tiebreak. Nathan drew
+            Argentina in a lottery and Argentina got Lionel Messi. Congratulations are boring but they're owed.
+          </P>
+          <P>
+            Which is how we arrive at Sunday's arrangement: the final will be watched at Nick's place. 
+            Caleb will be in attendance, in person, for the first time all year. 
+            Caleb is not in the pool. Caleb has never been in the pool. Caleb has not paid
+            for a drink since the group stage and will arrive with opinions about a goal-difference rule he had no
+            vote on.
+          </P>
+          <P>
+            And that rule is the story of what's left. The pool decided ties break on cumulative goal difference —
+            every team you own, every match — and it walked in and immediately shot two people. Rob, on eight,
+            can be caught by Dante's Spain on eight; Dante's goal difference is +4 and Rob's is −2, so the tie
+            isn't a tie, it's a loss. Dino and Max are both frozen on seven; Dino is +12 and Max is +5, so the
+            marriage everyone joked about for two rounds is annulled. Max does not split the last chair with Dino.
+            Max does not get a chair. Max, whose Norway was knocked out of this tournament by England — his own
+            country — now cashes in zero of the two possible futures, and there is nothing he can do about any of
+            it because every team he owns has been dead for four days.
+          </P>
+        </Panel>
+
+        <Panel
+          title="THE TABLE — 62 BANKED, 3 IN PLAY"
+          blurb="Points bank at the furthest round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Both finalists are scored as a provisional 5 until Sunday, so the only 3 points left all week are the gap between runner-up and champion — and they belong to Nathan or Dante. New this round: ties settle on cumulative goal difference, every team a seat owns, every match of the tournament. The column below is now worth more than most of the points beside it."
+        >
+          <Standings
+            gd
+            rows={[
+              [9, "Nathan", ["Argentina"], 10],
+              [8, "Rob", [], -2],
+              [7, "Dino", [], 12],
+              [7, "Max", [], 5],
+              [6, "Nick", [], 6],
+              [5, "Dante", ["Spain"], 3],
+              [5, "Jake", [], -3],
+              [4, "Kunal", [], 17],
+              [4, "Jack", [], 0],
+              [4, "Adrian", [], -12],
+              [3, "Shaya", [], -9],
+              [0, "Matt", [], -27],
+            ]}
+          />
+          <P>
+            Read the GD column and enjoy the injustice. Kunal is +17 — the best goal difference in the entire pool by
+            five clear goals, Germany and Brazil and the Netherlands all thumping people on their way out — and it is
+            worth precisely nothing, because he's on four points in a three-place pool. Rob is −2, the worst number
+            among the top six, because he owned Tunisia and Iraq and they were catastrophic in June. In a pool where
+            ties now break on goal difference, the man who ran England and France to a −1350 favorite carries the
+            weakest tiebreaker at the top of the table.
+          </P>
+        </Panel>
+
+        <Panel
+          title="OUTRIGHT — TO WIN THE POOL"
+          blurb="The June 11 opening sheet against the July 16 morning line. One winner, eleven obituaries, and a note about a number that fooled everybody."
+        >
+          <Lines
+            rows={[
+              ["Nathan", "+780", "WON ✓", "Opened eighth-shortest in a twelve-man pool and won it outright. Argentina, South Africa, Croatia, Egypt — one of those four turned out to have the greatest player in history on it, and that was that. Nine points, nobody within reach, engraving done"],
+              ["Rob", "+220", "OFF", "Opened the favorite, spent a month as the favorite, peaked at −1350, and finishes with nothing but a runner-up fight. He owned England AND France and both died in the semifinal round. About that −1350, see below"],
+              ["Dante", "+410", "OFF", "Spain reached the final and it moved him from 11th to... 6th. His ceiling is eight, Nathan has nine, so he has been mathematically barred from winning this pool since Wednesday noon. His whole summer is now the $40 line below"],
+              ["Dino", "+530", "OFF", "The Cinderella died July 9 and he hasn't moved a point since. And yet: +12 goal difference, frozen, waiting — the corpse with the best tiebreaker in the neighborhood"],
+              ["The other eight", "—", "OFF", "Nick is hosting. Max is furious. The rest have been gone so long they've stopped checking"],
+            ]}
+          />
+          <P>
+            The −1350 deserves a word, because the chat has been misreading it for a week. Rob was never a 93% shot to
+            win this pool. That price was the <em>house</em> number: the outright board charges a 35% margin across a
+            full field, and the fair probability underneath −1350 was 69% (nice). The market didn't overrate France. The book
+            took its vig, exactly as posted, and 69% (nice) is a number that loses roughly one time in three. It lost.
+          </P>
+          <P>
+            Which exposes a second thing, and the house would rather say it out loud than get caught. A 35% margin is
+            what a futures board charges across twelve runners. It is not what anybody charges on a coin flip. With
+            this field down to two, that constant was quietly printing <em>both</em> finalists at negative odds — a
+            135% book on a two-horse race, which isn't a market, it's a mugging. So from this sheet the vig scales
+            with the live field: two runners left, two-way pricing, about 108%. It's why Dante is −175 to take second
+            here and Burnes is −175 to win the entire SOSK pool. Those are the same coin — Spain lifting the Cup — and
+            they should always have printed the same number.
+          </P>
+        </Panel>
+
+        <Panel
+          title="TO CASH — $40 AND $20, AND THAT'S THE LOT"
+          blurb="Three podium spots. Nathan and Rob have clinched two of them. Everything still live is priced July 16 — and the tiebreak has already decided who's allowed to be in the conversation."
+        >
+          <Slips
+            bets={[
+              ["Nathan — CLINCHED the pool. The $200 is engraved", "LOCKED"],
+              ["Rob — CLINCHED top 3 the moment England lost; only 2nd vs 3rd is live", "LOCKED"],
+              ["Dante takes second — Spain must lift the actual Cup, then he beats Rob on goal difference, +4 to −2", "−175"],
+              ["Dino backs into third — Spain lose, and he beats Max to the chair by seven goals", "+125"],
+              ["Max cashes anything at all", "OFF THE BOARD"],
+            ]}
+          />
+          <P>
+            Max's line is not a joke and it is not a slight — it is arithmetic, and it is the first real casualty of
+            the new rule. Under the old dead-heat regime, Max and Dino were married: both frozen on seven, both
+            splitting the last chair if Spain lost, +110 apiece going into the semifinals and +270 apiece yesterday. The pool
+            changed the tiebreak and the marriage ended instantly. Seven points and +12 beats seven points and +5. So
+            in the Spain-lose branch, Dino takes the $20 alone; in the Spain-win branch, Dante takes second and Rob
+            takes third and Dino and Max both get nothing. There is no third branch. Max has been eliminated from the
+            money by a rule, having already been eliminated from the tournament by England.
+          </P>
+        </Panel>
+
+        <Panel
+          title="SUNDAY — ONE REAL GAME, ONE PERFECT JOKE"
+          blurb="A final that settles $60 total, and a third-place game that settles a rounding error."
+        >
+          <Fixtures
+            rows={[
+              ["Sun, Jul 19 · The Final", "Spain", "Dante", "Argentina", "Nathan", "Nathan's already won, so this is Dante's game and nobody else's. Spain lift it, he's on eight and beats Rob on goal difference for $40. Spain lose, he's on five, finishes sixth, and Dino takes the last chair"],
+              ["Sat, Jul 18 · Third Place", "France", "Rob", "England", "Rob", "The perfect joke: Rob owns both of them. Whatever happens, one of his teams' goal difference goes up by exactly what the other's goes down. The meme game is, for the only man it could possibly affect, a literal wash"],
+            ]}
+          />
+          <P>
+            That third-place row is worth sitting with. In a pool that just made goal difference the thing that decides
+            money, the one seat whose goal difference is at the top of the table and under threat — Rob, on −2, being
+            hunted by Dante — owns <em>both teams in the only other match left</em>. France beats England 4–0 and Rob
+            gains nothing. England beats France 4–0 and Rob loses nothing. He is hedged against himself, perfectly,
+            by accident, in June, by a random number generator.
+          </P>
+        </Panel>
+
+        <Panel
+          title="CALEB'S CORNER — LIVE FROM NICK'S"
+          blurb="Caleb is not in the pool. That has never once stopped him, and on Sunday it will not even slow him down, because he'll be standing in the host's kitchen. The July 16 card. Cash up front — he knows the drill."
+        >
+          <Slips
+            bets={[
+              ["Dante steals second — Spain lift the Cup, he ties Rob on 8, and takes it on goal difference, +4 to −2", "−175"],
+              ["Rob salvages the $40 — Spain lose, Dante stalls on 5, and runner-up is the last thing England and France ever bought him", "+125"],
+              ["Dino backs into the last chair — dead since the quarterfinal, beats Max by seven goals neither can touch", "+125"],
+              ["Nathan wins the pool — the house is not taking this action and posts the number purely so it can be admired", "−2400"],
+            ]}
+          />
+          <P>
+            So: a dead man hosts, a man who isn't in the pool attends, the champion is decided, the runner-up is a
+            referendum on Spain, the third seat belongs to a corpse with a good goal difference, and a dirty Brit sits
+            in the corner having been knocked out by his own country and then knocked out of the money by a rule
+            change. Somewhere in there is a football match. Kickoff is Sunday. Bring cash.
+          </P>
+        </Panel>
+      </>
+    ),
+  },
   {
     id: "sf2-boofy",
     bookId: "boofy",

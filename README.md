@@ -77,6 +77,12 @@ R16 = 2, QF = 3, SF = 4, Runner-up = 5, Champion = 8 (group-stage exit = 0). A
 player's score is the sum of their teams. The stage is the source of truth; points
 are derived from one map in `scoring.js`.
 
+**Ties.** From 2026-07-15 the pools settle ties on **cumulative goal difference** —
+every team a seat owns, across every match of the tournament, group and knockout
+alike (a shootout is a draw and contributes nothing). Only a dead heat on points
+*and* goal difference still splits. Sheets before that date were posted under
+dead-heat rules and are not repriced; see `GD_TIEBREAK_SINCE` in `build-books.mjs`.
+
 **Data model.** One global `results.json` (team → furthest stage) shared by every
 group, plus one `groups/<id>.json` per group holding that draft's player→team
 assignments. Standings are derived client-side. The two JSON shapes map 1:1 onto
@@ -149,6 +155,17 @@ patches the blended prob for a team before the final normalize.
 every pool draw against them, prices the markets with a house margin, writes
 `public/data/books/<id>.json`.
 
+**House margin.** The overround scales with how many runners a market is actually
+pricing: a full field carries the classic board margin (outright 135%, place 125%
+per place), a market down to two live names is charged as the two-way market it is
+(~107.5%, the number the head-to-head board already used), and everything between
+interpolates. Without this, an outright board whose field had collapsed to two
+posted *both* finalists at negative odds — a 135% book on a coin flip — and
+disagreed with the head-to-head price of the very same event. Applies from
+`FIELD_MARGIN_SINCE`; earlier sheets keep the flat margin they were posted with.
+`meta.marginScaled` records which schedule priced a sheet, so the view can drop
+▲▼ across the change — that "move" is vig, not probability.
+
 ### Live line movement
 
 Books reprice after every matchday. `build-books.mjs --date D` conditions the
@@ -161,6 +178,17 @@ the sheet's `matchesConditioned` against the log, so a sheet built before all
 of its day's results were entered is rebuilt automatically on the next run
 (`--force` rebuilds all — use after correcting a score); `--check-open` verifies
 a zero-match build still reproduces the committed opening books bit-for-bit.
+
+**Rest-gap sheets.** A round can sit days away from the last logged match (the
+final is July 19; the log stops on the 15th), which would leave championship week
+posting no line at all. `EXTRA_SHEET_DATES` in `build-books.mjs` lists match-free
+dates that still get a sheet, and `--backfill` builds one only once a consensus
+file exists for *that exact date*. That keeps the wall clock out of the pipeline —
+the market snapshot is the day's event — so `npm run refresh-book` each morning
+fetches the market and the sheet follows on its own. A gap sheet counts as fresh
+only when its `consensusDate` equals its own date; to reprice one mid-day after a
+re-fetch, run `--date <D>` directly (never `--backfill --force`, which would touch
+history).
 
 The specials corner ("Caleb's Corner" in Boofy, "Prozan's Parlay Window" in
 SOSK — the JSON field is `caleb` for historical reasons) is config data in

@@ -136,6 +136,17 @@ function Book({ book, prev, entries, books, cur, onNav }) {
     document.title = `${book.name} Sportsbook · World Cup Lotto '26`;
   }, [book.name]);
 
+  // ▲▼ compares posted prices, which only means something when both sheets were
+  // priced on the same margin schedule. The sheet where vig started scaling to
+  // the live field sits across that change from its predecessor, so most of the
+  // apparent "move" there would be margin, not probability — Burnes shortening
+  // from 57.2% to 59.1% would have rendered as "▲ −340 → −175", an arrow flatly
+  // contradicting the numbers beside it. Drop the comparison on that one
+  // boundary. Two-way markets (h2h, grudges, faction) never changed basis, so
+  // they keep their movement.
+  const sameMarginBasis = !!prev && !!prev.meta?.marginScaled === !!m.marginScaled;
+  const cmpRows = (rows) => (sameMarginBasis ? rows : null);
+
   // Section ordering. The default (pre-QF) layout is faction on top, the specials
   // corner down by the Watch. From the QF turn (sheets ≥ 2026-07-08) the live
   // specials corner takes the marquee at the very top of both books — Hawaii West
@@ -152,7 +163,7 @@ function Book({ book, prev, entries, books, cur, onNav }) {
     <Panel title={book.caleb.title} blurb={book.caleb.blurb}>
       <div className="bk-rows">
         {book.caleb.bets.map((b) => {
-          const was = prev?.caleb?.bets?.find((o) => o.label === b.label)?.price;
+          const was = cmpRows(prev?.caleb?.bets)?.find((o) => o.label === b.label)?.price;
           return (
             <div key={b.label} className="bk-row">
               <span className="bk-caleb-label">{b.label}</span>
@@ -206,7 +217,7 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         </Panel>
       ) : (
         <Panel title="OUTRIGHT — TO WIN THE POOL" blurb={book.copy.outright}>
-          <MarketRows rows={book.outright} prevRows={prev?.outright} kind="outright" tags />
+          <MarketRows rows={book.outright} prevRows={cmpRows(prev?.outright)} kind="outright" tags />
         </Panel>
       )}
 
@@ -214,10 +225,10 @@ function Book({ book, prev, entries, books, cur, onNav }) {
 
       <div className="bk-grid2">
         <Panel title="TO CASH — TOP 3 FINISH" blurb={book.copy.toCash}>
-          <MarketRows rows={book.toCash} prevRows={prev?.toCash} kind="toCash" compact />
+          <MarketRows rows={book.toCash} prevRows={cmpRows(prev?.toCash)} kind="toCash" compact />
         </Panel>
         <Panel title="THE WOODEN SPOON — LAST PLACE" blurb={book.copy.spoon}>
-          <MarketRows rows={book.spoon} prevRows={prev?.spoon} kind="spoon" compact />
+          <MarketRows rows={book.spoon} prevRows={cmpRows(prev?.spoon)} kind="spoon" compact />
         </Panel>
       </div>
 
@@ -395,20 +406,35 @@ function MarketRows({ rows, prevRows, kind, tags, compact }) {
 
 // The pool's live standings doubling as the outright board: banked points and
 // still-alive teams (as of this sheet's date), plus the price to win the pool.
-// Point-sorted like a real table; ties broken by win probability.
+// Point-sorted like a real table. Sheets from the goal-difference tiebreak on
+// carry a `gd` per seat and show it as the column that actually separates ties;
+// earlier sheets have no such field and render exactly as they always did.
 function OutrightTable({ rows }) {
-  const sorted = [...rows].sort((a, b) => (b.pts ?? 0) - (a.pts ?? 0) || b.fairPct - a.fairPct);
+  const showGd = rows.some((r) => "gd" in r);
+  const sorted = [...rows].sort(
+    (a, b) =>
+      (b.pts ?? 0) - (a.pts ?? 0) ||
+      (showGd ? (b.gd ?? 0) - (a.gd ?? 0) : 0) ||
+      b.fairPct - a.fairPct
+  );
   const toWin = (r) =>
     r.status === "dead" ? "OUT" : r.status === "locked" ? "WON ✓" : r.price ?? "—";
   return (
     <table className="bk-table bk-standings">
       <thead>
-        <tr><th>PTS</th><th>SEAT</th><th>STILL ALIVE</th><th className="bk-col-r">TO WIN</th></tr>
+        <tr>
+          <th>PTS</th>
+          {showGd && <th>GD</th>}
+          <th>SEAT</th>
+          <th>STILL ALIVE</th>
+          <th className="bk-col-r">TO WIN</th>
+        </tr>
       </thead>
       <tbody>
         {sorted.map((r) => (
           <tr key={r.player}>
             <td>{r.pts ?? 0}</td>
+            {showGd && <td>{r.gd > 0 ? `+${r.gd}` : r.gd < 0 ? `−${-r.gd}` : "0"}</td>}
             <td className="bk-td-team">{r.player}</td>
             <td>
               {r.alive?.length

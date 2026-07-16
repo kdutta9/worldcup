@@ -226,6 +226,16 @@ export function deriveState(matches) {
     eliminated.add(r.winner === r.a ? r.b : r.a);
   }
 
+  // Cumulative goal difference across every match played, group and knockout
+  // alike — the pool's tiebreaker. A shootout is a draw and contributes 0; a
+  // score that went to extra time counts in full, exactly as the log records it.
+  const cumGD = Object.fromEntries(TEAM_NAMES.map((t) => [t, 0]));
+  for (const m of matches) {
+    const [ga, gb] = m.score;
+    cumGD[m.a] += ga - gb;
+    cumGD[m.b] += gb - ga;
+  }
+
   // Semifinal winners with the final still to play. stageOf holds them at SF so
   // the scoreboard can label them "Finalist", but they've reached the final and
   // so have banked at least runner-up (5) — the sportsbook scores them that way
@@ -246,6 +256,7 @@ export function deriveState(matches) {
     stageOf,
     eliminated,
     finalists,
+    cumGD,
   };
 }
 
@@ -288,7 +299,10 @@ export function buildCondition(state) {
   const ko = {};
   for (const [id, r] of Object.entries(state.ko))
     ko[id] = { a: TEAM_INDEX[r.a], b: TEAM_INDEX[r.b], winner: TEAM_INDEX[r.winner] };
-  return { groups, thirds, ko, nMatches: state.matches.length };
+  // Real goal difference so far, by team index — the engine adds only the
+  // margins it simulates on top of this.
+  const gdBase = Float64Array.from(TEAM_NAMES, (t) => state.cumGD[t] ?? 0);
+  return { groups, thirds, ko, gdBase, nMatches: state.matches.length };
 }
 
 // Team-name normalization for CLI input and external feeds (Kalshi).
