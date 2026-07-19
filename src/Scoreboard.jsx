@@ -67,7 +67,12 @@ function GroupStandings({ groupId }) {
 
   const results = data[1];
   const stages = results.stages || {};
-  const rows = computeStandings(group, stages, results.gd || {});
+  // Each pool carries its own tiebreak rule (see groups/<id>.json). "gd" shows
+  // and ranks on goal difference; "shootout" hides the column and leaves level
+  // seats tied here — the pool settles them from the penalty spot, off the board.
+  const tiebreak = group.tiebreak ?? "gd";
+  const showGd = tiebreak === "gd";
+  const rows = computeStandings(group, stages, results.gd || {}, tiebreak);
 
   return (
     <Panel title={`${group.name.toUpperCase()} — STANDINGS`}>
@@ -77,10 +82,12 @@ function GroupStandings({ groupId }) {
             <div className="stand-head">
               <span className="stand-rank">{row.rank}</span>
               <span className="stand-player">{row.player}</span>
-              <span className="stand-gd" title="Cumulative goal difference — breaks ties on points">
-                {fmtGd(row.gd)}
-                <small>GD</small>
-              </span>
+              {showGd && (
+                <span className="stand-gd" title="Cumulative goal difference — breaks ties on points">
+                  {fmtGd(row.gd)}
+                  <small>GD</small>
+                </span>
+              )}
               <span className="stand-total">
                 {row.total}
                 <small>PTS</small>
@@ -105,10 +112,21 @@ function GroupStandings({ groupId }) {
       <p className="fine" style={{ margin: "20px auto 0" }}>
         Points are scored per team by furthest round reached: Round of 32 = 1, R16 = 2, QF = 3,
         SF = 4, Runner-up = 5, Champion = 8. A semifinal winner is scored as a Finalist (5, same
-        as runner-up) until the final decides Runner-up vs. Champion. Ties break on GD — cumulative
-        goal difference across every match your teams have played, penalty shootouts counting as
-        draws — so seats level on points are separated by the column beside it, and only seats level
-        on both share a rank. Last updated {results.updatedAt || "—"}.
+        as runner-up) until the final decides Runner-up vs. Champion.{" "}
+        {showGd ? (
+          <>
+            Ties break on GD — cumulative goal difference across every match your teams have played,
+            penalty shootouts counting as draws — so seats level on points are separated by the
+            column beside it, and only seats level on both share a rank.
+          </>
+        ) : (
+          <>
+            Ties are settled from the penalty spot: this pool voted out goal difference, so seats
+            level on points share a rank here and a five-kick shootout — each player in his own goal
+            — decides the money off the board.
+          </>
+        )}{" "}
+        Last updated {results.updatedAt || "—"}.
       </p>
       <div className="btn-row" style={{ marginTop: 18 }}>
         <a className="ghost-btn" href={`?book=${groupId}`}>Sportsbook: latest lines →</a>

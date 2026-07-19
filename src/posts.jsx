@@ -17,8 +17,9 @@ const P = ({ children }) => <p className="post-p">{children}</p>;
 
 const flag = (t) => TEAM_BY_NAME[t]?.flag ?? "🏳️";
 
-// [pts, seat, alive-teams[], gd?] — the GD column is opt-in via `gd`, since only
-// the championship-week posts run under the goal-difference tiebreak.
+// [pts, seat, alive-teams[], gd?] — the GD column is opt-in via `gd`. Only Boofy
+// still runs the goal-difference tiebreak; SOSK repealed it for a penalty
+// shootout, so its final table drops the column.
 const Standings = ({ rows, gd = false }) => (
   <table className="bk-table">
     <thead>
@@ -96,7 +97,7 @@ export const POSTS = [
     linesLabel: "July 16",
     eyebrow: "THE HOUSE ORGAN — THE FINAL",
     title: "MANY HAPPY RETURNS",
-    deck: "Argentina beat England 2–1 in Atlanta on two Messi assists in the last five minutes, and what's left of this pool is the cleanest thing a sportsbook ever gets to post: two live seats, two finalists, one match. Burnes bought Spain in June and is −175. J Call has Argentina and is +125. Whichever team lifts the Cup on Sunday, that man takes the $150 — there is no third road. The final is July 19. July 19 is Jacob Call's birthday. And underneath it all, the pool's new goal-difference tiebreak has loaded a gun nobody noticed: Burnes and Chris are level on 9 points AND level on 7 goal difference, so if Spain lose, Chris takes the last $30 by exactly one goal. Unless it's a shootout. Then they split it.",
+    deck: "Argentina beat England 2–1 in Atlanta on two Messi assists in the last five minutes, and what's left of this pool is the cleanest thing a sportsbook ever gets to post: two live seats, two finalists, one match. Burnes bought Spain in June and is −175. J Call has Argentina and is +125. Whichever team lifts the Cup on Sunday, that man takes the $150 — there is no third road. The final is July 19. July 19 is Jacob Call's birthday. And underneath it all, the pool did the one thing a pool should never be allowed to do: it changed its own tiebreaker four days before the final. Goal difference is gone, handed back to the players by vote. If Argentina win, Burnes drops level with Chris on 9 points and the last $30 is settled the way the sport settles everything that matters — a five-kick shootout, each man keeping his own goal. Chris played high school soccer. Burnes was a DKE legend at goalkeeper. The house has a line on it.",
     body: (
       <>
         <Panel title="THE STORY SO FAR">
@@ -121,35 +122,36 @@ export const POSTS = [
             Which leaves the cruelty for the people who can't do anything. Arnst is frozen on ten and locked onto the
             podium — France dying barred him from first forever, so his entire remaining interest is the size of his
             own check, and it is decided by Burnes's team. Chris has been a statue on nine since Belgium went home.
-            And here the new tiebreak does something genuinely vicious: Burnes and Chris are tied on nine points and
-            tied on seven goal difference, right now, tonight. If Spain lose the final, Spain's goal difference drops
-            and Burnes drops below Chris by one goal, and Chris — every team he owns dead for a week — takes the last
-            thirty dollars off him without leaving the couch.
+            And here the amended rule does something genuinely vicious: if Argentina win, Burnes falls to nine, level
+            with Chris, and the pool no longer looks at a single number to separate them — it puts a ball on the spot.
+            Five kicks each, every man his own goalkeeper, thirty dollars on the outcome. Chris, who has not owned a
+            live team since Belgium died on July 10, gets to win it back the only way left to him: from twelve yards,
+            against a man who used to play in goal.
           </P>
         </Panel>
 
         <Panel
           title="THE TABLE — 62 BANKED, 3 IN PLAY"
-          blurb="Points bank at the furthest round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Both finalists are scored as a provisional 5 until Sunday settles it, so only 3 points remain on the board all week — the gap between runner-up and champion. New this round: the pool broke with dead-heat rules and now settles ties on cumulative goal difference, every team a seat owns, every match of the tournament. Note the column, then note that Burnes and Chris are identical in both."
+          blurb="Points bank at the furthest round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Both finalists are scored as a provisional 5 until Sunday settles it, so only 3 points remain on the board all week — the gap between runner-up and champion. New this week: the pool tore up last week's goal-difference rule and voted to break a level finish from the penalty spot instead. So read the top of the table plainly — Burnes and Chris are the same number, and nothing but a shootout can tell them apart."
         >
           <Standings
-            gd
             rows={[
-              [11, "J Call", ["Argentina"], 4],
-              [10, "Arnst", [], 7],
-              [9, "Burnes", ["Spain"], 7],
-              [9, "Chris", [], 7],
-              [7, "Oanta", [], 2],
-              [6, "HG", [], -4],
-              [6, "Kunal", [], -19],
-              [4, "Prozan", [], -4],
+              [11, "J Call", ["Argentina"]],
+              [10, "Arnst", []],
+              [9, "Burnes", ["Spain"]],
+              [9, "Chris", []],
+              [7, "Oanta", []],
+              [6, "HG", []],
+              [6, "Kunal", []],
+              [4, "Prozan", []],
             ]}
           />
           <P>
-            Two teams remain in this tournament and they have the same goal difference: Spain +12, Argentina +12.
-            Spain got there by conceding once. Argentina got there by conceding seven and scoring nineteen. Ninety
-            minutes on Sunday decides which of those is the correct way to build a football team, and — via a
-            tiebreak rule written last week — also decides who gets thirty dollars.
+            Two teams remain in this tournament, and for one glorious week the pool had a rule that turned the final's
+            margin into a second currency — every goal Spain conceded or scored moved thirty dollars. Then the pool
+            looked at what it had built, decided goal difference was too much like homework, and repealed it. A level
+            finish now goes to penalties. Ninety minutes on Sunday decides the $150. If it also produces a nine-nine
+            tie beneath it, the last $30 is decided by two men and a goalkeeper each, which happens to be the same man.
           </P>
         </Panel>
 
@@ -162,37 +164,49 @@ export const POSTS = [
               ["Burnes", "+190", "−175", "Opened the favorite of this entire pool and is closing as the favorite of this entire pool, which almost never happens and which he will absolutely never stop mentioning. He bought the most boring team in the world in June and it has conceded one goal since. Spain lift the Cup, he takes $150"],
               ["J Call", "+460", "+125", "The birthday boy. Argentina is his last live hand, it is in the final, and the final is on his actual birthday. Beat Spain and he has 14 points and the pool; lose and he's 11 and second. There is no number between those two"],
               ["Arnst", "+220", "OFF", "Was a −160 co-favorite as recently as Saturday and is now a monument. France's death froze him on ten: a champion always clears ten, so he is barred from first place and locked onto the podium. He cannot win, cannot miss the money, and cannot participate"],
-              ["Chris", "+960", "OFF", "Dead for first since Belgium lost, but not dead — see below. He is the entire reason the tiebreak matters"],
+              ["Chris", "+960", "OFF", "Dead for first since Belgium lost, but not dead — see below. He is the entire reason there is a shootout to price"],
               ["The other four", "—", "OFF", "Oanta hosted the best Saturday of the tournament and finishes fifth. HG, Kunal and Prozan are where they have been for a while"],
             ]}
           />
         </Panel>
 
         <Panel
-          title="TO CASH — THE ONE-GOAL RULE"
-          blurb="Three podium spots. J Call and Arnst have clinched two of them. The third is a one-goal argument between a man with a team and a man without one, priced July 16."
+          title="TO CASH — THE SHOOTOUT"
+          blurb="Three podium spots. J Call and Arnst have clinched two of them. The third is no longer an argument about goals — it is a penalty shootout between a man with a team and a man without one, priced July 16."
         >
           <Slips
             bets={[
               ["J Call — CLINCHED top 3; he's playing purely for the $150 now", "LOCKED"],
               ["Arnst — CLINCHED top 3, barred from 1st; only the size of the check is live", "LOCKED"],
-              ["Burnes cashes — Spain lift the Cup, or Argentina need a shootout", "−230"],
-              ["Chris takes the last $30 — Spain lose in ninety or in extra time, and one goal of tournament difference does the rest", "+165"],
+              ["Burnes cashes — Spain lift the Cup, or he wins the shootout", "−560"],
+              ["Chris takes the last $30 — Argentina win, then he beats Burnes from the spot", "+340"],
+              ["To the spot — Argentina win and the $30 goes to penalties at all", "+120"],
             ]}
           />
           <P>
-            This is the best line on the board and it needs explaining. Burnes and Chris are both on nine points and
-            both on +7 goal difference. Every team Chris owns is eliminated, so his +7 is carved in stone. Burnes's +7
-            contains Spain, so it moves on Sunday. If Spain <em>win</em>, Burnes goes to twelve and none of this
-            matters. If Spain <em>lose</em> by any margin at all, Spain's goal difference falls, Burnes falls to +6 or
-            worse, and Chris wins the tiebreak and the $30 — having not had a live team since July 10.
+            This is the best sequence on the board and it needs explaining. Burnes and Chris are both on nine points,
+            and goal difference — the thing that separated them for exactly one week — no longer exists. So the two
+            outcomes are clean. If Spain <em>win</em>, Burnes goes to twelve and cashes and none of this matters. If
+            Spain <em>lose</em>, in ninety minutes or on penalties or any way at all, Burnes falls to nine, dead level
+            with a man whose every team has been eliminated since July 10, and the pool does not consult a spreadsheet.
+            It puts the two of them on the spot.
           </P>
           <P>
-            But there is a door. A shootout is a draw, and a draw doesn't move goal difference. So if Argentina win
-            the World Cup on penalties, Spain stay on +12, Burnes stays on +7, and the two of them finish tied on
-            points <em>and</em> tied on goal difference — a genuine dead heat, the only one the new rule can still
-            produce, and they split the thirty. That is the entire remaining Burnes portfolio: win the tournament, or
-            pray for penalties. The house priced it at −230 and would like the record to show it enjoyed doing so.
+            Which is its own market, and the house is delighted to book it. Five kicks each, every man his own
+            goalkeeper. Chris played high school soccer — a real credential, a taker's credential, and the taker
+            always fancies himself. Burnes played goalkeeper for the DKE intramural side that won the Berkeley title —
+            a championship, in goal, and a shootout is a goalkeeper's document. We make Burnes the man to beat.
+          </P>
+          <Slips
+            bets={[
+              ["Burnes wins the shootout — the Berkeley IM title-winning keeper", "−145"],
+              ["Chris wins the shootout — high school soccer and a puncher's chance", "+105"],
+            ]}
+          />
+          <P>
+            So the entire remaining Burnes portfolio is one line: win the tournament, or win the kicks. There is no
+            longer a version where he prays for a specific scoreline, and no longer a version where anyone splits
+            anything — the thirty dollars goes to exactly one man, and Sunday, one way or another, tells us which.
           </P>
         </Panel>
 
@@ -202,8 +216,8 @@ export const POSTS = [
         >
           <Fixtures
             rows={[
-              ["Sun, Jul 19 · The Final", "Spain", "Burnes", "Argentina", "J Call", "The pool, in ninety minutes. Whoever's team lifts it takes $150 and the loser takes second. Both sides carry +12 goal difference into it, and the margin — or the absence of one — also settles the last podium seat behind them"],
-              ["Sat, Jul 18 · Third Place", "France", "Arnst", "England", "Oanta", "The meme game, and for once genuinely a meme: Arnst is frozen at ten regardless and Oanta is fifth regardless. Neither man's goal difference can change a single dollar in this pool. Play it in a car park"],
+              ["Sun, Jul 19 · The Final", "Spain", "Burnes", "Argentina", "J Call", "The pool, in ninety minutes. Whoever's team lifts it takes $150 and the loser takes second. And if it's Argentina who lift it, the whistle doesn't end the day — it drops Burnes level with Chris on nine and sends the last $30 to a shootout of their own"],
+              ["Sat, Jul 18 · Third Place", "France", "Arnst", "England", "Oanta", "The meme game, and for once genuinely a meme: Arnst is frozen at ten regardless and Oanta is fifth regardless. Not a dollar in this pool moves on it — and now that goal difference is buried, not even the scoreline pretends to matter. Play it in a car park"],
             ]}
           />
           <P>
@@ -222,8 +236,8 @@ export const POSTS = [
               ["Burnes wins the pool — he bought Spain in June and Spain lifting the Cup is the entire $150", "−175"],
               ["The birthday boy takes it all — Argentina win on July 19", "+125"],
               ["Arnst's check is Burnes's problem — second if Spain lose, third if Spain win, and he cannot lift a finger either way", "+125"],
-              ["The one-goal tiebreak — Chris takes third off Burnes because Spain losing drops their goal difference below his 7", "+165"],
-              ["Burnes salvages something — Spain lift the Cup, or Argentina need a shootout", "−230"],
+              ["To the spot — Argentina win, Burnes and Chris finish level on nine, and the last $30 goes to a shootout", "+120"],
+              ["Burnes wins the shootout — the Berkeley IM title-winning keeper against a high-schooler", "−145"],
             ]}
           />
           <P>
@@ -239,14 +253,16 @@ export const POSTS = [
             and is worth exactly one point.
           </P>
           <P>
-            And that one point is load-bearing — which is the part that should ruin somebody's week. Chris is on nine
-            only because Ivory Coast is one of them; strip it out and he's on eight and never draws level with Burnes
-            at all. Ivory Coast's goal difference is +1, and the tiebreak is Chris +7 against Burnes +7 — so if Spain
-            lose by a single goal on Sunday, Chris takes the last $30 by exactly one goal of difference, and it is the
-            one Ivory Coast supplied. Take that jersey out of the tournament and the shootout branch stops paying
-            Chris fifteen dollars and starts paying Burnes thirty. An hour of research, and Arnst walked out of it
-            owning a shirt for the only team holding up the man directly beneath him on the podium, in a race he is
-            barred from winning and incapable of losing. The team he actually needed was France. France is dead.
+            And that one point is load-bearing, which is the part that should ruin somebody's week. Chris is on nine
+            only because Ivory Coast is one of his; strip it out and he's on eight, never draws level with Burnes, and
+            the shootout never happens — Burnes keeps the last $30 without kicking a ball. That single point is the
+            whole of Chris's remaining hope. Now the beautiful part. Arnst did not buy the jersey for the point. He
+            bought it, after a full hour of research, to work the <em>goal-difference</em> tiebreak — Ivory Coast's
+            +1, he had decided, was the kind of edge a serious man finds. Four days later the pool voted goal
+            difference out of existence and replaced it with penalties. The mechanism he researched is gone; the shirt
+            remains; and its one surviving effect is to keep alive the man sitting directly beneath him on the podium,
+            in a race Arnst is barred from winning and incapable of losing. The team he actually needed was France.
+            France is dead.
           </P>
           <P>
             Many happy returns, Jacob. The house means that in the technical sense.

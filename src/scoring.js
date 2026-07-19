@@ -8,6 +8,8 @@ export const STAGE_POINTS = {
   R16: 2, // reached the Round of 16
   QF: 3, // reached the Quarterfinal
   SF: 4, // reached the Semifinal
+  FOURTH: 4, // lost the third-place game — still a semifinalist, still 4
+  THIRD: 4, // won the third-place game — still a semifinalist, still 4
   FINALIST: 5, // won the Semifinal — guaranteed at least runner-up, scored as such provisionally
   RUNNER_UP: 5, // lost the Final
   CHAMPION: 8, // won it
@@ -19,6 +21,8 @@ export const STAGE_LABEL = {
   R16: "Round of 16",
   QF: "Quarterfinal",
   SF: "Semifinal",
+  FOURTH: "4th Place",
+  THIRD: "3rd Place",
   FINALIST: "Finalist",
   RUNNER_UP: "Runner-up",
   CHAMPION: "Champion",
@@ -32,10 +36,14 @@ export function pointsForStage(stage) {
 // gd: { teamName: goalDifference }. Teams absent from `stages` default to GROUP
 // (0) and from `gd` to 0. Returns rows sorted high→low with a competition rank.
 //
-// Ties break on cumulative goal difference — every team a seat owns, summed
-// across every match of the tournament — so a rank is only shared when two seats
-// match on points AND on goal difference.
-export function computeStandings(group, stages, gd = {}) {
+// `tiebreak` is the pool's own rule for a level finish: "gd" breaks ties on
+// cumulative goal difference (every team a seat owns, every match), so a rank is
+// shared only when two seats match on points AND on GD; "shootout" leaves a
+// points tie unbroken here — the pool settles it from the penalty spot, off the
+// board — so level seats share a rank and GD is not consulted. (The sportsbook
+// keeps the dated history of which rule applied when; this is the current rule.)
+export function computeStandings(group, stages, gd = {}, tiebreak = "gd") {
+  const useGd = tiebreak === "gd";
   const rows = group.players.map((p) => {
     const teams = p.teams.map((name) => {
       const stage = stages[name] || "GROUP";
@@ -46,13 +54,13 @@ export function computeStandings(group, stages, gd = {}) {
     return { player: p.name, teams, total, gd: totalGd };
   });
 
-  rows.sort((a, b) => b.total - a.total || b.gd - a.gd);
+  rows.sort((a, b) => b.total - a.total || (useGd ? b.gd - a.gd : 0));
 
   let lastTotal = null;
   let lastGd = null;
   let lastRank = 0;
   rows.forEach((row, i) => {
-    if (row.total !== lastTotal || row.gd !== lastGd) {
+    if (row.total !== lastTotal || (useGd && row.gd !== lastGd)) {
       lastRank = i + 1;
       lastTotal = row.total;
       lastGd = row.gd;

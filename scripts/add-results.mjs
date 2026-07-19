@@ -150,6 +150,20 @@ if (!state.ko[104]) {
   }
 }
 
+// The bronze game (match 103) is logged but never reaches the engine — both
+// semifinal losers already banked SF, so it moves no points and no line. It does
+// decide 3rd from 4th, though, which the scoreboard should show. Read it straight
+// off the log (deriveState deliberately drops 103 from state.ko) and relabel the
+// two seats — display only, still 4 points each.
+const bronze = matches.find((m) => m.id === 103);
+if (bronze) {
+  const [ga, gb] = bronze.score;
+  const winner = ga > gb ? bronze.a : gb > ga ? bronze.b : bronze.pens;
+  const loser = winner === bronze.a ? bronze.b : bronze.a;
+  if (stages[winner] === "SF") stages[winner] = "THIRD";
+  if (stages[loser] === "SF") stages[loser] = "FOURTH";
+}
+
 // Cumulative goal difference per team — the pool's tiebreak, so the standings
 // need it to order tied seats. Only teams that have played appear; anything
 // absent reads as 0. Same team→value shape as `stages`.

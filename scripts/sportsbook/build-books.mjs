@@ -40,13 +40,18 @@ const FORCE = argv.includes("--force");
 const CHECK_OPEN = argv.includes("--check-open");
 const OPEN_SEED = 20260611; // the committed opening books' seed — do not change
 
-// The pool ruled that ties break on cumulative goal difference — every team a
-// seat owns, every match of the tournament, group and knockout alike. It landed
-// the day the final was set, so it applies from that sheet forward and no
-// earlier: before this date the book split dead heats, and those sheets are
-// history. Gating it here (rather than switching the sim outright) is what keeps
-// --check-open green and every prior sheet reproducible.
-const GD_TIEBREAK_SINCE = "2026-07-15";
+// How a pool breaks a dead heat is a per-pool rule with its own timeline, read
+// off each pool's `tiebreakRule` config the same way every other dated timeline
+// is (see `latestSince`). Three rules: "split" (the default — a dead heat shares
+// the place), "gd" (goal difference decides), and "shootout" (a level pool goes
+// to penalties). Both pools adopted "gd" the day the final was set (2026-07-15);
+// SOSK then swapped it for "shootout" on 2026-07-18 while Boofy kept "gd". The
+// rule has to reach inside the batch, not just the display: whether a level
+// finish shares credit or is broken on GD changes the tie probability the
+// shootout markets price. Gating by date keeps --check-open green and every
+// prior sheet reproducible: before a pool's first entry it splits, as it always
+// did, and those sheets are history.
+const tiebreakRuleOf = (poolId, date) => latestSince(CONFIG[poolId]?.tiebreakRule ?? [], date)?.rule ?? "split";
 
 // Sheets on dates with no match — the reprint that carries a round's line across
 // a rest gap. The tournament ends July 19 but the log stops on the 15th, so the
@@ -143,6 +148,16 @@ const CONFIG = {
     tagline: "Official betting partner of Sons of Steve Kerr",
     stakes: { buyIn: "$30", pot: "$240", payouts: ["1st $150", "2nd $60", "3rd $30"] },
     places: 3,
+    // Ties broke on goal difference from the final-morning sheet (07-15), then
+    // the pool voted to hand it back to the players: from 07-18 a level pool is
+    // settled by a five-kick shootout, each man in his own goal. The shootout
+    // rule scores a Burnes/Chris level finish as a real dead heat again (so the
+    // tie probability the shootout markets price comes back), but unlike a split
+    // it's losable — one man takes the whole $30, so neither clinches on a tie.
+    tiebreakRule: [
+      { since: "2026-07-15", rule: "gd" },
+      { since: "2026-07-18", rule: "shootout" },
+    ],
     copy: {
       outright: "First place takes $150. Dead-heat rules: ties split the cash.",
       toCash: "Any money is good money ($30 still buys a burrito).",
@@ -158,6 +173,14 @@ const CONFIG = {
         toCash:
           "Any money is good money ($30 still buys a burrito). Burnes and Chris are level on 9 points AND on 7 goal difference: one goal on Sunday settles the last $30.",
         h2h: "The four strongest seats, priced against each other. Higher pool finish wins; level on points goes to the better goal difference, and only a dead heat on both returns stakes.",
+      },
+      {
+        since: "2026-07-18", // the pool dropped goal difference and now settles a level pool by shootout
+        outright:
+          "First place takes $150. Goal difference is out — the pool voted to settle a level finish from the penalty spot, five kicks a side, each man in his own goal. Only Burnes and Chris can reach one.",
+        toCash:
+          "Any money is good money ($30 still buys a burrito). Burnes and Chris are level on 9: if Argentina win, the last $30 is decided by a five-kick shootout, not by a column.",
+        h2h: "The four strongest seats, priced against each other. Higher pool finish wins; tie on points = stakes returned (handled as half-win in pricing).",
       },
     ],
     // Watch timeline: HG (Hunter) drew the loaded hand pre-tournament; by the QF
@@ -364,6 +387,27 @@ const CONFIG = {
             { label: "Burnes salvages something — Spain lift the Cup, or Argentina need a shootout, which leaves Spain's goal difference untouched and dead-heats the last $30", kind: "cashes", player: "Burnes" },
           ],
         },
+        {
+          since: "2026-07-18", // The pool amended its own rulebook: goal difference is out, and a
+          // level pool now settles from the penalty spot — five kicks, each man in his own goal.
+          // GD is off for SOSK from this sheet (see tiebreakRule), so a Burnes/Chris tie is a real
+          // dead heat in the sim again. That has one and only one trigger: Argentina winning the
+          // Cup drops Burnes to nine, level with the frozen Chris, and the last $30 goes to kicks.
+          // The `ties` line prices that trigger off the sim; the two `prob` lines are the shootout
+          // itself, which the tournament model can't touch — Chris played high school soccer, Burnes
+          // kept goal for the DKE side that won the Berkeley IM title, and the house has a read.
+          title: "THE BIRTHDAY INVITATIONAL — THE SHOOTOUT",
+          blurb:
+            "The final is today — July 19, Jacob Call's birthday, Jacob Call's Argentina, the house long past pretending that's a coincidence. Two seats are live and both are finalists' owners: Spain lifts the Cup and Burnes takes the $150, Argentina lifts it and J Call does. The pool tore up the goal-difference rule it wrote last week and handed the tiebreak back to the players — a level finish now goes to a five-kick shootout, each man keeping his own goal. It can only ever happen one way: Argentina win, Burnes falls to nine beside the frozen Chris, and the last $30 is decided from twelve yards. Chris played high school soccer. Burnes won a Berkeley IM title in goal. Cash up front; the jukebox still doesn't take IOUs.",
+          bets: [
+            { label: "Burnes wins the pool — he bought Spain in June and Spain lifting the Cup on Sunday is the entire $150", kind: "winsPool", player: "Burnes" },
+            { label: "The birthday boy takes it all — Argentina win on July 19, Jacob Call's actual birthday, and the pool is his", kind: "winsPool", player: "J Call" },
+            { label: "Arnst's check is Burnes's problem — frozen on 10, he is second if Spain lose and third if Spain win, and he cannot lift a finger either way", kind: "outscores", player: "Arnst", other: "Burnes" },
+            { label: "To the spot — Argentina win, Burnes and Chris finish level on nine, and the last $30 is settled by a five-kick shootout", kind: "ties", player: "Burnes", other: "Chris" },
+            { label: "Burnes wins the shootout — a shootout is a goalkeeper's document, and he owns a Berkeley IM title in goal", kind: "prob", p: 0.55 },
+            { label: "Chris wins the shootout — high school soccer against an IM-league DKE legend in goal, and the taker always fancies himself", kind: "prob", p: 0.45 },
+          ],
+        },
       ],
     },
   },
@@ -372,6 +416,9 @@ const CONFIG = {
     tagline: "Official betting partner of Boofy",
     stakes: { buyIn: "$20", pot: "$260", payouts: ["1st $200", "2nd $40", "3rd $20"] },
     places: 3,
+    // Boofy adopted goal difference on the final-morning sheet and kept it — no
+    // shootout amendment here, so it runs "gd" from 07-15 onward.
+    tiebreakRule: [{ since: "2026-07-15", rule: "gd" }],
     copy: {
       outright: "First place takes $200 even — Dante topped up the pot. Dead-heat rules: ties split the cash.",
       toCash: "Twelve seats, three podium spots. Any money is good money.",
@@ -649,10 +696,20 @@ const jointIdx = pools.map((pool) => {
 const n = TEAM_NAMES.length;
 const MAXPTS = 66;
 
-function runBatch(ratings, sims, seed, cond, tiebreak = false) {
+// `rules` is per-pool: an array of tiebreak-rule strings aligned to `pools`
+// ("split" | "gd" | "shootout"), or a bare null for the opening build (every
+// pool splits). Only the "gd" rule reads goal difference in the scoring loop;
+// "split" and "shootout" both let a level finish share credit here (the shootout
+// itself is priced separately, off the tie probability this produces). teamGD is
+// accumulated whenever ANY pool runs GD — its presence must not depend on which
+// pool, so the RNG stream stays identical to the old global-flag build for every
+// historic date.
+function runBatch(ratings, sims, seed, cond, rules = null) {
+  const gdOf = (p) => (Array.isArray(rules) ? rules[p] === "gd" : false);
+  const anyGD = Array.isArray(rules) && rules.some((r) => r === "gd");
   const stages = new Uint8Array(n);
   const pts = new Uint8Array(n);
-  const teamGD = tiebreak ? new Float64Array(n) : null;
+  const teamGD = anyGD ? new Float64Array(n) : null;
   const stageCounts = Array.from({ length: n }, () => new Float64Array(7));
   const ptsSum = new Float64Array(n);
 
@@ -688,6 +745,7 @@ function runBatch(ratings, sims, seed, cond, tiebreak = false) {
       const pool = pools[p];
       const a = acc[p];
       const np = pool.players.length;
+      const useGD = gdOf(p);
       const totals = a.totals;
       const gds = a.gds;
       for (let i = 0; i < np; i++) {
@@ -696,7 +754,7 @@ function runBatch(ratings, sims, seed, cond, tiebreak = false) {
         totals[i] = tot;
         a.hist[i][tot]++;
         a.sum[i] += tot;
-        if (tiebreak) {
+        if (useGD) {
           let g = 0;
           for (const ti of pool.players[i].idx) g += teamGD[ti];
           gds[i] = g;
@@ -712,7 +770,7 @@ function runBatch(ratings, sims, seed, cond, tiebreak = false) {
         let below = 0;
         let ties = 0;
         for (let j = 0; j < np; j++) {
-          const d = totals[j] - totals[i] || (tiebreak ? gds[j] - gds[i] : 0);
+          const d = totals[j] - totals[i] || (useGD ? gds[j] - gds[i] : 0);
           if (d > 0) above++;
           else if (d < 0) below++;
           else ties++;
@@ -862,24 +920,31 @@ function playerBounds(pool, state) {
 // the tiebreak settles them for good. Without that guard an exact points tie
 // between two dead seats would sit "live" forever while the sim quietly priced
 // one of them at zero.
-function boundsCmp(bounds, tiebreak) {
+function boundsCmp(bounds, rule) {
   const { min, max, gd, frozen } = bounds;
-  const tiedFrozen = (i, j) => tiebreak && frozen[i] && frozen[j] && min[i] === min[j];
+  const gdMode = rule === "gd";
+  // A level finish is "losable" — a threat either seat can go under — whenever
+  // the rule actually breaks ties: goal difference or a shootout. Under the
+  // original "split" rule a dead heat shares the place, so it threatens nobody.
+  const losable = rule === "gd" || rule === "shootout";
+  const tiedFrozen = (i, j) => gdMode && frozen[i] && frozen[j] && min[i] === min[j];
   return {
-    // j finishes strictly above i in every outcome that remains.
+    // j finishes strictly above i in every outcome that remains. A level finish
+    // is only ever "sure" under GD, and only once both seats are frozen — a
+    // shootout is never sure for either side, so it adds nothing here.
     surelyAbove: (j, i) => min[j] > max[i] || (tiedFrozen(i, j) && gd[j] > gd[i]),
-    // j could still finish strictly above i. Without the tiebreak an exact tie
-    // shares the place, so only a higher ceiling threatens i. With it, a tie is
-    // something i can *lose*: j's ceiling merely reaching i's floor is a threat
-    // unless both are frozen and i is provably the better goal difference.
+    // j could still finish strictly above i. Split: only a higher ceiling
+    // threatens i. GD: a tie is losable unless both are frozen and i owns the
+    // better goal difference. Shootout: a tie is losable, full stop — either man
+    // can win from the spot, so j's ceiling merely reaching i's floor threatens.
     couldBeAbove: (j, i) =>
       max[j] > min[i] ||
-      (tiebreak && max[j] === min[i] && (!(frozen[i] && frozen[j]) || gd[j] > gd[i])),
+      (losable && max[j] === min[i] && (!gdMode || !(frozen[i] && frozen[j]) || gd[j] > gd[i])),
   };
 }
 
-function marketStatuses(bounds, places, tiebreak) {
-  const { surelyAbove, couldBeAbove } = boundsCmp(bounds, tiebreak);
+function marketStatuses(bounds, places, rule) {
+  const { surelyAbove, couldBeAbove } = boundsCmp(bounds, rule);
   const np = bounds.min.length;
   const win = [];
   const cash = [];
@@ -963,9 +1028,14 @@ function deriveBook(pool, p, batch, sims, snapshot) {
     pLast: a.last[i] / sims,
   }));
 
-  const tiebreak = snapshot?.tiebreak ?? false;
+  // The pool's tiebreak rule on this sheet: "split" (dead heats share), "gd"
+  // (goal difference decides), or "shootout" (a level pool goes to penalties).
+  // Only "gd" surfaces a goal-difference column; the shootout is priced in the
+  // specials off the tie probability, not shown as a standings number.
+  const rule = snapshot?.tiebreak?.[p] ?? "split";
+  const showGD = rule === "gd";
   const statuses = snapshot
-    ? marketStatuses(playerBounds(pool, snapshot.state), cfg.places ?? 3, tiebreak)
+    ? marketStatuses(playerBounds(pool, snapshot.state), cfg.places ?? 3, rule)
     : null;
 
   // Per-market margins, scaled by how many runners that market is actually
@@ -999,7 +1069,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // separates tied seats, and gating it keeps it off every historical sheet.
   const standingsRow = (i) => ({
     pts: players[i].teams.reduce((s, t) => s + STAGE_POINTS[bankedStage(snapshot.state, t)], 0),
-    ...(tiebreak
+    ...(showGD
       ? { gd: players[i].teams.reduce((s, t) => s + (snapshot.state.cumGD[t] ?? 0), 0) }
       : {}),
     alive: players[i].teams.filter((t) => !snapshot.state.eliminated.has(t)),
@@ -1020,7 +1090,7 @@ function deriveBook(pool, p, batch, sims, snapshot) {
   // an optional display label to fold tied seats into one line). Gated on date
   // so the opening book and every prior sheet keep the auto round-robin.
   const bounds = snapshot ? playerBounds(pool, snapshot.state) : null;
-  const cmp = bounds ? boundsCmp(bounds, tiebreak) : null;
+  const cmp = bounds ? boundsCmp(bounds, rule) : null;
   const pairSettled = (i, j) =>
     !cmp ? null : cmp.surelyAbove(i, j) ? "a" : cmp.surelyAbove(j, i) ? "b" : null;
   const h2hEntry = (i, j, aLabel, bLabel) => {
@@ -1204,6 +1274,20 @@ function deriveBook(pool, p, batch, sims, snapshot) {
           return price(1 - pOver(a.hist[idxOf(bet.player)], sims, bet.line), MARGIN.twoWay);
         case "outscores":
           return price(pairPrice(idxOf(bet.player), idxOf(bet.other)), MARGIN.twoWay);
+        case "ties": {
+          // Both seats finish level on points — a genuine dead heat, which only
+          // exists once GD is off. This is the probability the pool goes to a
+          // penalty shootout, priced straight off the sim's pair-tie counter.
+          const i = idxOf(bet.player);
+          const j = idxOf(bet.other);
+          return price((a.pairTie[Math.min(i, j) * np + Math.max(i, j)] ?? 0) / sims, MARGIN.twoWay);
+        }
+        case "prob":
+          // A hand-set line the sim can't produce — the tournament model has no
+          // opinion on two men taking penalties at each other. `p` is a lore
+          // judgement (see the shootout board); it rides the same two-way vig as
+          // every other side so the overround stays honest.
+          return price(bet.p, MARGIN.twoWay);
         case "joint":
           return price(jointOf(bet.id) / sims, MARGIN.twoWay);
         case "jointNot":
@@ -1367,7 +1451,7 @@ function buildSnapshot(date) {
     console.log("Zero matches + pre-tournament consensus → reusing committed ratings/seed");
   }
 
-  const tiebreak = date >= GD_TIEBREAK_SINCE;
+  const tiebreak = pools.map((pool) => tiebreakRuleOf(pool.id, date));
   const batch = runBatch(ratings, SIMS, seed, cond, tiebreak);
   const snapshot = {
     date,
