@@ -235,6 +235,7 @@ export const css = `
   width: 38px; text-align: center; flex-shrink: 0;
 }
 .stand-row.lead .stand-rank { color: #E4C46A; }
+.stand-rank.medal { font-size: 24px; width: 38px; }
 .stand-player { font-family: 'Anton', sans-serif; font-size: 20px; letter-spacing: 0.03em; color: #F2EFE6; flex: 1; }
 .stand-total { font-family: 'Anton', sans-serif; font-size: 26px; color: #E4C46A; }
 .stand-total small { font-family: 'Archivo', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: rgba(242,239,230,0.5); margin-left: 6px; }

@@ -4,6 +4,10 @@ import { computeStandings, STAGE_LABEL, loadResults, loadGroup, loadGroupsIndex 
 
 const fmtGd = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : "0");
 
+// The pool's final podium. Keyed off competition rank, so a shootout-pool tie
+// that leaves two seats sharing rank 1 honestly shows two golds and no silver.
+const MEDALS = { 1: "🥇", 2: "🥈", 3: "🥉" };
+
 // `?scores` → landing list of groups. `?scores=boofy` → that group's standings.
 export default function Scoreboard({ groupId }) {
   if (groupId) return <GroupStandings groupId={groupId} />;
@@ -73,6 +77,10 @@ function GroupStandings({ groupId }) {
   const tiebreak = group.tiebreak ?? "gd";
   const showGd = tiebreak === "gd";
   const rows = computeStandings(group, stages, results.gd || {}, tiebreak);
+  // Medals are the final podium, so they only appear once the Cup is decided —
+  // gated on a champion existing rather than a date, so they light up the moment
+  // the final result lands and stay dark all tournament before it.
+  const podium = Object.values(stages).includes("CHAMPION");
 
   return (
     <Panel title={`${group.name.toUpperCase()} — STANDINGS`}>
@@ -80,7 +88,9 @@ function GroupStandings({ groupId }) {
         {rows.map((row) => (
           <div key={row.player} className={`stand-row ${row.rank === 1 ? "lead" : ""}`}>
             <div className="stand-head">
-              <span className="stand-rank">{row.rank}</span>
+              <span className={`stand-rank ${podium && MEDALS[row.rank] ? "medal" : ""}`}>
+                {podium && MEDALS[row.rank] ? MEDALS[row.rank] : row.rank}
+              </span>
               <span className="stand-player">{row.player}</span>
               {showGd && (
                 <span className="stand-gd" title="Cumulative goal difference — breaks ties on points">
