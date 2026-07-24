@@ -182,7 +182,7 @@ export const POSTS = [
         <b>SOURCING.</b> Every price is the debut line from the committed book sheets — the June 11 opening
         book through the July 19 morning line. Standing markets (outright, to-cash, spoon, H2H, watch) are
         graded at their opening price; specials at their first-posted price. All grades computed from the
-        final <code>results.json</code> via <code>settle.mjs</code> — not hand-copied. For entertainment only;
+        final results by hand. For entertainment only;
         no real bets, no real money, no refunds.
       </p>
     ),
@@ -191,8 +191,10 @@ export const POSTS = [
         <Panel title="FINAL STANDINGS" blurb="Points bank at the furthest round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Ties broken by aggregate goal difference.">
           <RecapStandings rows={boofyRecap.standings} gd />
           <P>
-            Nathan's Argentina reached the final and led him to the top of the podium. Dante's Spain won the whole
-            thing (and paid him his money back). Rob's England took third and his France took fourth — the two best consolation prizes in
+            Nathan's Argentina reached the final and led him to the top of the podium. 
+            The only bet Caleb didn't take in his life resulted in the big payout. Cheers.
+            Dante's Spain won the whole thing (and paid him his money back). 
+            Rob's England took third and his France took fourth — the two best consolation prizes in
             the tournament, and they bought him exactly one spot below the man whose only team lifted the
             trophy. The GD tiebreaker separated them: Dante +4, Rob −2.
           </P>
@@ -303,13 +305,13 @@ export const POSTS = [
     date: "2026-07-20",
     eyebrow: "THE HOUSE ORGAN — THE BOOK CLOSES",
     title: "THE RECKONING",
-    deck: `Burnes bought Spain in June at +190, opened as the favorite, and closed as the champion. He is the only man in either pool whose opening-day price was the shortest on the board and who also won. J Call had Argentina and finished second on his actual birthday. Arnst froze on the podium when France died and could neither rise nor fall — the most expensive statue in pool history. The house hung ${soskRecap.house.nTickets} tickets across 37 sheets, a faction war, a tiebreaker amendment, and the threat of a penalty shootout that never happened. Every line, graded.`,
+    deck: `Burnes opened as the favorite and closed as the champion. J Call had Argentina and cashed out on his birthday. Arnst froze on the podium when France died and could neither rise nor fall — the most expensive statue in pool history. The house hung ${soskRecap.house.nTickets} tickets across 37 sheets, a faction war, a tiebreaker amendment, and the threat of a penalty shootout that never happened. Every line, graded.`,
     sourcing: (
       <p className="bk-fine">
         <b>SOURCING.</b> Every price is the debut line from the committed book sheets — the June 11 opening
         book through the July 19 morning line. Standing markets (outright, to-cash, spoon, H2H, faction, watch)
         are graded at their opening price; specials at their first-posted price. All grades computed from the
-        final <code>results.json</code> via <code>settle.mjs</code> — not hand-copied. For entertainment only;
+        final results by hand. For entertainment only;
         no real bets, no real money, no refunds.
       </p>
     ),
@@ -322,7 +324,9 @@ export const POSTS = [
             scored across all six of their teams. Call's Argentina reached the final and gave him second place with 11. 
             Arnst's France dying in the semifinals froze him at 10, which was enough for third and
             too many for fourth and exactly right for a man who spent the last week unable to affect a
-            single number on the board. Prozan finished last with 4 points.
+            single number on the board. 
+            Chris just missed the podium and Spain winning denied the books (and the people) a penalty shootout for the ages :/.
+            Prozan finished last with 4 points.
           </P>
         </Panel>
 
