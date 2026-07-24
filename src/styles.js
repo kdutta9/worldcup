@@ -443,6 +443,52 @@ export const css = `
 .bk-leg b { color: #E4C46A; font-weight: 700; }
 .bk-leg-swatch { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
 
+/* Settlement recap tables & components */
+.recap-chip {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.recap-chip.won { background: rgba(201,162,75,0.22); color: #E4C46A; }
+.recap-chip.lost { background: rgba(255,255,255,0.05); color: rgba(237,232,218,0.35); }
+.recap-chip.push { background: rgba(127,227,168,0.1); color: rgba(127,227,168,0.65); }
+.recap-ret { font-variant-numeric: tabular-nums; }
+.recap-ret.won { color: #E4C46A; font-weight: 700; }
+.recap-ret.lost { color: rgba(237,232,218,0.3); }
+.recap-ret.push { color: rgba(127,227,168,0.65); }
+.recap-row { display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.recap-row:last-child { border-bottom: none; }
+.recap-label { flex: 1; min-width: 0; font-size: 13.5px; color: rgba(237,232,218,0.85); line-height: 1.4; }
+.recap-label.lost { color: rgba(237,232,218,0.4); }
+.recap-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.recap-price { font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 0.04em;
+  color: rgba(237,232,218,0.55); min-width: 52px; text-align: right; }
+.recap-price.won { color: #E4C46A; }
+.recap-since { font-size: 10px; color: rgba(237,232,218,0.35); letter-spacing: 0.08em; margin-top: 2px; }
+.house-box {
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(201,162,75,0.3); border-radius: 10px;
+  padding: 20px 24px; margin-top: 14px; text-align: center;
+}
+.house-big { font-family: 'Anton', sans-serif; font-size: clamp(28px, 5vw, 44px); color: #E4C46A;
+  letter-spacing: 0.04em; line-height: 1.1; }
+.house-sub { font-size: 12px; color: rgba(237,232,218,0.5); letter-spacing: 0.2em; margin-top: 6px; }
+.house-breakdown { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 18px; text-align: center; }
+.house-cell { background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px 8px; }
+.house-cell-label { font-size: 10px; letter-spacing: 0.18em; color: rgba(237,232,218,0.45); margin-bottom: 4px; }
+.house-cell-val { font-family: 'Anton', sans-serif; font-size: 18px; color: #E4C46A; letter-spacing: 0.03em; }
+.house-cell-val.neg { color: #E8806B; }
+.recap-callout {
+  background: rgba(201,162,75,0.08); border-left: 3px solid #C9A24B;
+  padding: 14px 18px; margin-top: 14px; border-radius: 0 8px 8px 0;
+}
+.recap-callout-title { font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 0.1em; color: #E4C46A; margin: 0 0 6px; }
+.recap-callout-body { font-size: 13px; color: rgba(237,232,218,0.8); line-height: 1.5; }
+.recap-callout-price { font-family: 'Anton', sans-serif; color: #E4C46A; }
+.recap-payout { font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 0.04em; }
+.recap-payout.has { color: #E4C46A; }
+.recap-payout.none { color: rgba(237,232,218,0.25); }
+.recap-standings td.recap-payout { text-align: right; }
+
 @media (max-width: 760px) {
   .bk-grid2 { grid-template-columns: 1fr; }
   .bk-h2h-grid { grid-template-columns: 1fr; }

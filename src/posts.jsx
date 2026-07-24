@@ -1,9 +1,14 @@
 import { TEAM_BY_NAME } from "./draw";
+import boofyRecap from "./data/books/boofy-recap.json";
+import soskRecap from "./data/books/sons-of-steve-kerr-recap.json";
 
 // The house organ: hand-written editorial, one post per occasion. Numbers are
 // copied from the committed book snapshots they cite (open and 2026-07-04) —
 // history is immutable, so the copy carries its own facts rather than joining
-// against data files at runtime. Rendered by Post.jsx via ?post=<id>.
+// against data files at runtime. Settlement posts (settle-boofy, settle-sosk)
+// deviate: they import computed recap JSON for graded tables and superlatives
+// because a full settlement is too many numbers to hand-verify. Rendered by
+// Post.jsx via ?post=<id>.
 
 const Panel = ({ title, blurb, children }) => (
   <section className="bk-panel">
@@ -88,7 +93,338 @@ const Slips = ({ bets }) => (
   </div>
 );
 
+// ── Settlement recap components ──────────────────────────────────────────────
+const MARKET_LABEL = {
+  outright: "OUTRIGHT", toCash: "TO CASH", spoon: "WOODEN SPOON",
+  h2h: "HEAD-TO-HEAD", grudge: "GRUDGE MATCH", watch: "WATCH",
+  faction: "FACTION", special: "SPECIALS",
+};
+
+const Chip = ({ result }) => (
+  <span className={`recap-chip ${result.toLowerCase()}`}>{result}</span>
+);
+
+const fmtRet = (r) => r.result === "LOST" ? "—" : `$${r.ret.toFixed(2)}`;
+
+const RecapRows = ({ rows }) => (
+  <div className="bk-rows">
+    {rows.map((r, i) => (
+      <div key={i} className="recap-row">
+        <span className={`recap-label${r.result === "LOST" ? " lost" : ""}`}>
+          {r.label}
+          {r.since && r.since !== "open" && <span className="recap-since"> — {r.since}</span>}
+        </span>
+        <span className="recap-right">
+          <span className={`recap-price${r.result === "WON" ? " won" : ""}`}>{r.price}</span>
+          <Chip result={r.result} />
+          <span className={`recap-ret ${r.result.toLowerCase()}`}>{fmtRet(r)}</span>
+        </span>
+      </div>
+    ))}
+  </div>
+);
+
+const RecapStandings = ({ rows, gd = false }) => (
+  <table className="bk-table recap-standings">
+    <thead>
+      <tr><th>#</th><th>SEAT</th><th>PTS</th>{gd && <th>GD</th>}<th style={{textAlign:"right"}}>PAYOUT</th></tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr key={r.player}>
+          <td>{r.rank}</td>
+          <td className="bk-td-team">{r.player}</td>
+          <td>{r.points}</td>
+          {gd && <td>{r.gd > 0 ? `+${r.gd}` : r.gd}</td>}
+          <td className={`recap-payout ${r.payout !== "—" ? "has" : "none"}`}>{r.payout}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
+const HouseNight = ({ house }) => (
+  <div className="house-box">
+    <div className="house-big">${house.hold.toFixed(2)}</div>
+    <div className="house-sub">HOUSE HOLD — {house.holdPct}% OF ${house.taken} HANDLE</div>
+    <div className="house-breakdown">
+      {Object.entries(house.byMarket).map(([k, v]) => (
+        <div key={k} className="house-cell">
+          <div className="house-cell-label">{MARKET_LABEL[k] ?? k.toUpperCase()}</div>
+          <div className={`house-cell-val${v.hold < 0 ? " neg" : ""}`}>
+            {v.hold < 0 ? `−$${Math.abs(v.hold).toFixed(2)}` : `$${v.hold.toFixed(2)}`}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const TicketCard = ({ title, children }) => (
+  <div className="recap-callout">
+    <div className="recap-callout-title">{title}</div>
+    <div className="recap-callout-body">{children}</div>
+  </div>
+);
+
 export const POSTS = [
+  // ── Settlement posts ───────────────────────────────────────────────────────
+  {
+    id: "settle-boofy",
+    bookId: "boofy",
+    bookName: "BOOFY SPORTSBOOK",
+    date: "2026-07-20",
+    eyebrow: "THE HOUSE ORGAN — THE BOOK CLOSES",
+    title: "THE RECKONING",
+    deck: `Nathan drew Argentina and Messi walked him to the title. Dante started 11th and finished 2nd on the back of a single team — his own Spain — that won the entire tournament. Rob had England and France, the two best squads behind the finalists, and finished 3rd because goal difference is a cruel tiebreaker. The house hung ${boofyRecap.house.nTickets} tickets across 37 sheets and six weeks of daily lines. What follows is every one of them, graded at the price it was posted, with a $10 win ticket on each. The reckoning is the point.`,
+    sourcing: (
+      <p className="bk-fine">
+        <b>SOURCING.</b> Every price is the debut line from the committed book sheets — the June 11 opening
+        book through the July 19 morning line. Standing markets (outright, to-cash, spoon, H2H, watch) are
+        graded at their opening price; specials at their first-posted price. All grades computed from the
+        final <code>results.json</code> via <code>settle.mjs</code> — not hand-copied. For entertainment only;
+        no real bets, no real money, no refunds.
+      </p>
+    ),
+    body: (
+      <>
+        <Panel title="FINAL STANDINGS" blurb="Points bank at the furthest round reached: R32 = 1, R16 = 2, QF = 3, SF = 4, runner-up = 5, champion = 8. Ties broken by aggregate goal difference.">
+          <RecapStandings rows={boofyRecap.standings} gd />
+          <P>
+            Nathan's Argentina reached the final and led him to the top of the podium. Dante's Spain won the whole
+            thing (and paid him his money back). Rob's England took third and his France took fourth — the two best consolation prizes in
+            the tournament, and they bought him exactly one spot below the man whose only team lifted the
+            trophy. The GD tiebreaker separated them: Dante +4, Rob −2.
+          </P>
+        </Panel>
+
+        <Panel title="OUTRIGHT — TO WIN THE POOL" blurb="Graded at the June 11 opening price. One $10 ticket on each seat.">
+          <RecapRows rows={boofyRecap.markets.outright} />
+          <P>
+            Nathan opened at +780 and closed at −2400. The widest price swing the book ever posted belonged to
+            the man who won the pool, which is either a credit to the market's ability to learn or an
+            indictment of the opening line's ability to read. The house declines to say which.
+          </P>
+        </Panel>
+
+        <Panel title="TO CASH — TOP 3" blurb="Three podium spots, twelve seats. Graded at the June 11 opening price.">
+          <RecapRows rows={boofyRecap.markets.toCash} />
+        </Panel>
+
+        <Panel title="WOODEN SPOON" blurb="Last place. Matt held Panama, Uzbekistan, Curaçao, and Haiti — the four lowest-rated teams in the draw. Graded at the June 11 opening price.">
+          <RecapRows rows={boofyRecap.markets.spoon} />
+          <P>
+            Matt opened as the −105 spoon favorite and closed as the spoon. The market was right from the
+            first morning. Zero points. The only man in the pool without a single team past the group stage.
+            Panama, Uzbekistan, Curaçao, and Haiti went a combined 0–12 with a goal difference of −27. The
+            number speaks for itself.
+          </P>
+        </Panel>
+
+        <Panel title="HEAD-TO-HEAD" blurb={`${boofyRecap.markets.h2h.length / 2} pairs, each graded at their debut price. The book added pairs as the top of the table crystallized.`}>
+          <RecapRows rows={boofyRecap.markets.h2h} />
+        </Panel>
+
+        {boofyRecap.markets.grudges.length > 0 && (
+          <Panel title="GRUDGE MATCHES" blurb="The beefs that predate the pool. Graded at the opening price.">
+            <RecapRows rows={boofyRecap.markets.grudges} />
+            <P>
+              Shaya needed to finish above both Jake and Matt to sweep the beef. He finished above Matt
+              (11th vs 12th) but below Jake (11th vs 7th). The sweep failed; the individual grudge against
+              Jake failed; the one against Matt cashed. One out of three on the beef menu.
+            </P>
+          </Panel>
+        )}
+
+        <Panel title="THE WATCH" blurb={`${boofyRecap.markets.watch.length} O/U rungs across the watch panel, graded at their debut price. The watch tracked the seat the book found most interesting — it moved from Kunal to Rob to Dante as the tournament evolved.`}>
+          <RecapRows rows={boofyRecap.markets.watch} />
+        </Panel>
+
+        <Panel title="SPECIALS — CALEB'S CORNER" blurb={`${boofyRecap.markets.specials.length} specials posted across ${new Set(boofyRecap.markets.specials.map(s => s.since)).size} boards. Each graded at its debut price.`}>
+          <RecapRows rows={boofyRecap.markets.specials} />
+          <P>
+            The specials told the tournament's story better than the standings did. Dante cashing from 11th
+            was the book's recurring obsession — the Inferno arc ran from July 3 to July 15, each board
+            hanging a new version of the same bet at shorter and shorter odds. Every single one of them
+            cashed. Nathan's pool-winning specials cashed. The Rob-goes-nuclear overs never hit. Matt's
+            +43000 moonshot did exactly what +43000 moonshots do (Caleb bet on it btw).
+          </P>
+        </Panel>
+
+        <Panel title="THE HOUSE'S NIGHT" blurb="One $10 win ticket on every posted selection. The vig makes the house whole — in theory.">
+          <HouseNight house={boofyRecap.house} />
+          <P>
+            The house took ${boofyRecap.house.taken.toLocaleString()}, paid ${boofyRecap.house.paid.toFixed(2)},
+            and held ${boofyRecap.house.hold.toFixed(2)} — a {boofyRecap.house.holdPct}% hold. For a book
+            designed to entertain rather than to print money, that's a clean night. The specials bled — Dante's
+            Inferno alone almost broken even with what the house took on the entire specials board — but the standing
+            markets and the H2H pairs held serve. The house always wins.
+          </P>
+        </Panel>
+
+        <Panel title="SUPERLATIVES" blurb="The best, the worst, and the ones that actually cashed.">
+          {boofyRecap.superlatives.ticketOfTournament && (
+            <TicketCard title="TICKET OF THE TOURNAMENT">
+              <b>{boofyRecap.superlatives.ticketOfTournament.label}</b>
+              {" "}({MARKET_LABEL[boofyRecap.superlatives.ticketOfTournament.market]}) at{" "}
+              <span className="recap-callout-price">{boofyRecap.superlatives.ticketOfTournament.price}</span>
+              {" → "}
+              <span className="recap-callout-price">${boofyRecap.superlatives.ticketOfTournament.ret.toFixed(2)}</span> on $10.
+              {" "}Nathan at +780 on opening day. He opened as the 5th favorite in a twelve-man field
+              and won the whole thing. The $10 ticket returned $88. Nobody saw it coming in June;
+              everybody saw it coming by July.
+            </TicketCard>
+          )}
+          {boofyRecap.superlatives.badBeat && (
+            <TicketCard title="WORST BAD BEAT">
+              <b>{boofyRecap.superlatives.badBeat.label}</b> at{" "}
+              <span className="recap-callout-price">{boofyRecap.superlatives.badBeat.price}</span>.
+              {" "}Rob and Dante finished on identical points. The GD tiebreaker separated 2nd from 3rd. 
+              Rob had the favorite at −155. He lost by zero points.
+            </TicketCard>
+          )}
+          {boofyRecap.superlatives.specialsThatCashed.length > 0 && (
+            <TicketCard title={`SPECIALS THAT CASHED — ${boofyRecap.superlatives.specialsThatCashed.length} OF ${boofyRecap.markets.specials.length}`}>
+              {boofyRecap.superlatives.specialsThatCashed.map((s, i) => (
+                <div key={i} style={{marginTop: i ? 4 : 0}}>
+                  {s.label} — <span className="recap-callout-price">{s.price} → ${s.ret.toFixed(2)}</span>
+                </div>
+              ))}
+            </TicketCard>
+          )}
+        </Panel>
+      </>
+    ),
+  },
+  {
+    id: "settle-sosk",
+    bookId: "sons-of-steve-kerr",
+    bookName: "SOSK SPORTSBOOK",
+    date: "2026-07-20",
+    eyebrow: "THE HOUSE ORGAN — THE BOOK CLOSES",
+    title: "THE RECKONING",
+    deck: `Burnes bought Spain in June at +190, opened as the favorite, and closed as the champion. He is the only man in either pool whose opening-day price was the shortest on the board and who also won. J Call had Argentina and finished second on his actual birthday. Arnst froze on the podium when France died and could neither rise nor fall — the most expensive statue in pool history. The house hung ${soskRecap.house.nTickets} tickets across 37 sheets, a faction war, a tiebreaker amendment, and the threat of a penalty shootout that never happened. Every line, graded.`,
+    sourcing: (
+      <p className="bk-fine">
+        <b>SOURCING.</b> Every price is the debut line from the committed book sheets — the June 11 opening
+        book through the July 19 morning line. Standing markets (outright, to-cash, spoon, H2H, faction, watch)
+        are graded at their opening price; specials at their first-posted price. All grades computed from the
+        final <code>results.json</code> via <code>settle.mjs</code> — not hand-copied. For entertainment only;
+        no real bets, no real money, no refunds.
+      </p>
+    ),
+    body: (
+      <>
+        <Panel title="FINAL STANDINGS" blurb="Points bank at the furthest round reached. The pool voted to replace goal-difference tiebreaking with a penalty shootout — which was never needed, because nobody tied.">
+          <RecapStandings rows={soskRecap.standings} />
+          <P>
+            Burnes won by a point. Spain's championship was worth 8 points on its own — more than half the pool
+            scored across all six of their teams. Call's Argentina reached the final and gave him second place with 11. 
+            Arnst's France dying in the semifinals froze him at 10, which was enough for third and
+            too many for fourth and exactly right for a man who spent the last week unable to affect a
+            single number on the board. Prozan finished last with 4 points.
+          </P>
+        </Panel>
+
+        <Panel title="OUTRIGHT — TO WIN THE POOL" blurb="Graded at the June 11 opening price. One $10 ticket on each seat.">
+          <RecapRows rows={soskRecap.markets.outright} />
+          <P>
+            Burnes was the +190 opening favorite and the −175 closing favorite. The book had him right from
+            the first sheet. J Call opened at +460 and closed at +125 — the best mover on the board. Arnst
+            opened at +220 and ended as a monument. The market priced this pool correctly from day one;
+            the top three on the opening sheet are the top three on the final one.
+          </P>
+        </Panel>
+
+        <Panel title="TO CASH — TOP 3" blurb="Three podium spots, eight seats. Graded at the June 11 opening price.">
+          <RecapRows rows={soskRecap.markets.toCash} />
+        </Panel>
+
+        <Panel title="WOODEN SPOON" blurb="Last place. Prozan held Iran, Scotland, USA, Panama, New Zealand, and Brazil. Graded at the June 11 opening price.">
+          <RecapRows rows={soskRecap.markets.spoon} />
+          <P>
+            Prozan opened with +470 odds to carry the spoon and finished last with 4 points. The parlay window
+            never paid out. The Prozan special — USA and Brazil both reaching the quarters — died when
+            both teams lost in the Round of 16. He would like you to know this was all part of the plan.
+          </P>
+        </Panel>
+
+        <Panel title="HEAD-TO-HEAD" blurb={`${soskRecap.markets.h2h.length / 2} pairs, each graded at their debut price.`}>
+          <RecapRows rows={soskRecap.markets.h2h} />
+        </Panel>
+
+        {soskRecap.markets.faction.length > 0 && (
+          <Panel title="THE DKE CIVIL WAR — FACTION" blurb="OLD DKE (HG, Prozan, Arnst, Oanta) vs NEW DKE (Burnes, J Call, Kunal, Chris). Moneyline, spread, and totals — graded at the opening price.">
+            <RecapRows rows={soskRecap.markets.faction} />
+            <P>
+              NEW DKE won {soskRecap.markets.faction.find(f => f.type === "ml")?.actualB}–{soskRecap.markets.faction.find(f => f.type === "ml")?.actualA}.
+              {" "}It wasn't close. Burnes and J Call alone scored 23 of their side's 38 points. OLD DKE's best
+              performer was Arnst at 10. The spread was −1.5 NEW DKE; the actual margin was 11. 
+              The faction war ended the way faction wars usually end: the side with the better teams won, and the side with the better story lost.
+            </P>
+          </Panel>
+        )}
+
+        <Panel title="THE WATCH" blurb={`${soskRecap.markets.watch.length} O/U rungs across the watch panel, graded at their debut price.`}>
+          <RecapRows rows={soskRecap.markets.watch} />
+        </Panel>
+
+        <Panel title="SPECIALS" blurb={`${soskRecap.markets.specials.length} specials posted across ${new Set(soskRecap.markets.specials.map(s => s.since)).size} boards. Each graded at its debut price.`}>
+          <RecapRows rows={soskRecap.markets.specials} />
+          <P>
+            The leapfrog was the book's defining narrative. Burnes running down Chris appeared on five
+            consecutive boards — the same structural bet repriced as the bracket moved — and cashed all five times. 
+            Spain winning the tournament didn't just hand Burnes the pool; it retroactively validated every leapfrog slip the house ever hung.
+          </P>
+        </Panel>
+
+        <Panel title="THE HOUSE'S NIGHT" blurb="One $10 win ticket on every posted selection.">
+          <HouseNight house={soskRecap.house} />
+          <P>
+            The house took ${soskRecap.house.taken.toLocaleString()}, paid ${soskRecap.house.paid.toFixed(2)},
+            and held ${soskRecap.house.hold.toFixed(2)} — a {soskRecap.house.holdPct}% hold. A third of the
+            handle stayed in the drawer. The faction market helped: OLD DKE lost every line (except the under),
+            and the house pocketed the moneyline and spread without breaking a sweat. The specials bled less
+            than Boofy's did — the leapfrog cashed repeatedly, but nobody else's narrative survived.
+          </P>
+        </Panel>
+
+        <Panel title="SUPERLATIVES" blurb="The best, the worst, and the ones that actually cashed.">
+          {soskRecap.superlatives.ticketOfTournament && (
+            <TicketCard title="TICKET OF THE TOURNAMENT">
+              <b>{soskRecap.superlatives.ticketOfTournament.label}</b>
+              {" "}({MARKET_LABEL[soskRecap.superlatives.ticketOfTournament.market]}) at{" "}
+              <span className="recap-callout-price">{soskRecap.superlatives.ticketOfTournament.price}</span>
+              {" → "}
+              <span className="recap-callout-price">${soskRecap.superlatives.ticketOfTournament.ret.toFixed(2)}</span> on $10.
+              {" "}The longest-odds winner in the SOSK book is the wooden spoon. Prozan finished last at +470
+              and the $10 ticket returned $57. The cruelest symmetry the book produced: the man who asked for
+              a sportsbook is the man whose most profitable ticket was proof that he lost.
+            </TicketCard>
+          )}
+          {soskRecap.superlatives.badBeat && (
+            <TicketCard title="WORST BAD BEAT">
+              <b>{soskRecap.superlatives.badBeat.label}</b> at{" "}
+              <span className="recap-callout-price">{soskRecap.superlatives.badBeat.price}</span>.
+              {" "}HG scored exactly 6 points. The under was 5.5. He missed by half a point — the smallest
+              margin the board's half-point lines allow. One fewer team past the group stage and the under
+              cashes. The house sends its regards.
+            </TicketCard>
+          )}
+          {soskRecap.superlatives.specialsThatCashed.length > 0 && (
+            <TicketCard title={`SPECIALS THAT CASHED — ${soskRecap.superlatives.specialsThatCashed.length} OF ${soskRecap.markets.specials.length}`}>
+              {soskRecap.superlatives.specialsThatCashed.map((s, i) => (
+                <div key={i} style={{marginTop: i ? 4 : 0}}>
+                  {s.label} — <span className="recap-callout-price">{s.price} → ${s.ret.toFixed(2)}</span>
+                </div>
+              ))}
+            </TicketCard>
+          )}
+        </Panel>
+      </>
+    ),
+  },
+  // ── Pre-settlement posts ─────────────────────────────────────────────────
   {
     id: "final-sosk",
     bookId: "sons-of-steve-kerr",

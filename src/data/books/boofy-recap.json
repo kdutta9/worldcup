@@ -1,0 +1,2477 @@
+{
+  "id": "boofy",
+  "generated": "2026-07-24",
+  "standings": [
+    {
+      "rank": 1,
+      "player": "Nathan",
+      "points": 9,
+      "gd": 9,
+      "payout": "$200",
+      "teams": [
+        {
+          "name": "Argentina",
+          "stage": "RUNNER_UP",
+          "stageLabel": "Runner-up",
+          "points": 5,
+          "gd": 11
+        },
+        {
+          "name": "South Africa",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -2
+        },
+        {
+          "name": "Croatia",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "Egypt",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 1
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "player": "Dante",
+      "points": 8,
+      "gd": 4,
+      "payout": "$40",
+      "teams": [
+        {
+          "name": "Scotland",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -3
+        },
+        {
+          "name": "Spain",
+          "stage": "CHAMPION",
+          "stageLabel": "Champion",
+          "points": 8,
+          "gd": 13
+        },
+        {
+          "name": "Türkiye",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -2
+        },
+        {
+          "name": "Saudi Arabia",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -4
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "player": "Rob",
+      "points": 8,
+      "gd": -2,
+      "payout": "$20",
+      "teams": [
+        {
+          "name": "Tunisia",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -10
+        },
+        {
+          "name": "Iraq",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -11
+        },
+        {
+          "name": "England",
+          "stage": "THIRD",
+          "stageLabel": "3rd Place",
+          "points": 4,
+          "gd": 9
+        },
+        {
+          "name": "France",
+          "stage": "FOURTH",
+          "stageLabel": "4th Place",
+          "points": 4,
+          "gd": 10
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "player": "Dino",
+      "points": 7,
+      "gd": 12,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Iran",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": 0
+        },
+        {
+          "name": "Portugal",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 5
+        },
+        {
+          "name": "Canada",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 3
+        },
+        {
+          "name": "Morocco",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 4
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "player": "Max",
+      "points": 7,
+      "gd": 5,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Norway",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 2
+        },
+        {
+          "name": "Ghana",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "United States",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 3
+        },
+        {
+          "name": "Senegal",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 1
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "player": "Nick",
+      "points": 6,
+      "gd": 6,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Japan",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 3
+        },
+        {
+          "name": "DR Congo",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "Bosnia & Herzegovina",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -3
+        },
+        {
+          "name": "Belgium",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 7
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "player": "Jake",
+      "points": 5,
+      "gd": -3,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Qatar",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -8
+        },
+        {
+          "name": "Switzerland",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 4
+        },
+        {
+          "name": "Mexico",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 7
+        },
+        {
+          "name": "New Zealand",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -6
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "player": "Kunal",
+      "points": 4,
+      "gd": 17,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Germany",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 6
+        },
+        {
+          "name": "Brazil",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 6
+        },
+        {
+          "name": "South Korea",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -1
+        },
+        {
+          "name": "Netherlands",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 6
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "player": "Jack",
+      "points": 4,
+      "gd": 0,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Colombia",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 4
+        },
+        {
+          "name": "Australia",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 0
+        },
+        {
+          "name": "Austria",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -3
+        },
+        {
+          "name": "Uruguay",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -1
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "player": "Adrian",
+      "points": 4,
+      "gd": -12,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Sweden",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -3
+        },
+        {
+          "name": "Cape Verde",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "Paraguay",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": -3
+        },
+        {
+          "name": "Jordan",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -5
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "player": "Shaya",
+      "points": 3,
+      "gd": -9,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Ecuador",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -2
+        },
+        {
+          "name": "Czechia",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -4
+        },
+        {
+          "name": "Ivory Coast",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 1
+        },
+        {
+          "name": "Algeria",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -4
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "player": "Matt",
+      "points": 0,
+      "gd": -27,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Panama",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -4
+        },
+        {
+          "name": "Uzbekistan",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -9
+        },
+        {
+          "name": "Curaçao",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -8
+        },
+        {
+          "name": "Haiti",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -6
+        }
+      ]
+    }
+  ],
+  "markets": {
+    "outright": [
+      {
+        "market": "outright",
+        "label": "Rob",
+        "price": "+220",
+        "player": "Rob",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Kunal",
+        "price": "+230",
+        "player": "Kunal",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Dante",
+        "price": "+410",
+        "player": "Dante",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Dino",
+        "price": "+530",
+        "player": "Dino",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Nathan",
+        "price": "+780",
+        "player": "Nathan",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 88
+      },
+      {
+        "market": "outright",
+        "label": "Max",
+        "price": "+1150",
+        "player": "Max",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Jack",
+        "price": "+1650",
+        "player": "Jack",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Nick",
+        "price": "+1750",
+        "player": "Nick",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Jake",
+        "price": "+2750",
+        "player": "Jake",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Shaya",
+        "price": "+3200",
+        "player": "Shaya",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Adrian",
+        "price": "+7200",
+        "player": "Adrian",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Matt",
+        "price": "+43000",
+        "player": "Matt",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ],
+    "toCash": [
+      {
+        "market": "toCash",
+        "label": "Kunal",
+        "price": "−210",
+        "player": "Kunal",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Rob",
+        "price": "−140",
+        "player": "Rob",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 17.14
+      },
+      {
+        "market": "toCash",
+        "label": "Dante",
+        "price": "+115",
+        "player": "Dante",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 21.5
+      },
+      {
+        "market": "toCash",
+        "label": "Dino",
+        "price": "+120",
+        "player": "Dino",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Nathan",
+        "price": "+180",
+        "player": "Nathan",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 28
+      },
+      {
+        "market": "toCash",
+        "label": "Max",
+        "price": "+240",
+        "player": "Max",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Jack",
+        "price": "+290",
+        "player": "Jack",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Nick",
+        "price": "+370",
+        "player": "Nick",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Jake",
+        "price": "+460",
+        "player": "Jake",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Shaya",
+        "price": "+500",
+        "player": "Shaya",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Adrian",
+        "price": "+1250",
+        "player": "Adrian",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Matt",
+        "price": "+5000",
+        "player": "Matt",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ],
+    "spoon": [
+      {
+        "market": "spoon",
+        "label": "Matt",
+        "price": "−105",
+        "player": "Matt",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 19.52
+      },
+      {
+        "market": "spoon",
+        "label": "Adrian",
+        "price": "+310",
+        "player": "Adrian",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Shaya",
+        "price": "+1000",
+        "player": "Shaya",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Nick",
+        "price": "+1200",
+        "player": "Nick",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Jack",
+        "price": "+1300",
+        "player": "Jack",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Max",
+        "price": "+1650",
+        "player": "Max",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Jake",
+        "price": "+1650",
+        "player": "Jake",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Nathan",
+        "price": "+2050",
+        "player": "Nathan",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Dante",
+        "price": "+2700",
+        "player": "Dante",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Dino",
+        "price": "+3500",
+        "player": "Dino",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Rob",
+        "price": "+4600",
+        "player": "Rob",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Kunal",
+        "price": "+10000",
+        "player": "Kunal",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ],
+    "h2h": [
+      {
+        "market": "h2h",
+        "label": "Kunal vs Rob: Kunal",
+        "price": "−140",
+        "a": "Kunal",
+        "b": "Rob",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Rob: Rob",
+        "price": "+105",
+        "a": "Kunal",
+        "b": "Rob",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 20.5,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Dante: Kunal",
+        "price": "−200",
+        "a": "Kunal",
+        "b": "Dante",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Dante: Dante",
+        "price": "+145",
+        "a": "Kunal",
+        "b": "Dante",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 24.5,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Dino: Kunal",
+        "price": "−210",
+        "a": "Kunal",
+        "b": "Dino",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Dino: Dino",
+        "price": "+150",
+        "a": "Kunal",
+        "b": "Dino",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 25,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Dante: Rob",
+        "price": "−155",
+        "a": "Rob",
+        "b": "Dante",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Dante: Dante",
+        "price": "+115",
+        "a": "Rob",
+        "b": "Dante",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 21.5,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Dino: Rob",
+        "price": "−160",
+        "a": "Rob",
+        "b": "Dino",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 16.25,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Dino: Dino",
+        "price": "+115",
+        "a": "Rob",
+        "b": "Dino",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Dante vs Dino: Dante",
+        "price": "−115",
+        "a": "Dante",
+        "b": "Dino",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.7,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Dante vs Dino: Dino",
+        "price": "−115",
+        "a": "Dante",
+        "b": "Dino",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Nick: Kunal",
+        "price": "−330",
+        "a": "Kunal",
+        "b": "Nick",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-15"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Nick: Nick",
+        "price": "+230",
+        "a": "Kunal",
+        "b": "Nick",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 33,
+        "since": "2026-06-15"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Nick: Rob",
+        "price": "−200",
+        "a": "Rob",
+        "b": "Nick",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15,
+        "since": "2026-06-15"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Nick: Nick",
+        "price": "+145",
+        "a": "Rob",
+        "b": "Nick",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-15"
+      },
+      {
+        "market": "h2h",
+        "label": "Dino vs Nick: Dino",
+        "price": "−150",
+        "a": "Dino",
+        "b": "Nick",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 16.67,
+        "since": "2026-06-15"
+      },
+      {
+        "market": "h2h",
+        "label": "Dino vs Nick: Nick",
+        "price": "+110",
+        "a": "Dino",
+        "b": "Nick",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-15"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Max: Kunal",
+        "price": "−290",
+        "a": "Kunal",
+        "b": "Max",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-17"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Max: Max",
+        "price": "+200",
+        "a": "Kunal",
+        "b": "Max",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 30,
+        "since": "2026-06-17"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Max: Rob",
+        "price": "−185",
+        "a": "Rob",
+        "b": "Max",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.41,
+        "since": "2026-06-17"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Max: Max",
+        "price": "+135",
+        "a": "Rob",
+        "b": "Max",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-17"
+      },
+      {
+        "market": "h2h",
+        "label": "Dino vs Max: Dino",
+        "price": "−120",
+        "a": "Dino",
+        "b": "Max",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.33,
+        "since": "2026-06-17"
+      },
+      {
+        "market": "h2h",
+        "label": "Dino vs Max: Max",
+        "price": "−110",
+        "a": "Dino",
+        "b": "Max",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-17"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Nathan: Kunal",
+        "price": "−310",
+        "a": "Kunal",
+        "b": "Nathan",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-22"
+      },
+      {
+        "market": "h2h",
+        "label": "Kunal vs Nathan: Nathan",
+        "price": "+210",
+        "a": "Kunal",
+        "b": "Nathan",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 31,
+        "since": "2026-06-22"
+      },
+      {
+        "market": "h2h",
+        "label": "Dino vs Nathan: Dino",
+        "price": "−150",
+        "a": "Dino",
+        "b": "Nathan",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-22"
+      },
+      {
+        "market": "h2h",
+        "label": "Dino vs Nathan: Nathan",
+        "price": "+110",
+        "a": "Dino",
+        "b": "Nathan",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 21,
+        "since": "2026-06-22"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Nathan: Rob",
+        "price": "−145",
+        "a": "Rob",
+        "b": "Nathan",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-22"
+      },
+      {
+        "market": "h2h",
+        "label": "Rob vs Nathan: Nathan",
+        "price": "+110",
+        "a": "Rob",
+        "b": "Nathan",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 21,
+        "since": "2026-06-22"
+      },
+      {
+        "market": "h2h",
+        "label": "Nathan vs Max: Nathan",
+        "price": "−165",
+        "a": "Nathan",
+        "b": "Max",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 16.06,
+        "since": "2026-06-26"
+      },
+      {
+        "market": "h2h",
+        "label": "Nathan vs Max: Max",
+        "price": "+120",
+        "a": "Nathan",
+        "b": "Max",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-26"
+      },
+      {
+        "market": "h2h",
+        "label": "Nathan vs Nick: Nathan",
+        "price": "−320",
+        "a": "Nathan",
+        "b": "Nick",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 13.13,
+        "since": "2026-06-27"
+      },
+      {
+        "market": "h2h",
+        "label": "Nathan vs Nick: Nick",
+        "price": "+220",
+        "a": "Nathan",
+        "b": "Nick",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-27"
+      },
+      {
+        "market": "h2h",
+        "label": "Max vs Nick: Max",
+        "price": "−220",
+        "a": "Max",
+        "b": "Nick",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 14.55,
+        "since": "2026-06-27"
+      },
+      {
+        "market": "h2h",
+        "label": "Max vs Nick: Nick",
+        "price": "+160",
+        "a": "Max",
+        "b": "Nick",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-27"
+      },
+      {
+        "market": "h2h",
+        "label": "Dante vs Dino & Max: Dante",
+        "price": "−160",
+        "a": "Dante",
+        "b": "Dino & Max",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 16.25,
+        "since": "2026-07-14"
+      },
+      {
+        "market": "h2h",
+        "label": "Dante vs Dino & Max: Dino & Max",
+        "price": "+115",
+        "a": "Dante",
+        "b": "Dino & Max",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-07-14"
+      }
+    ],
+    "grudges": [
+      {
+        "market": "grudge",
+        "label": "Shaya vs Jake: Shaya",
+        "price": "−100",
+        "a": "Shaya",
+        "b": "Jake",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open",
+        "note": "THE FOREVER FEUD"
+      },
+      {
+        "market": "grudge",
+        "label": "Shaya vs Jake: Jake",
+        "price": "−135",
+        "a": "Shaya",
+        "b": "Jake",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 17.41,
+        "since": "open",
+        "note": "THE FOREVER FEUD"
+      },
+      {
+        "market": "grudge",
+        "label": "Shaya vs Matt: Shaya",
+        "price": "−540",
+        "a": "Shaya",
+        "b": "Matt",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.85,
+        "since": "open",
+        "note": "YES, SHAYA AGAIN"
+      },
+      {
+        "market": "grudge",
+        "label": "Shaya vs Matt: Matt",
+        "price": "+330",
+        "a": "Shaya",
+        "b": "Matt",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open",
+        "note": "YES, SHAYA AGAIN"
+      }
+    ],
+    "faction": [],
+    "watch": [
+      {
+        "market": "watch",
+        "label": "Kunal Over 4.5",
+        "player": "Kunal",
+        "line": 4.5,
+        "side": "over",
+        "price": "−1500",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 4.5",
+        "player": "Kunal",
+        "line": 4.5,
+        "side": "under",
+        "price": "+620",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 72,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 5.5",
+        "player": "Kunal",
+        "line": 5.5,
+        "side": "over",
+        "price": "−470",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 5.5",
+        "player": "Kunal",
+        "line": 5.5,
+        "side": "under",
+        "price": "+300",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 40,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 6.5",
+        "player": "Kunal",
+        "line": 6.5,
+        "side": "over",
+        "price": "−220",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 6.5",
+        "player": "Kunal",
+        "line": 6.5,
+        "side": "under",
+        "price": "+155",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 25.5,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 7.5",
+        "player": "Kunal",
+        "line": 7.5,
+        "side": "over",
+        "price": "−120",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 7.5",
+        "player": "Kunal",
+        "line": 7.5,
+        "side": "under",
+        "price": "−115",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.7,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 8.5",
+        "player": "Kunal",
+        "line": 8.5,
+        "side": "over",
+        "price": "+140",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 8.5",
+        "player": "Kunal",
+        "line": 8.5,
+        "side": "under",
+        "price": "−190",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.26,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 9.5",
+        "player": "Kunal",
+        "line": 9.5,
+        "side": "over",
+        "price": "+220",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 9.5",
+        "player": "Kunal",
+        "line": 9.5,
+        "side": "under",
+        "price": "−320",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 13.13,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 10.5",
+        "player": "Kunal",
+        "line": 10.5,
+        "side": "over",
+        "price": "+330",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 10.5",
+        "player": "Kunal",
+        "line": 10.5,
+        "side": "under",
+        "price": "−540",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.85,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 11.5",
+        "player": "Kunal",
+        "line": 11.5,
+        "side": "over",
+        "price": "+520",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 11.5",
+        "player": "Kunal",
+        "line": 11.5,
+        "side": "under",
+        "price": "−1050",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.95,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 12.5",
+        "player": "Kunal",
+        "line": 12.5,
+        "side": "over",
+        "price": "+830",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 12.5",
+        "player": "Kunal",
+        "line": 12.5,
+        "side": "under",
+        "price": "−2400",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 13.5",
+        "player": "Kunal",
+        "line": 13.5,
+        "side": "over",
+        "price": "+1050",
+        "since": "2026-06-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 13.5",
+        "player": "Kunal",
+        "line": 13.5,
+        "side": "under",
+        "price": "−2400",
+        "since": "2026-06-11",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Over 3.5",
+        "player": "Kunal",
+        "line": 3.5,
+        "side": "over",
+        "price": "−2400",
+        "since": "2026-06-27",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Kunal Under 3.5",
+        "player": "Kunal",
+        "line": 3.5,
+        "side": "under",
+        "price": "+1650",
+        "since": "2026-06-27",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 4
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 6.5",
+        "player": "Rob",
+        "line": 6.5,
+        "side": "over",
+        "price": "−2400",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 6.5",
+        "player": "Rob",
+        "line": 6.5,
+        "side": "under",
+        "price": "+1050",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 7.5",
+        "player": "Rob",
+        "line": 7.5,
+        "side": "over",
+        "price": "−500",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 12,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 7.5",
+        "player": "Rob",
+        "line": 7.5,
+        "side": "under",
+        "price": "+310",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 8.5",
+        "player": "Rob",
+        "line": 8.5,
+        "side": "over",
+        "price": "−195",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 8.5",
+        "player": "Rob",
+        "line": 8.5,
+        "side": "under",
+        "price": "+140",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 24,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 9.5",
+        "player": "Rob",
+        "line": 9.5,
+        "side": "over",
+        "price": "−125",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 9.5",
+        "player": "Rob",
+        "line": 9.5,
+        "side": "under",
+        "price": "−105",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 19.52,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 10.5",
+        "player": "Rob",
+        "line": 10.5,
+        "side": "over",
+        "price": "−125",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 10.5",
+        "player": "Rob",
+        "line": 10.5,
+        "side": "under",
+        "price": "−105",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 19.52,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 11.5",
+        "player": "Rob",
+        "line": 11.5,
+        "side": "over",
+        "price": "+180",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 11.5",
+        "player": "Rob",
+        "line": 11.5,
+        "side": "under",
+        "price": "−260",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 13.85,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Over 12.5",
+        "player": "Rob",
+        "line": 12.5,
+        "side": "over",
+        "price": "+400",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Rob Under 12.5",
+        "player": "Rob",
+        "line": 12.5,
+        "side": "under",
+        "price": "−700",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.43,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Dante Over 5.5",
+        "player": "Dante",
+        "line": 5.5,
+        "side": "over",
+        "price": "−175",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Dante Under 5.5",
+        "player": "Dante",
+        "line": 5.5,
+        "side": "under",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Dante Over 6.5",
+        "player": "Dante",
+        "line": 6.5,
+        "side": "over",
+        "price": "−175",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Dante Under 6.5",
+        "player": "Dante",
+        "line": 6.5,
+        "side": "under",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Dante Over 7.5",
+        "player": "Dante",
+        "line": 7.5,
+        "side": "over",
+        "price": "−175",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71,
+        "actual": 8
+      },
+      {
+        "market": "watch",
+        "label": "Dante Under 7.5",
+        "player": "Dante",
+        "line": 7.5,
+        "side": "under",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 8
+      }
+    ],
+    "specials": [
+      {
+        "market": "special",
+        "label": "Matt wins the whole pool (Panama · Uzbekistan · Curaçao · Haiti)",
+        "price": "+43000",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Matt cashes top 3",
+        "price": "+5000",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Shaya sweeps the beef — finishes above Jake AND Matt",
+        "price": "+150",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Kunal goes nuclear — Over 14.5 pts",
+        "price": "+2500",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob bricks it — Under 4.5 pts with England AND France",
+        "price": "+320",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Adrian wins the whole pool (Paraguay, and only Paraguay, remain)",
+        "price": "+48000",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dante rises from 11th — cashes top 3 on Spain alone",
+        "price": "+620",
+        "since": "2026-07-03",
+        "result": "WON",
+        "stake": 10,
+        "ret": 72
+      },
+      {
+        "market": "special",
+        "label": "Paraguay, slayers of Germany, reach the semifinal",
+        "price": "+2050",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Hosts with the most — Mexico win the whole thing",
+        "price": "+1350",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob goes nuclear — England AND France both live and in the quarters, Over 12.5 points",
+        "price": "+400",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dante climbs from 10th — cashes top 3 on Spain alone",
+        "price": "+490",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 59
+      },
+      {
+        "market": "special",
+        "label": "The QF-96 derby — Jake (Switzerland) finishes above Jack (Colombia), settled tomorrow",
+        "price": "+135",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 23.5
+      },
+      {
+        "market": "special",
+        "label": "Nathan survives his own civil war (Argentina vs Egypt, both his) and wins the pool",
+        "price": "+210",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 31
+      },
+      {
+        "market": "special",
+        "label": "The full Cinderella — Morocco, and only Morocco, wins Dino the entire pool",
+        "price": "+1750",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "“One more closer to the money” — Jake texts his way onto the podium, cashes top 3",
+        "price": "+3500",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The final is Rob vs Rob — England AND France both reach it",
+        "price": "+440",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob goes nuclear — Over 12.5 points",
+        "price": "+440",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Max, a dirty Brit, sends England home on Saturday and wins the whole pool",
+        "price": "+630",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dante climbs from the basement — cashes top 3 on Spain alone",
+        "price": "+330",
+        "since": "2026-07-07",
+        "result": "WON",
+        "stake": 10,
+        "ret": 43
+      },
+      {
+        "market": "special",
+        "label": "Rob runs the table — France past Morocco, England past Norway, he laps the field, Over 12.5 points",
+        "price": "+450",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The full Cinderella survives — Morocco (Dino) knocks out Rob's France and wins the pool",
+        "price": "+1850",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Max, a dirty Brit, sends England home Saturday and wins the whole pool",
+        "price": "+650",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "One more closer to the money — Switzerland takes down Argentina for Jake",
+        "price": "+1500",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob runs the table — Over 12.5 points with an England vs France final",
+        "price": "+370",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Max, a dirty Brit, wins the whole pool — step one is sending England home Saturday",
+        "price": "+580",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "One more closer to the money — Jake climbs past Nathan in the pool, riding Switzerland's shot at Argentina",
+        "price": "+1650",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dante's Inferno — top 3 or bust, and it starts with Spain getting past Belgium Friday",
+        "price": "+320",
+        "since": "2026-07-09",
+        "result": "WON",
+        "stake": 10,
+        "ret": 42
+      },
+      {
+        "market": "special",
+        "label": "The last two with a pulse — Max (Norway) outlasts Dante (Spain) for whatever's left on the board",
+        "price": "−1400",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob laps the field — England AND France both alive on opposite halves, so they can only meet in the final, and he wins the pool",
+        "price": "−540",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dante's Inferno — his entire summer is Spain, and cashing top 3 means Spain lifting the actual trophy; a final isn't enough, it has to be the whole thing",
+        "price": "+370",
+        "since": "2026-07-10",
+        "result": "WON",
+        "stake": 10,
+        "ret": 47
+      },
+      {
+        "market": "special",
+        "label": "Dead but not buried — Dino, every team he owns eliminated, frozen on 7, still cashes top 3 if the climbers all stall",
+        "price": "+130",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Nathan needs Argentina — step one is beating Jake's Switzerland in Saturday's all-Boofy quarterfinal, then the pool is his",
+        "price": "+200",
+        "since": "2026-07-10",
+        "result": "WON",
+        "stake": 10,
+        "ret": 30
+      },
+      {
+        "market": "special",
+        "label": "Max, a dirty Brit, sends Rob's England home Saturday and rides Norway to the whole pool",
+        "price": "+620",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "One more closer to the money — Jake climbs past Nathan, riding Switzerland's shot at Argentina",
+        "price": "+1800",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The final is Rob vs Rob — England AND France both reach it, the trophy and the runner-up landing on one seat",
+        "price": "+220",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob laps the field — two live semifinalists on opposite halves, and he wins the pool",
+        "price": "−1350",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Nathan's only road runs through Rob — Argentina has to beat England on Wednesday, then the pool is his",
+        "price": "+140",
+        "since": "2026-07-11",
+        "result": "WON",
+        "stake": 10,
+        "ret": 24
+      },
+      {
+        "market": "special",
+        "label": "Dante's Inferno, last chamber — top 3 means Spain lifting the actual trophy, a final isn't enough, and it starts by getting past Rob's France",
+        "price": "+240",
+        "since": "2026-07-11",
+        "result": "WON",
+        "stake": 10,
+        "ret": 34
+      },
+      {
+        "market": "special",
+        "label": "Killed by his own country — Max, a dirty Brit whose Norway fell to England, is frozen at 7 and still cashes top 3 if Spain stays boring",
+        "price": "+110",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dead but not buried — Dino, every team he owns eliminated, frozen on 7, cashes top 3 if the climbers all stall",
+        "price": "+110",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Rob wins the pool — his England beats Nathan's Argentina and it's over",
+        "price": "−250",
+        "since": "2026-07-14",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Nathan wins the pool — his Argentina beats Rob's England and the $200 is his",
+        "price": "−175",
+        "since": "2026-07-14",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71
+      },
+      {
+        "market": "special",
+        "label": "Dante takes the last podium spot — but only if his Spain wins the whole thing; a runner-up leaves him a point short",
+        "price": "−250",
+        "since": "2026-07-14",
+        "result": "WON",
+        "stake": 10,
+        "ret": 14
+      },
+      {
+        "market": "special",
+        "label": "Dino and Max back into third — the two frozen sevens (Cinderella's corpse and a dirty Brit killed by his own country) split the last seat if Spain loses the final",
+        "price": "+270",
+        "since": "2026-07-14",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dante steals second — Spain lift the Cup, he ties Rob on 8, and takes it on goal difference, +4 to −2",
+        "price": "−175",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71
+      },
+      {
+        "market": "special",
+        "label": "Rob salvages the $40 — Spain lose, Dante stalls on 5, and runner-up is the last thing England and France ever bought him",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Dino backs into the last chair — dead since the quarterfinal, he needs Spain to lose, then beats Max to it by seven goals neither of them can touch",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Nathan wins the pool — the house is not taking this action and posts the number purely so it can be admired",
+        "price": "−2400",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42
+      }
+    ]
+  },
+  "house": {
+    "taken": 1680,
+    "paid": 1449.13,
+    "hold": 230.87,
+    "holdPct": 13.74,
+    "nTickets": 168,
+    "byMarket": {
+      "outright": {
+        "tickets": 12,
+        "taken": 120,
+        "paid": 88,
+        "hold": 32
+      },
+      "toCash": {
+        "tickets": 12,
+        "taken": 120,
+        "paid": 66.64,
+        "hold": 53.36
+      },
+      "spoon": {
+        "tickets": 12,
+        "taken": 120,
+        "paid": 19.52,
+        "hold": 100.48
+      },
+      "watch": {
+        "tickets": 42,
+        "taken": 420,
+        "paid": 396.52,
+        "hold": 23.48
+      },
+      "special": {
+        "tickets": 48,
+        "taken": 480,
+        "paid": 461.34,
+        "hold": 18.66
+      },
+      "h2h": {
+        "tickets": 38,
+        "taken": 380,
+        "paid": 387.85,
+        "hold": -7.85
+      },
+      "grudge": {
+        "tickets": 4,
+        "taken": 40,
+        "paid": 29.26,
+        "hold": 10.74
+      }
+    }
+  },
+  "superlatives": {
+    "ticketOfTournament": {
+      "market": "outright",
+      "label": "Nathan",
+      "price": "+780",
+      "player": "Nathan",
+      "since": "open",
+      "result": "WON",
+      "stake": 10,
+      "ret": 88
+    },
+    "badBeat": {
+      "market": "h2h",
+      "label": "Rob vs Dante: Rob",
+      "price": "−155",
+      "a": "Rob",
+      "b": "Dante",
+      "side": "a",
+      "result": "LOST",
+      "stake": 10,
+      "ret": 0,
+      "since": "open",
+      "margin": {
+        "points": 0
+      }
+    },
+    "specialsThatCashed": [
+      {
+        "label": "Dante rises from 11th — cashes top 3 on Spain alone",
+        "price": "+620",
+        "since": "2026-07-03",
+        "ret": 72
+      },
+      {
+        "label": "Dante climbs from 10th — cashes top 3 on Spain alone",
+        "price": "+490",
+        "since": "2026-07-06",
+        "ret": 59
+      },
+      {
+        "label": "The QF-96 derby — Jake (Switzerland) finishes above Jack (Colombia), settled tomorrow",
+        "price": "+135",
+        "since": "2026-07-06",
+        "ret": 23.5
+      },
+      {
+        "label": "Nathan survives his own civil war (Argentina vs Egypt, both his) and wins the pool",
+        "price": "+210",
+        "since": "2026-07-06",
+        "ret": 31
+      },
+      {
+        "label": "Dante climbs from the basement — cashes top 3 on Spain alone",
+        "price": "+330",
+        "since": "2026-07-07",
+        "ret": 43
+      },
+      {
+        "label": "Dante's Inferno — top 3 or bust, and it starts with Spain getting past Belgium Friday",
+        "price": "+320",
+        "since": "2026-07-09",
+        "ret": 42
+      },
+      {
+        "label": "Dante's Inferno — his entire summer is Spain, and cashing top 3 means Spain lifting the actual trophy; a final isn't enough, it has to be the whole thing",
+        "price": "+370",
+        "since": "2026-07-10",
+        "ret": 47
+      },
+      {
+        "label": "Nathan needs Argentina — step one is beating Jake's Switzerland in Saturday's all-Boofy quarterfinal, then the pool is his",
+        "price": "+200",
+        "since": "2026-07-10",
+        "ret": 30
+      },
+      {
+        "label": "Nathan's only road runs through Rob — Argentina has to beat England on Wednesday, then the pool is his",
+        "price": "+140",
+        "since": "2026-07-11",
+        "ret": 24
+      },
+      {
+        "label": "Dante's Inferno, last chamber — top 3 means Spain lifting the actual trophy, a final isn't enough, and it starts by getting past Rob's France",
+        "price": "+240",
+        "since": "2026-07-11",
+        "ret": 34
+      },
+      {
+        "label": "Nathan wins the pool — his Argentina beats Rob's England and the $200 is his",
+        "price": "−175",
+        "since": "2026-07-14",
+        "ret": 15.71
+      },
+      {
+        "label": "Dante takes the last podium spot — but only if his Spain wins the whole thing; a runner-up leaves him a point short",
+        "price": "−250",
+        "since": "2026-07-14",
+        "ret": 14
+      },
+      {
+        "label": "Dante steals second — Spain lift the Cup, he ties Rob on 8, and takes it on goal difference, +4 to −2",
+        "price": "−175",
+        "since": "2026-07-15",
+        "ret": 15.71
+      },
+      {
+        "label": "Nathan wins the pool — the house is not taking this action and posts the number purely so it can be admired",
+        "price": "−2400",
+        "since": "2026-07-15",
+        "ret": 10.42
+      }
+    ]
+  }
+}

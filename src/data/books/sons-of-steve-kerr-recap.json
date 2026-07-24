@@ -1,0 +1,2169 @@
+{
+  "id": "sons-of-steve-kerr",
+  "generated": "2026-07-24",
+  "standings": [
+    {
+      "rank": 1,
+      "player": "Burnes",
+      "points": 12,
+      "gd": 8,
+      "payout": "$150",
+      "teams": [
+        {
+          "name": "Tunisia",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -10
+        },
+        {
+          "name": "Netherlands",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 6
+        },
+        {
+          "name": "Sweden",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -3
+        },
+        {
+          "name": "Uruguay",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -1
+        },
+        {
+          "name": "Canada",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 3
+        },
+        {
+          "name": "Spain",
+          "stage": "CHAMPION",
+          "stageLabel": "Champion",
+          "points": 8,
+          "gd": 13
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "player": "J Call",
+      "points": 11,
+      "gd": 3,
+      "payout": "$60",
+      "teams": [
+        {
+          "name": "Argentina",
+          "stage": "RUNNER_UP",
+          "stageLabel": "Runner-up",
+          "points": 5,
+          "gd": 11
+        },
+        {
+          "name": "Czechia",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -4
+        },
+        {
+          "name": "Switzerland",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 4
+        },
+        {
+          "name": "Croatia",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "Egypt",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 1
+        },
+        {
+          "name": "Qatar",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -8
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "player": "Arnst",
+      "points": 10,
+      "gd": 5,
+      "payout": "$30",
+      "teams": [
+        {
+          "name": "Morocco",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 4
+        },
+        {
+          "name": "Saudi Arabia",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -4
+        },
+        {
+          "name": "Portugal",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 5
+        },
+        {
+          "name": "Uzbekistan",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -9
+        },
+        {
+          "name": "Cape Verde",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "France",
+          "stage": "FOURTH",
+          "stageLabel": "4th Place",
+          "points": 4,
+          "gd": 10
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "player": "Chris",
+      "points": 9,
+      "gd": 7,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Curaçao",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -8
+        },
+        {
+          "name": "Japan",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 3
+        },
+        {
+          "name": "Ivory Coast",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 1
+        },
+        {
+          "name": "Belgium",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 7
+        },
+        {
+          "name": "Mexico",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 7
+        },
+        {
+          "name": "Paraguay",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": -3
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "player": "Oanta",
+      "points": 7,
+      "gd": 4,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "DR Congo",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "England",
+          "stage": "THIRD",
+          "stageLabel": "3rd Place",
+          "points": 4,
+          "gd": 9
+        },
+        {
+          "name": "Senegal",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 1
+        },
+        {
+          "name": "Jordan",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -5
+        },
+        {
+          "name": "Haiti",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -6
+        },
+        {
+          "name": "Germany",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 6
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "player": "HG",
+      "points": 6,
+      "gd": -4,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Ghana",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -1
+        },
+        {
+          "name": "Colombia",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 4
+        },
+        {
+          "name": "Australia",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": 0
+        },
+        {
+          "name": "Algeria",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -4
+        },
+        {
+          "name": "South Africa",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -2
+        },
+        {
+          "name": "South Korea",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -1
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "player": "Kunal",
+      "points": 6,
+      "gd": -19,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Norway",
+          "stage": "QF",
+          "stageLabel": "Quarterfinal",
+          "points": 3,
+          "gd": 2
+        },
+        {
+          "name": "Austria",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -3
+        },
+        {
+          "name": "Türkiye",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -2
+        },
+        {
+          "name": "Ecuador",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -2
+        },
+        {
+          "name": "Bosnia & Herzegovina",
+          "stage": "R32",
+          "stageLabel": "Round of 32",
+          "points": 1,
+          "gd": -3
+        },
+        {
+          "name": "Iraq",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -11
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "player": "Prozan",
+      "points": 4,
+      "gd": -4,
+      "payout": "—",
+      "teams": [
+        {
+          "name": "Iran",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": 0
+        },
+        {
+          "name": "Scotland",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -3
+        },
+        {
+          "name": "United States",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 3
+        },
+        {
+          "name": "Panama",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -4
+        },
+        {
+          "name": "New Zealand",
+          "stage": "GROUP",
+          "stageLabel": "Group stage",
+          "points": 0,
+          "gd": -6
+        },
+        {
+          "name": "Brazil",
+          "stage": "R16",
+          "stageLabel": "Round of 16",
+          "points": 2,
+          "gd": 6
+        }
+      ]
+    }
+  ],
+  "markets": {
+    "outright": [
+      {
+        "market": "outright",
+        "label": "Burnes",
+        "price": "+190",
+        "player": "Burnes",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 29
+      },
+      {
+        "market": "outright",
+        "label": "Arnst",
+        "price": "+220",
+        "player": "Arnst",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Oanta",
+        "price": "+460",
+        "player": "Oanta",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "J Call",
+        "price": "+460",
+        "player": "J Call",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Prozan",
+        "price": "+680",
+        "player": "Prozan",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Chris",
+        "price": "+960",
+        "player": "Chris",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "Kunal",
+        "price": "+1150",
+        "player": "Kunal",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "outright",
+        "label": "HG",
+        "price": "+2350",
+        "player": "HG",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ],
+    "toCash": [
+      {
+        "market": "toCash",
+        "label": "Burnes",
+        "price": "−260",
+        "player": "Burnes",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 13.85
+      },
+      {
+        "market": "toCash",
+        "label": "Arnst",
+        "price": "−190",
+        "player": "Arnst",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.26
+      },
+      {
+        "market": "toCash",
+        "label": "J Call",
+        "price": "−120",
+        "player": "J Call",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.33
+      },
+      {
+        "market": "toCash",
+        "label": "Oanta",
+        "price": "+105",
+        "player": "Oanta",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Prozan",
+        "price": "+150",
+        "player": "Prozan",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Chris",
+        "price": "+160",
+        "player": "Chris",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "Kunal",
+        "price": "+195",
+        "player": "Kunal",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "toCash",
+        "label": "HG",
+        "price": "+360",
+        "player": "HG",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ],
+    "spoon": [
+      {
+        "market": "spoon",
+        "label": "HG",
+        "price": "+220",
+        "player": "HG",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Kunal",
+        "price": "+400",
+        "player": "Kunal",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Prozan",
+        "price": "+470",
+        "player": "Prozan",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 57
+      },
+      {
+        "market": "spoon",
+        "label": "Chris",
+        "price": "+530",
+        "player": "Chris",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Oanta",
+        "price": "+530",
+        "player": "Oanta",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "J Call",
+        "price": "+870",
+        "player": "J Call",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Arnst",
+        "price": "+1100",
+        "player": "Arnst",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "spoon",
+        "label": "Burnes",
+        "price": "+1650",
+        "player": "Burnes",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ],
+    "h2h": [
+      {
+        "market": "h2h",
+        "label": "Burnes vs Arnst: Burnes",
+        "price": "−135",
+        "a": "Burnes",
+        "b": "Arnst",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 17.41,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Arnst: Arnst",
+        "price": "+100",
+        "a": "Burnes",
+        "b": "Arnst",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs J Call: Burnes",
+        "price": "−180",
+        "a": "Burnes",
+        "b": "J Call",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.56,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs J Call: J Call",
+        "price": "+130",
+        "a": "Burnes",
+        "b": "J Call",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Oanta: Burnes",
+        "price": "−210",
+        "a": "Burnes",
+        "b": "Oanta",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 14.76,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Oanta: Oanta",
+        "price": "+150",
+        "a": "Burnes",
+        "b": "Oanta",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs J Call: Arnst",
+        "price": "−150",
+        "a": "Arnst",
+        "b": "J Call",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs J Call: J Call",
+        "price": "+110",
+        "a": "Arnst",
+        "b": "J Call",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 21,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs Oanta: Arnst",
+        "price": "−170",
+        "a": "Arnst",
+        "b": "Oanta",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.88,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs Oanta: Oanta",
+        "price": "+125",
+        "a": "Arnst",
+        "b": "Oanta",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "J Call vs Oanta: J Call",
+        "price": "−140",
+        "a": "J Call",
+        "b": "Oanta",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 17.14,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "J Call vs Oanta: Oanta",
+        "price": "+100",
+        "a": "J Call",
+        "b": "Oanta",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "open"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs Prozan: Arnst",
+        "price": "−175",
+        "a": "Arnst",
+        "b": "Prozan",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71,
+        "since": "2026-06-13"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs Prozan: Prozan",
+        "price": "+130",
+        "a": "Arnst",
+        "b": "Prozan",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-13"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Prozan: Burnes",
+        "price": "−180",
+        "a": "Burnes",
+        "b": "Prozan",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.56,
+        "since": "2026-06-13"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Prozan: Prozan",
+        "price": "+130",
+        "a": "Burnes",
+        "b": "Prozan",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-13"
+      },
+      {
+        "market": "h2h",
+        "label": "Oanta vs Prozan: Oanta",
+        "price": "−115",
+        "a": "Oanta",
+        "b": "Prozan",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.7,
+        "since": "2026-06-13"
+      },
+      {
+        "market": "h2h",
+        "label": "Oanta vs Prozan: Prozan",
+        "price": "−115",
+        "a": "Oanta",
+        "b": "Prozan",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-13"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs Chris: Arnst",
+        "price": "−195",
+        "a": "Arnst",
+        "b": "Chris",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.13,
+        "since": "2026-06-21"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs Chris: Chris",
+        "price": "+145",
+        "a": "Arnst",
+        "b": "Chris",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-21"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Chris: Burnes",
+        "price": "−175",
+        "a": "Burnes",
+        "b": "Chris",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71,
+        "since": "2026-06-21"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs Chris: Chris",
+        "price": "+130",
+        "a": "Burnes",
+        "b": "Chris",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-21"
+      },
+      {
+        "market": "h2h",
+        "label": "J Call vs Chris: J Call",
+        "price": "−135",
+        "a": "J Call",
+        "b": "Chris",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 17.41,
+        "since": "2026-06-21"
+      },
+      {
+        "market": "h2h",
+        "label": "J Call vs Chris: Chris",
+        "price": "+100",
+        "a": "J Call",
+        "b": "Chris",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-21"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs HG: Arnst",
+        "price": "−170",
+        "a": "Arnst",
+        "b": "HG",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.88,
+        "since": "2026-06-24"
+      },
+      {
+        "market": "h2h",
+        "label": "Arnst vs HG: HG",
+        "price": "+125",
+        "a": "Arnst",
+        "b": "HG",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-24"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs HG: Burnes",
+        "price": "−140",
+        "a": "Burnes",
+        "b": "HG",
+        "side": "a",
+        "result": "WON",
+        "stake": 10,
+        "ret": 17.14,
+        "since": "2026-06-24"
+      },
+      {
+        "market": "h2h",
+        "label": "Burnes vs HG: HG",
+        "price": "+100",
+        "a": "Burnes",
+        "b": "HG",
+        "side": "b",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-24"
+      },
+      {
+        "market": "h2h",
+        "label": "HG vs Chris: HG",
+        "price": "−165",
+        "a": "HG",
+        "b": "Chris",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-24"
+      },
+      {
+        "market": "h2h",
+        "label": "HG vs Chris: Chris",
+        "price": "+120",
+        "a": "HG",
+        "b": "Chris",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 22,
+        "since": "2026-06-24"
+      },
+      {
+        "market": "h2h",
+        "label": "HG vs J Call: HG",
+        "price": "−130",
+        "a": "HG",
+        "b": "J Call",
+        "side": "a",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "since": "2026-06-25"
+      },
+      {
+        "market": "h2h",
+        "label": "HG vs J Call: J Call",
+        "price": "−105",
+        "a": "HG",
+        "b": "J Call",
+        "side": "b",
+        "result": "WON",
+        "stake": 10,
+        "ret": 19.52,
+        "since": "2026-06-25"
+      }
+    ],
+    "grudges": [],
+    "faction": [
+      {
+        "market": "faction",
+        "label": "OLD DKE ML",
+        "side": "a",
+        "type": "ml",
+        "price": "+115",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "NEW DKE ML",
+        "side": "b",
+        "type": "ml",
+        "price": "−160",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 16.25,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "OLD DKE +1.5",
+        "side": "a",
+        "type": "spread",
+        "spreadLine": 1.5,
+        "price": "−120",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "NEW DKE −1.5",
+        "side": "b",
+        "type": "spread",
+        "spreadLine": -1.5,
+        "price": "−115",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.7,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "OLD DKE O 31.5",
+        "side": "a",
+        "type": "totalOver",
+        "totalLine": 31.5,
+        "price": "−120",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "OLD DKE U 31.5",
+        "side": "a",
+        "type": "totalUnder",
+        "totalLine": 31.5,
+        "price": "−115",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.7,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "NEW DKE O 33.5",
+        "side": "b",
+        "type": "totalOver",
+        "totalLine": 33.5,
+        "price": "−115",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 18.7,
+        "actualA": 27,
+        "actualB": 38
+      },
+      {
+        "market": "faction",
+        "label": "NEW DKE U 33.5",
+        "side": "b",
+        "type": "totalUnder",
+        "totalLine": 33.5,
+        "price": "−120",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actualA": 27,
+        "actualB": 38
+      }
+    ],
+    "watch": [
+      {
+        "market": "watch",
+        "label": "HG Over 3.5",
+        "player": "HG",
+        "line": 3.5,
+        "side": "over",
+        "price": "−1350",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.74,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 3.5",
+        "player": "HG",
+        "line": 3.5,
+        "side": "under",
+        "price": "+590",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 4.5",
+        "player": "HG",
+        "line": 4.5,
+        "side": "over",
+        "price": "−390",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 12.56,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 4.5",
+        "player": "HG",
+        "line": 4.5,
+        "side": "under",
+        "price": "+260",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 5.5",
+        "player": "HG",
+        "line": 5.5,
+        "side": "over",
+        "price": "−170",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.88,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 5.5",
+        "player": "HG",
+        "line": 5.5,
+        "side": "under",
+        "price": "+125",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 6.5",
+        "player": "HG",
+        "line": 6.5,
+        "side": "over",
+        "price": "+120",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 6.5",
+        "player": "HG",
+        "line": 6.5,
+        "side": "under",
+        "price": "−160",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 16.25,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 7.5",
+        "player": "HG",
+        "line": 7.5,
+        "side": "over",
+        "price": "+220",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 7.5",
+        "player": "HG",
+        "line": 7.5,
+        "side": "under",
+        "price": "−320",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 13.13,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 8.5",
+        "player": "HG",
+        "line": 8.5,
+        "side": "over",
+        "price": "+400",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 8.5",
+        "player": "HG",
+        "line": 8.5,
+        "side": "under",
+        "price": "−690",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.45,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 9.5",
+        "player": "HG",
+        "line": 9.5,
+        "side": "over",
+        "price": "+700",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 9.5",
+        "player": "HG",
+        "line": 9.5,
+        "side": "under",
+        "price": "−1900",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.53,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 10.5",
+        "player": "HG",
+        "line": 10.5,
+        "side": "over",
+        "price": "+1200",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 10.5",
+        "player": "HG",
+        "line": 10.5,
+        "side": "under",
+        "price": "−2400",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 11.5",
+        "player": "HG",
+        "line": 11.5,
+        "side": "over",
+        "price": "+2150",
+        "since": "open",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 11.5",
+        "player": "HG",
+        "line": 11.5,
+        "side": "under",
+        "price": "−2400",
+        "since": "open",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 2.5",
+        "player": "HG",
+        "line": 2.5,
+        "side": "over",
+        "price": "−2400",
+        "since": "2026-06-11",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 2.5",
+        "player": "HG",
+        "line": 2.5,
+        "side": "under",
+        "price": "+1350",
+        "since": "2026-06-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 12.5",
+        "player": "HG",
+        "line": 12.5,
+        "side": "over",
+        "price": "+3400",
+        "since": "2026-06-22",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 12.5",
+        "player": "HG",
+        "line": 12.5,
+        "side": "under",
+        "price": "−2400",
+        "since": "2026-06-22",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Over 13.5",
+        "player": "HG",
+        "line": 13.5,
+        "side": "over",
+        "price": "+2550",
+        "since": "2026-06-24",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "HG Under 13.5",
+        "player": "HG",
+        "line": 13.5,
+        "side": "under",
+        "price": "−2400",
+        "since": "2026-06-24",
+        "result": "WON",
+        "stake": 10,
+        "ret": 10.42,
+        "actual": 6
+      },
+      {
+        "market": "watch",
+        "label": "J Call Over 10.5",
+        "player": "J Call",
+        "line": 10.5,
+        "side": "over",
+        "price": "−105",
+        "since": "2026-07-07",
+        "result": "WON",
+        "stake": 10,
+        "ret": 19.52,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Under 10.5",
+        "player": "J Call",
+        "line": 10.5,
+        "side": "under",
+        "price": "−125",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Over 11.5",
+        "player": "J Call",
+        "line": 11.5,
+        "side": "over",
+        "price": "+380",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Under 11.5",
+        "player": "J Call",
+        "line": 11.5,
+        "side": "under",
+        "price": "−650",
+        "since": "2026-07-07",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.54,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Over 12.5",
+        "player": "J Call",
+        "line": 12.5,
+        "side": "over",
+        "price": "+380",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Under 12.5",
+        "player": "J Call",
+        "line": 12.5,
+        "side": "under",
+        "price": "−650",
+        "since": "2026-07-07",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.54,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Over 13.5",
+        "player": "J Call",
+        "line": 13.5,
+        "side": "over",
+        "price": "+380",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0,
+        "actual": 11
+      },
+      {
+        "market": "watch",
+        "label": "J Call Under 13.5",
+        "player": "J Call",
+        "line": 13.5,
+        "side": "under",
+        "price": "−650",
+        "since": "2026-07-07",
+        "result": "WON",
+        "stake": 10,
+        "ret": 11.54,
+        "actual": 11
+      }
+    ],
+    "specials": [
+      {
+        "market": "special",
+        "label": "Prozan wins the pool (the ladder out of the basement exists)",
+        "price": "+1500",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Prozan cashes top 3",
+        "price": "+550",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The Prozan special — USA AND Brazil both reach the quarters",
+        "price": "+160",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "USA win the whole thing",
+        "price": "+2000",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Canada lift the trophy (Burnes insists he's never even been)",
+        "price": "+33000",
+        "since": "2026-07-03",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The QF-98 leapfrog — Burnes (Spain) runs down Chris (Belgium), the fallen favorite's revenge",
+        "price": "+330",
+        "since": "2026-07-06",
+        "result": "WON",
+        "stake": 10,
+        "ret": 43
+      },
+      {
+        "market": "special",
+        "label": "House money — Kunal (Norway) outscores Oanta (England) in the QF-99 mirror",
+        "price": "+150",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "J Call storms the lead — Argentina, Egypt AND Switzerland all still standing, wins the pool",
+        "price": "+270",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Arnst runs away and hides — France and Morocco both live, Over 13.5 points",
+        "price": "+135",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "HG crashes the podium — Colombia alone drags him into the top 3",
+        "price": "+630",
+        "since": "2026-07-06",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "J Call beats J Call (Argentina vs Switzerland, both his) and wins the pool",
+        "price": "+280",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Kunal (Norway) outscores Oanta (England) — settled on the pitch Saturday, adjudicated at the bar",
+        "price": "+135",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The leapfrog lives — Burnes (Spain) still runs down Chris (Belgium), Friday is the whole ballgame",
+        "price": "+250",
+        "since": "2026-07-07",
+        "result": "WON",
+        "stake": 10,
+        "ret": 35
+      },
+      {
+        "market": "special",
+        "label": "Arnst plays himself Thursday and his survivor reaches the final — Over 10.5 points",
+        "price": "−175",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The Hawaii West parlay — Norway AND Argentina both win Saturday, drinks on the doubters",
+        "price": "+200",
+        "since": "2026-07-07",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The logjam breaks his way — J Call, guaranteed a semifinalist (Argentina vs Switzerland, both his), wins the pool",
+        "price": "+250",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Battle of the men who play themselves — J Call (Argentina/Switzerland) finishes above Arnst (France/Morocco)",
+        "price": "+120",
+        "since": "2026-07-08",
+        "result": "WON",
+        "stake": 10,
+        "ret": 22
+      },
+      {
+        "market": "special",
+        "label": "The leapfrog, now on Friday — Burnes (Spain) runs down Chris (Belgium) head-to-head",
+        "price": "+250",
+        "since": "2026-07-08",
+        "result": "WON",
+        "stake": 10,
+        "ret": 35
+      },
+      {
+        "market": "special",
+        "label": "Chris holds serve — the fallen favorite (Belgium) beats Spain and cashes top 3",
+        "price": "−310",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The Hawaii West parlay — Norway AND Argentina both reach the semis, drinks on the doubters",
+        "price": "+240",
+        "since": "2026-07-08",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The logjam breaks his way — Jacob Call wins the pool",
+        "price": "+240",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Battle of the men who play themselves — J Call (Argentina/Switzerland) finishes above Arnst, now with a one-point bigger cushion",
+        "price": "+120",
+        "since": "2026-07-09",
+        "result": "WON",
+        "stake": 10,
+        "ret": 22
+      },
+      {
+        "market": "special",
+        "label": "Kunal (Norway) outscores Oanta (England) — Saturday at Hawaii West, adjudicated over a poorly mixed Mai Tai",
+        "price": "+135",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Oanta's last stand — top 3 or nothing, and it hinges on England getting past Erling Haaland",
+        "price": "+400",
+        "since": "2026-07-09",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The leapfrog reborn — Burnes (Spain) runs down the frozen Chris (Belgium), but only through France: Spain reaching the final ties it at 9, only the trophy passes him",
+        "price": "+260",
+        "since": "2026-07-10",
+        "result": "WON",
+        "stake": 10,
+        "ret": 36
+      },
+      {
+        "market": "special",
+        "label": "The statue holds — Chris, every team eliminated, cashes top 3 anyway; dead-heat rules split the cash, so even a tie pays",
+        "price": "−240",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Arnst runs it back — France, the tournament favorite, lifts the Cup and he clears Over 12.5 points",
+        "price": "+130",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "J Call beats J Call — Argentina vs Switzerland on Saturday, both his, so he can't lose a semifinalist, and rides the survivor to win the pool",
+        "price": "+270",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The Saturday mirror — Kunal (Norway) outlasts Oanta (England), settled on the pitch, adjudicated over a poorly mixed Mai Tai",
+        "price": "+140",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Chaos at Hawaii West — Norway AND Switzerland both pull the Saturday upset and turn SF-102 into a Cinderella semifinal, drinks on the doubters",
+        "price": "+800",
+        "since": "2026-07-10",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "J Call beats the host — Argentina past Oanta's England on Wednesday — and wins the pool",
+        "price": "+290",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Arnst answers the co-leader — France past Burnes's Spain on Tuesday, and he clears Over 12.5 points",
+        "price": "+125",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The co-leaders collide for the Cup — Argentina AND France both reach the final, J Call vs Arnst for everything",
+        "price": "+195",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The leapfrog, last leg — Burnes (Spain) runs down the frozen Chris, but only the trophy does it: a final merely ties, and it's through Arnst's France first",
+        "price": "+195",
+        "since": "2026-07-11",
+        "result": "WON",
+        "stake": 10,
+        "ret": 29.5
+      },
+      {
+        "market": "special",
+        "label": "Oanta crashes his own party — the man who threw the Saturday needs England to win the whole thing to cash top 3",
+        "price": "+380",
+        "since": "2026-07-11",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Burnes wins the pool — Spain lifts the Cup and the $150 is his; the board's favorite",
+        "price": "−340",
+        "since": "2026-07-14",
+        "result": "WON",
+        "stake": 10,
+        "ret": 12.94
+      },
+      {
+        "market": "special",
+        "label": "Oanta wins the pool — England beats Argentina, then dethrones Spain in the final",
+        "price": "+220",
+        "since": "2026-07-14",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "J Call wins the pool — Argentina beats England, then dethrones Spain in the final",
+        "price": "+280",
+        "since": "2026-07-14",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Arnst holds second — frozen at 10, locked onto the podium, he keeps at least a share of the $60 spot in every outcome but one",
+        "price": "−350",
+        "since": "2026-07-14",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Arnst slips to sole third — the lone exception: Argentina reaches the final AND Spain wins it, stacking two seats above him",
+        "price": "+240",
+        "since": "2026-07-14",
+        "result": "WON",
+        "stake": 10,
+        "ret": 34
+      },
+      {
+        "market": "special",
+        "label": "Chris steals a podium — frozen at 9, every team dead, he backs into a shared third only if Argentina wins the whole thing",
+        "price": "+720",
+        "since": "2026-07-14",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Burnes wins the pool — he bought Spain in June and Spain lifting the Cup on Sunday is the entire $150",
+        "price": "−175",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 15.71
+      },
+      {
+        "market": "special",
+        "label": "The birthday boy takes it all — Argentina win on July 19, Jacob Call's actual birthday, and the pool is his",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Arnst's check is Burnes's problem — frozen on 10, he is second if Spain lose and third if Spain win, and he cannot lift a finger either way",
+        "price": "+125",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "The one-goal tiebreak — Chris, every team dead, takes third off Burnes because Spain losing drops their goal difference below his 7",
+        "price": "+165",
+        "since": "2026-07-15",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Burnes salvages something — Spain lift the Cup, or Argentina need a shootout, which leaves Spain's goal difference untouched and dead-heats the last $30",
+        "price": "−230",
+        "since": "2026-07-15",
+        "result": "WON",
+        "stake": 10,
+        "ret": 14.35
+      },
+      {
+        "market": "special",
+        "label": "To the spot — Argentina win, Burnes and Chris finish level on nine, and the last $30 is settled by a five-kick shootout",
+        "price": "+120",
+        "since": "2026-07-18",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Burnes wins the shootout — a shootout is a goalkeeper's document, and he owns a Berkeley IM title in goal",
+        "price": "−145",
+        "since": "2026-07-18",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      },
+      {
+        "market": "special",
+        "label": "Chris wins the shootout — high school soccer against an IM-league DKE legend in goal, and the taker always fancies himself",
+        "price": "+105",
+        "since": "2026-07-18",
+        "result": "LOST",
+        "stake": 10,
+        "ret": 0
+      }
+    ]
+  },
+  "house": {
+    "taken": 1450,
+    "paid": 976.58,
+    "hold": 473.42,
+    "holdPct": 32.65,
+    "nTickets": 145,
+    "byMarket": {
+      "outright": {
+        "tickets": 8,
+        "taken": 80,
+        "paid": 29,
+        "hold": 51
+      },
+      "toCash": {
+        "tickets": 8,
+        "taken": 80,
+        "paid": 47.44,
+        "hold": 32.56
+      },
+      "spoon": {
+        "tickets": 8,
+        "taken": 80,
+        "paid": 57,
+        "hold": 23
+      },
+      "watch": {
+        "tickets": 32,
+        "taken": 320,
+        "paid": 196.78,
+        "hold": 123.22
+      },
+      "faction": {
+        "tickets": 8,
+        "taken": 80,
+        "paid": 72.35,
+        "hold": 7.65
+      },
+      "special": {
+        "tickets": 49,
+        "taken": 490,
+        "paid": 299.5,
+        "hold": 190.5
+      },
+      "h2h": {
+        "tickets": 32,
+        "taken": 320,
+        "paid": 274.51,
+        "hold": 45.49
+      }
+    }
+  },
+  "superlatives": {
+    "ticketOfTournament": {
+      "market": "spoon",
+      "label": "Prozan",
+      "price": "+470",
+      "player": "Prozan",
+      "since": "open",
+      "result": "WON",
+      "stake": 10,
+      "ret": 57
+    },
+    "badBeat": {
+      "market": "watch",
+      "label": "HG Under 5.5",
+      "player": "HG",
+      "line": 5.5,
+      "side": "under",
+      "price": "+125",
+      "since": "open",
+      "result": "LOST",
+      "stake": 10,
+      "ret": 0,
+      "actual": 6,
+      "margin": {
+        "gap": 0.5
+      }
+    },
+    "specialsThatCashed": [
+      {
+        "label": "The QF-98 leapfrog — Burnes (Spain) runs down Chris (Belgium), the fallen favorite's revenge",
+        "price": "+330",
+        "since": "2026-07-06",
+        "ret": 43
+      },
+      {
+        "label": "The leapfrog lives — Burnes (Spain) still runs down Chris (Belgium), Friday is the whole ballgame",
+        "price": "+250",
+        "since": "2026-07-07",
+        "ret": 35
+      },
+      {
+        "label": "Battle of the men who play themselves — J Call (Argentina/Switzerland) finishes above Arnst (France/Morocco)",
+        "price": "+120",
+        "since": "2026-07-08",
+        "ret": 22
+      },
+      {
+        "label": "The leapfrog, now on Friday — Burnes (Spain) runs down Chris (Belgium) head-to-head",
+        "price": "+250",
+        "since": "2026-07-08",
+        "ret": 35
+      },
+      {
+        "label": "Battle of the men who play themselves — J Call (Argentina/Switzerland) finishes above Arnst, now with a one-point bigger cushion",
+        "price": "+120",
+        "since": "2026-07-09",
+        "ret": 22
+      },
+      {
+        "label": "The leapfrog reborn — Burnes (Spain) runs down the frozen Chris (Belgium), but only through France: Spain reaching the final ties it at 9, only the trophy passes him",
+        "price": "+260",
+        "since": "2026-07-10",
+        "ret": 36
+      },
+      {
+        "label": "The leapfrog, last leg — Burnes (Spain) runs down the frozen Chris, but only the trophy does it: a final merely ties, and it's through Arnst's France first",
+        "price": "+195",
+        "since": "2026-07-11",
+        "ret": 29.5
+      },
+      {
+        "label": "Burnes wins the pool — Spain lifts the Cup and the $150 is his; the board's favorite",
+        "price": "−340",
+        "since": "2026-07-14",
+        "ret": 12.94
+      },
+      {
+        "label": "Arnst slips to sole third — the lone exception: Argentina reaches the final AND Spain wins it, stacking two seats above him",
+        "price": "+240",
+        "since": "2026-07-14",
+        "ret": 34
+      },
+      {
+        "label": "Burnes wins the pool — he bought Spain in June and Spain lifting the Cup on Sunday is the entire $150",
+        "price": "−175",
+        "since": "2026-07-15",
+        "ret": 15.71
+      },
+      {
+        "label": "Burnes salvages something — Spain lift the Cup, or Argentina need a shootout, which leaves Spain's goal difference untouched and dead-heats the last $30",
+        "price": "−230",
+        "since": "2026-07-15",
+        "ret": 14.35
+      }
+    ]
+  }
+}

@@ -292,7 +292,7 @@ function Book({ book, prev, entries, books, cur, onNav }) {
         </p>
         <p className="bk-foot">{book.bookName} · EST. JUNE 2026 · NO REFUNDS</p>
         <p className="bk-foot-nav">
-          <a className="bk-link" href={`?scores=${book.id}`}>Live standings</a> · <a className="bk-link" href="./">Scoreboards</a> · <a className="bk-link" href="?draft">New draft</a>
+          <a className="bk-link" href={`?scores=${book.id}`}>Live standings</a> · <a className="bk-link" href={`?post=settle-${book.id === "sons-of-steve-kerr" ? "sosk" : book.id}`}>The reckoning</a> · <a className="bk-link" href="./">Scoreboards</a> · <a className="bk-link" href="?draft">New draft</a>
         </p>
       </footer>
     </>
